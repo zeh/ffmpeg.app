@@ -1,0 +1,11 @@
+{
+	"editor.insertSpaces": false,
+	"editor.detectIndentation": false,
+	"files.eol": "\n",
+	"files.trimTrailingWhitespace": true,
+	"files.exclude": {
+		"**/.git": true,
+		"**/.DS_Store": true,
+		"node_modules": true
+	}
+}

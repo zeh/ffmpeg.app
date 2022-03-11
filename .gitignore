@@ -1,0 +1,9 @@
+# NPM/task management stuff
+node_modules
+yarn-error.log
+.tscache
+report.*.json
+
+# Build folder
+dist
+dist-*

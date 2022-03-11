@@ -1,0 +1,8 @@
+{
+	"name": "online-ffmpeg",
+	"version": "1.0.0",
+	"main": "index.js",
+	"repository": "git@github.com:zeh/online-ffmpeg.git",
+	"author": "Zeh Fernando <zeh@zehfernando.com>",
+	"license": "MIT"
+}

@@ -1,20 +1,15 @@
-import { Logo } from './logo'
+import { Logo } from "./logo";
 
-export function App() {
+export function App(): JSX.Element {
 	return (
 		<>
 			<Logo />
 			<p>Hello Vite + Preact!</p>
 			<p>
-				<a
-					class="link"
-					href="https://preactjs.com/"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
+				<a class="link" href="https://preactjs.com/" target="_blank" rel="noopener noreferrer">
 					Learn Preact
 				</a>
 			</p>
 		</>
-	)
+	);
 }

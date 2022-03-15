@@ -1,6 +1,6 @@
 {
 	"editor.insertSpaces": false,
-	"editor.detectIndentation": false,
+	"editor.detectIndentation": true,
 	"files.eol": "\n",
 	"files.trimTrailingWhitespace": true,
 	"files.exclude": {

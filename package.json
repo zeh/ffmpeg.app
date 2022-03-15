@@ -1,8 +1,21 @@
 {
 	"name": "online-ffmpeg",
+	"private": true,
 	"version": "1.0.0",
-	"main": "index.js",
+	"license": "MIT",
 	"repository": "git@github.com:zeh/online-ffmpeg.git",
 	"author": "Zeh Fernando <zeh@zehfernando.com>",
-	"license": "MIT"
+	"scripts": {
+		"start": "vite",
+		"build": "tsc && vite build",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"preact": "^10.5.15"
+	},
+	"devDependencies": {
+		"@preact/preset-vite": "^2.1.5",
+		"typescript": "^4.5.4",
+		"vite": "^2.8.0"
+	}
 }

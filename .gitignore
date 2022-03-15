@@ -1,9 +1,19 @@
-# NPM/task management stuff
-node_modules
-yarn-error.log
-.tscache
-report.*.json
+# Logs
+logs
+*.log
+yarn-debug.log*
+yarn-error.log*
 
-# Build folder
+node_modules
 dist
-dist-*
+dist-ssr
+*.local
+
+# Editor directories and files
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

@@ -1,12 +1,14 @@
-import classes from "./index.module.css";
+import s from "./styles.module.css";
 
-const App = (): JSX.Element => {
+export const Footer = (): JSX.Element => {
 	return (
-		<div className={classes.container}>
-			<p>App</p>
-			<p>App a</p>
-		</div>
+		<footer className={s.container}>
+			<span>
+				{"Made with 🤬 by "}
+				<a href={"https://portfolio.zehfernando.com"}>Zeh Fernando</a>
+				{" • "}
+				<a href={"https://github.com/zeh/online-ffmpeg"}>Source code</a>
+			</span>
+		</footer>
 	);
 };
-
-export default App;

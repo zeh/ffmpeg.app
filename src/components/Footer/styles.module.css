@@ -1,0 +1,10 @@
+@import "../../styles/mixins/index.css";
+
+.container {
+	@mixin type-style-footer;
+
+	display: flex;
+	position: absolute;
+	bottom: 0;
+	margin-bottom: var(--size-margin-common);
+}

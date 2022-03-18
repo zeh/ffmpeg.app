@@ -18,6 +18,8 @@
 		"@preact/preset-vite": "^2.1.5",
 		"@typescript-eslint/eslint-plugin": "^5.15.0",
 		"@typescript-eslint/parser": "^5.15.0",
+		"autoprefixer": "^10.4.4",
+		"cssnano": "^5.1.4",
 		"eslint": "^8.11.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-prettier": "^4.0.0",

@@ -1,0 +1,17 @@
+# Do "npx browserslist" to test what's covered in the terminal
+
+# Last 24 months (more or less)
+last 2 iOS major versions
+last 2 Safari major versions
+
+# Last 6 months (cadence = 4 weeks)
+last 6 Firefox versions
+
+# Last 6 months (cadence = 4 weeks)
+last 6 Chrome versions
+
+# Last 3 months (cadence = ~6 weeks)
+last 2 Opera versions
+
+# Last 8 months (cadence = 4 weeks)
+last 8 Edge versions

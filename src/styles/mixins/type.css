@@ -1,0 +1,20 @@
+/* Basic fonts */
+
+@define-mixin type-basic-body-regular {
+	font-family: "Roboto Slab", sans-serif;
+	font-weight: 400;
+}
+
+@define-mixin type-basic-body-bold {
+	font-family: "Roboto Slab", sans-serif;
+	font-weight: 700;
+}
+
+/* Actual styles */
+
+@define-mixin type-style-body {
+	@mixin type-basic-body-regular;
+
+	font-size: 13px;
+	line-height: 150%;
+}

@@ -1,10 +1,9 @@
-import classes from "./index.module.css";
+import styles from "./styles.module.css";
 
 export const App = (): JSX.Element => {
 	return (
-		<div className={classes.container}>
+		<div className={styles.container}>
 			<p>App</p>
-			<Footer></Footer>
 		</div>
 	);
 };

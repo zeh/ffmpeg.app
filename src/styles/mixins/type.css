@@ -18,3 +18,9 @@
 	font-size: 16px;
 	line-height: 150%;
 }
+
+@define-mixin type-style-footer {
+	@mixin type-style-body;
+
+	font-size: 0.75em;
+}

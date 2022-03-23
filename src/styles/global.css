@@ -1,4 +1,5 @@
 @import "./mixins/index.css";
+@import "./vars/index.css";
 
 html,
 body {
@@ -8,10 +9,15 @@ body {
 	width: 100%;
 	padding: 0;
 	margin: 0;
-	background: #eeefef;
-	color: #444;
+
+	background: var(--color-theme-background);
+	color: var(--color-theme-text);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+a {
+	color: var(--color-theme-text-link);
 }
 
 * {

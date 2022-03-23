@@ -1,0 +1,21 @@
+:root {
+	--color-basic-black: #000000;
+	--color-basic-blackish: #161616;
+	--color-basic-transparent: rgba(0, 0, 0, 0);
+	--color-basic-whiteish: #e0e0e0;
+	--color-basic-white: #ffffff;
+
+	/* Light theme */
+	--color-theme-background: var(--color-basic-whiteish);
+	--color-theme-text: var(--color-basic-blackish);
+	--color-theme-text-link: var(--color-basic-black);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		/* Dark theme */
+		--color-theme-background: var(--color-basic-blackish);
+		--color-theme-text: var(--color-basic-whiteish);
+		--color-theme-text-link: var(--color-basic-white);
+	}
+}

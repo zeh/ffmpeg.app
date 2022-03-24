@@ -12,6 +12,14 @@
 
 /* Actual styles */
 
+@define-mixin type-style-title {
+	@mixin type-basic-body-regular;
+
+	font-size: 20px;
+	letter-spacing: 0.05em;
+	line-height: 150%;
+}
+
 @define-mixin type-style-body {
 	@mixin type-basic-body-regular;
 

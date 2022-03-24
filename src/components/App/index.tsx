@@ -1,11 +1,11 @@
 import { Footer } from "../Footer";
 
-import styles from "./styles.module.css";
+import s from "./styles.module.css";
 
 export const App = (): JSX.Element => {
 	return (
-		<div className={styles.container}>
-			<p>App</p>
+		<div className={s.container}>
+			<p className={s.title}>What do you want to do with FFmpeg today?</p>
 			<Footer />
 		</div>
 	);

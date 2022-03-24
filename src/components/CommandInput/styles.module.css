@@ -1,0 +1,75 @@
+@import "../../styles/mixins/index.css";
+
+.form {
+	appearance: none;
+	margin: 0 auto;
+	outline: none;
+	padding: 0;
+	position: relative;
+	margin: 0 auto;
+	max-width: 600px;
+	width: 100%;
+	background-color: var(--color-theme-input-background);
+	box-shadow: 0 1px 3px var(--color-theme-input-shadow);
+	display: flex;
+	border: 1px solid var(--color-theme-input-border);
+	border-radius: 6px;
+}
+
+.input {
+	@mixin type-style-body;
+
+	font-size: 1.2em;
+	color: var(--color-theme-input-text);
+	appearance: none;
+	-webkit-tap-highlight-color: var(--color-basic-transparent);
+	display: block;
+	background: none;
+	outline: noine;
+	border: none;
+	padding: 8px 10px;
+	text-shadow: none;
+	width: 100%;
+
+	&:focus {
+		outline: none;
+	}
+
+	&::placeholder {
+		color: var(--color-theme-input-text);
+		opacity: var(--opacity-placeholder);
+	}
+}
+
+.clear {
+	appearance: none;
+	line-height: 0;
+	-webkit-tap-highlight-color: var(--color-basic-transparent);
+	color: var(--color-theme-input-buttons);
+	cursor: pointer;
+	display: block;
+	background: none;
+	outline: none;
+	position: absolute;
+	right: 0;
+	padding: 0 12px;
+	margin: 0;
+	border: none;
+	height: 100%;
+
+	opacity: 0.5;
+	transition: opacity var(--time-rollover-fade-out) linear;
+
+	&:hover {
+		transition: opacity var(--time-rollover-fade-in) linear;
+		opacity: 1.0;
+	}
+}
+
+.clearVisible {
+	visibility: visible;
+}
+
+.clearHidden {
+	visibility: hidden;
+}

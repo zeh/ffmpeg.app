@@ -5,7 +5,7 @@ import Commands from "../../utils/commands/Commands";
 
 import s from "./styles.module.css";
 
-export interface ICommand {
+interface ICommand {
 	label: string;
 	value: string;
 }
@@ -16,7 +16,7 @@ export interface IProps {
 }
 
 export const CommandList = ({ searchTerms, selectedIndex }: IProps): JSX.Element | null => {
-	const [items, setItems] = useState<Array<{ label: string; value: string }>>([]);
+	const [items, setItems] = useState<ICommand[]>([]);
 
 	if (!searchTerms) {
 		return null;

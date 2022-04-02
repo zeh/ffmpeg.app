@@ -1,13 +1,19 @@
 @import "../../styles/mixins/index.css";
 
+.container {
+	margin: 0;
+	width: 100%;
+	max-width: 700px;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+
 .form {
 	appearance: none;
-	margin: 0 auto;
 	outline: none;
 	padding: 0;
-	position: relative;
 	margin: 0 auto;
-	max-width: 600px;
 	width: 100%;
 	background-color: var(--color-theme-input-background);
 	box-shadow: 0 1px 3px var(--color-theme-input-shadow);

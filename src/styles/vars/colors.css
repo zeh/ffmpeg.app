@@ -13,6 +13,7 @@
 	--color-theme-text-link: var(--color-basic-black);
 	--color-theme-input-text: var(--color-basic-blackish);
 	--color-theme-input-background: var(--color-basic-white);
+	--color-theme-input-background-selected: rgba(0, 0, 0, 0.1);
 	--color-theme-input-buttons: var(--color-basic-blackish);
 	--color-theme-input-border: rgba(0, 0, 0, 0.25);
 	--color-theme-input-shadow: rgba(0, 0, 0, 0.2);
@@ -28,8 +29,9 @@
 		--color-theme-text-link: var(--color-basic-white);
 		--color-theme-input-text: var(--color-basic-light-gray);
 		--color-theme-input-background: var(--color-basic-dark-gray);
+		--color-theme-input-background-selected: rgba(0, 0, 0, 0.2);
 		--color-theme-input-buttons: var(--color-basic-light-gray);
-		--color-theme-input-border: var(--color-basic-dark-gray);
+		--color-theme-input-border: var(--color-basic-blackish);
 		--color-theme-input-shadow: rgba(0, 0, 0, 0.2);
 
 		--opacity-placeholder: 0.35;

@@ -3,6 +3,7 @@
 	--color-basic-blackish: #161616;
 	--color-basic-transparent: rgba(0, 0, 0, 0);
 	--color-basic-light-gray: #cccccc;
+	--color-basic-dark-gray: #222222;
 	--color-basic-whiteish: #eeeeee;
 	--color-basic-white: #ffffff;
 
@@ -26,9 +27,9 @@
 		--color-theme-text: var(--color-basic-light-gray);
 		--color-theme-text-link: var(--color-basic-white);
 		--color-theme-input-text: var(--color-basic-light-gray);
-		--color-theme-input-background: var(--color-basic-black);
+		--color-theme-input-background: var(--color-basic-dark-gray);
 		--color-theme-input-buttons: var(--color-basic-light-gray);
-		--color-theme-input-border: var(--color-basic-black);
+		--color-theme-input-border: var(--color-basic-dark-gray);
 		--color-theme-input-shadow: rgba(0, 0, 0, 0.2);
 
 		--opacity-placeholder: 0.35;

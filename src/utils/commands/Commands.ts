@@ -5,8 +5,8 @@ interface ICommandsJSONCommand {
 	name: string;
 	description?: string;
 	command: string;
-	keywords?: string;
-	tags?: string;
+	keywords?: string[];
+	tags?: string[];
 }
 
 interface ICommandsJSON {
@@ -47,8 +47,8 @@ const getAll = (): ICommand[] => {
 				name: parseWithDefinitions(commandJSON.name, defs),
 				description: maybeParseWithDefinitions(commandJSON.description, defs),
 				command: parseWithDefinitions(commandJSON.command, defs),
-				keywords: commandJSON.keywords?.split(",") ?? [],
-				tags: commandJSON.tags?.split(",") ?? [],
+				keywords: commandJSON.keywords ?? [],
+				tags: commandJSON.tags ?? [],
 				searchIndex: [] as ISearchIndexEntry[],
 			};
 

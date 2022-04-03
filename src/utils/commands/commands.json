@@ -1,64 +1,64 @@
 {
 	"definitions": {
-		"input_audio": "{{{input_file:title=Input,mask=*.wav,*.mp3,*.aac}}}",
-		"input_video": "{{{input_file:title=Input,mask=*.mp4,*.avi,*.mov}}}"
+		"input_audio": "{{{input_file:title=Input;mask=*.wav,*.mp3,*.aac}}}",
+		"input_video": "{{{input_file:title=Input;mask=*.mp4,*.avi,*.mov}}}"
 	},
 	"commands": [
 		{
 			"name": "Mute a video",
 			"description": "Removes the audio track of a video without transcoding.",
 			"command": "ffmpeg -i ${input_video} -an -c copy {{{output:ext=input}}}",
-			"keywords": "audio,mute,remove,sound,mute,volume",
-			"tags": "video,no-transcoding"
+			"keywords": ["audio", "mute", "remove", "sound", "mute", "volume"],
+			"tags": ["video", "no-transcoding"]
 		},
 		{
 			"name": "Re-encode video as H.264",
 			"description": "Converts any input video to H.264 format. Audio is preserved.",
 			"command": "ffmpeg -i ${input_video} -c:v libx264 -crf 18 -preset veryslow -movflags faststart -profile:v high {{{output:ext=mp4}}}",
-			"keywords": "encode,transcode,video,h264",
-			"tags": "video"
+			"keywords": ["encode", "transcode", "video", "h264"],
+			"tags": ["video"]
 		},
 		{
 			"name": "Change volume of an audio file by scale",
 			"description": "Change the volume of an audio file to a scale of the current volune.",
 			"command": "ffmpeg -i ${input_audio} -filter:a \"volume=0.5\" {{{output:ext=input}}}",
-			"keywords": "audio,volume,increase,decrease",
-			"tags": "audio"
+			"keywords": ["audio", "volume", "increase", "decrease"],
+			"tags": ["audio"]
 		},
 		{
 			"name": "Change volume of an audio file by decibels",
 			"description": "Change the volume of an audio file by decibels.",
 			"command": "ffmpeg -i ${input_audio} -filter:a \"volume=10dB\" {{{output:ext=input}}}",
-			"keywords": "audio,volume,increase,decrease",
-			"tags": "audio"
+			"keywords": ["audio", "volume", "increase", "decrease"],
+			"tags": ["audio"]
 		},
 		{
 			"name": "Normalize loudness of an audio file",
 			"description": "Normalize the perceived loudness of a file using he EBU R128 algorithm.",
 			"command": "ffmpeg -i ${input_audio} -filter:a loudnorm {{{output:ext=input}}}",
-			"keywords": "audio,normalize,volume,increase,decrease",
-			"tags": "audio"
+			"keywords": ["audio", "normalize", "volume", "increase", "decrease"],
+			"tags": ["audio"]
 		},
 		{
 			"name": "Crop a video",
 			"description": "Crops a video to a specific area.",
 			"command": "ffmpeg -i ${input_video} -filter:v \"crop=w:h:x:y\" -crf 18 -preset veryslow {{{output:ext=input}}}",
-			"keywords": "crop,video",
-			"tags": "video"
+			"keywords": ["crop", "video"],
+			"tags": ["video"]
 		},
 		{
 			"name": "Change a video playback speed",
 			"description": "Change the speed a video is played (faster).",
 			"command": "ffmpeg -i ${input_video} -filter:v \"setpts=0.5*PTS\" -crf 18 -preset veryslow {{{output:ext=input}}}",
-			"keywords": "speed,video",
-			"tags": "video"
+			"keywords": ["speed", "video"],
+			"tags": ["video"]
 		},
 		{
 			"name": "Rotate a video",
 			"description": "Rotate a video 90\".",
 			"command": "ffmpeg -i ${input_video} -vf \"transpose=dir=1\" {{{output:ext=input}}}",
-			"keywords": "video,rotate",
-			"tags": "audio"
+			"keywords": ["video", "rotate"],
+			"tags": ["audio"]
 		}
 	]
 }

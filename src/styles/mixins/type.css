@@ -32,3 +32,11 @@
 
 	font-size: 0.75em;
 }
+
+@define-mixin type-style-tag {
+	@mixin type-style-body;
+
+	font-size: 0.55em;
+	text-transform: uppercase;
+	font-weight: 700;
+}

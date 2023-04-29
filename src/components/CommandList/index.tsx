@@ -8,6 +8,7 @@ import s from "./styles.module.css";
 interface ICommand {
 	label: string;
 	value: string;
+	tags: string[];
 }
 
 export interface IProps {
@@ -24,14 +25,19 @@ export const CommandList = ({ searchTerms, selectedIndex }: IProps): JSX.Element
 
 	useEffect(() => {
 		const commands = Commands.getWithSearch(searchTerms);
-		setItems(commands.map((c, index) => ({ label: c.name, value: index.toString() })));
+		setItems(commands.map((c, index) => ({ label: c.name, value: index.toString(), tags: c.tags })));
 	}, [searchTerms]);
 
 	return (
 		<div className={s.container}>
 			{items.map((c, index) => (
 				<div key={c.value} className={cx({ [s.entry]: true, [s.selected]: index === selectedIndex })}>
-					{c.label}
+					<div className={cx([s.label])}>{c.label}</div>
+					<div className={cx([s.tags])}>
+						{c.tags.map((t) => (
+							<div className={cx([s.tag])}>{t}</div>
+						))}
+					</div>
 				</div>
 			))}
 		</div>

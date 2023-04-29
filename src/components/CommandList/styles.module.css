@@ -20,12 +20,37 @@
 
 .entry {
 	@mixin type-style-body;
-	line-height: 1.9em;
 	height: 2em;
-	text-align: left;
 	padding: 0 10px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 
 	&.selected {
 		background-color: var(--color-theme-input-background-selected);
+	}
+
+	.label {
+		flex: 1;
+		text-align: start;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.tags {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+
+		.tag {
+			@mixin type-style-tag;
+			color: var(--color-theme-tag-foreground);
+			background-color: var(--color-theme-tag-background);
+			border-radius: var(--size-tag-border-radius);
+			padding: calc(var(--size-tag-border-radius) / 4) calc(var(--size-tag-border-radius) / 1);
+			opacity: var(--opacity-tag);
+			margin-inline-start: var(--size-tag-border-radius);
+		}
 	}
 }

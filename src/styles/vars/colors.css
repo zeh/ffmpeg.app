@@ -17,7 +17,10 @@
 	--color-theme-input-buttons: var(--color-basic-blackish);
 	--color-theme-input-border: rgba(0, 0, 0, 0.25);
 	--color-theme-input-shadow: rgba(0, 0, 0, 0.2);
+	--color-theme-tag-foreground: var(--color-basic-whiteish);
+	--color-theme-tag-background: var(--color-basic-dark-gray);
 
+	--opacity-tag: 0.75;
 	--opacity-placeholder: 0.35;
 }
 
@@ -33,6 +36,8 @@
 		--color-theme-input-buttons: var(--color-basic-light-gray);
 		--color-theme-input-border: var(--color-basic-blackish);
 		--color-theme-input-shadow: rgba(0, 0, 0, 0.2);
+		--color-theme-tag-foreground: var(--color-basic-blackish);
+		--color-theme-tag-background: var(--color-basic-light-gray);
 
 		--opacity-placeholder: 0.35;
 	}

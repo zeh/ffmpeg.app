@@ -1,4 +1,5 @@
 import { ISearchIndexEntry, generateSearchIndexWords, searchForTermsInIndexes } from "../SearchUtils";
+import { slugify } from "../StringUtils";
 import commandsJSONFile from "./commands.json";
 
 interface ICommandsJSONCommand {
@@ -15,6 +16,7 @@ interface ICommandsJSON {
 }
 
 interface ICommand {
+	slug: string;
 	name: string;
 	description?: string;
 	command: string;
@@ -44,6 +46,7 @@ const getAll = (): ICommand[] => {
 		const defs = commandsJSON.definitions;
 		commands = commandsJSON.commands.map((commandJSON): ICommand => {
 			const command = {
+				slug: slugify(parseWithDefinitions(commandJSON.name, defs)),
 				name: parseWithDefinitions(commandJSON.name, defs),
 				description: maybeParseWithDefinitions(commandJSON.description, defs),
 				command: parseWithDefinitions(commandJSON.command, defs),

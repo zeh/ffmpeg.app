@@ -26,6 +26,12 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	cursor: pointer;
+	user-select: none;
+
+	&:hover {
+		background-color: var(--color-theme-input-background-hover);
+	}
 
 	&.selected {
 		background-color: var(--color-theme-input-background-selected);

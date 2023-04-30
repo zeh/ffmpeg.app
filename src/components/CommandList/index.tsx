@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "preact/hooks";
+import { useCallback, useEffect, useMemo, useRef } from "preact/hooks";
 import cx from "classnames";
 
 import Commands from "../../utils/commands/Commands";
@@ -15,9 +15,10 @@ export interface IProps {
 	searchTerms?: string;
 	selectedIndex?: number;
 	setSelectedIndex?: (index: number) => void;
+	submit?: (index: number) => void;
 }
 
-export const CommandList = ({ searchTerms, selectedIndex, setSelectedIndex }: IProps): JSX.Element | null => {
+export const CommandList = ({ searchTerms, selectedIndex, setSelectedIndex, submit }: IProps): JSX.Element | null => {
 	const selectedIndexRef = useRef<HTMLDivElement>(null);
 
 	if (!searchTerms) {
@@ -50,6 +51,10 @@ export const CommandList = ({ searchTerms, selectedIndex, setSelectedIndex }: IP
 		scroll?.apply(selectedIndexRef.current);
 	}, [selectedIndexRef.current]);
 
+	const handleSubmit = useCallback((index: number) => {
+		submit?.(index);
+	}, []);
+
 	return (
 		<div className={s.container}>
 			{items.map((c, index) => (
@@ -57,6 +62,9 @@ export const CommandList = ({ searchTerms, selectedIndex, setSelectedIndex }: IP
 					ref={index === selectedIndexClean ? selectedIndexRef : undefined}
 					key={c.value}
 					className={cx({ [s.entry]: true, [s.selected]: index === selectedIndexClean })}
+					onClick={() => {
+						handleSubmit(index);
+					}}
 				>
 					<div className={cx([s.label])}>{c.label}</div>
 					<div className={cx([s.tags])}>

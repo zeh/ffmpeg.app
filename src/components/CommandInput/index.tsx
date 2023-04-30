@@ -11,6 +11,17 @@ export const CommandInput = (): JSX.Element => {
 	const [currentListIndex, setCurrentListIndex] = useState<number | undefined>(undefined);
 	const inputRef = useRef<HTMLInputElement>(null);
 
+	const handleListSubmit = useCallback((index: number) => {
+		// TODO: implement
+		console.error("Unimplemented: submit as selected!!!", index);
+	}, []);
+
+	const handleInputSubmit = useCallback(() => {
+		if (currentListIndex !== undefined) {
+			handleListSubmit(currentListIndex);
+		}
+	}, [currentListIndex, handleListSubmit]);
+
 	const handleInput = useCallback((e: JSX.TargetedEvent<HTMLInputElement>) => {
 		const newValue = (e.target as HTMLInputElement | undefined)?.value ?? "";
 		setCurrentValue(newValue);
@@ -20,15 +31,18 @@ export const CommandInput = (): JSX.Element => {
 	const handleInputKeyDown = useCallback(
 		(e: JSX.TargetedKeyboardEvent<HTMLInputElement>) => {
 			if (typeof currentListIndex === "number") {
-				if (e.code === "ArrowUp") {
+				if (e.key === "ArrowUp") {
 					if (currentListIndex > 0) {
 						setCurrentListIndex(currentListIndex - 1);
 					}
-				} else if (e.code === "ArrowDown") {
+				} else if (e.key === "ArrowDown") {
 					setCurrentListIndex(currentListIndex + 1);
+				} else if (e.key === "Enter") {
+					e.preventDefault();
+					handleInputSubmit();
 				}
 			} else {
-				if (e.code === "ArrowDown") {
+				if (e.key === "ArrowDown") {
 					setCurrentListIndex(0);
 				}
 			}
@@ -38,7 +52,7 @@ export const CommandInput = (): JSX.Element => {
 
 	const handleFormSubmit = useCallback((e: JSX.TargetedEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		// TODO: implement list/adding using currentValue
+		handleInputSubmit();
 	}, []);
 
 	const handleClickClear = useCallback((e: JSX.TargetedEvent<HTMLButtonElement>) => {
@@ -70,7 +84,12 @@ export const CommandInput = (): JSX.Element => {
 					<Icons.Close />
 				</button>
 			</form>
-			<CommandList searchTerms={currentValue} selectedIndex={currentListIndex} setSelectedIndex={setCurrentListIndex} />
+			<CommandList
+				searchTerms={currentValue}
+				selectedIndex={currentListIndex}
+				setSelectedIndex={setCurrentListIndex}
+				submit={handleListSubmit}
+			/>
 		</div>
 	);
 };

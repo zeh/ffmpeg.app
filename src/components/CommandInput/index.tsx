@@ -1,8 +1,9 @@
-import { useCallback, useRef, useState } from "preact/hooks";
+import { useCallback, useMemo, useRef, useState } from "preact/hooks";
 import cx from "classnames";
 
 import { Icons } from "../Icons";
 import { CommandList } from "../CommandList";
+import Commands, { ICommand } from "../../utils/commands/Commands";
 
 import s from "./styles.module.css";
 
@@ -11,14 +12,18 @@ export const CommandInput = (): JSX.Element => {
 	const [currentListIndex, setCurrentListIndex] = useState<number | undefined>(undefined);
 	const inputRef = useRef<HTMLInputElement>(null);
 
-	const handleListSubmit = useCallback((index: number) => {
+	const searchResults: ICommand[] = useMemo(() => {
+		return Commands.getWithSearch(currentValue);
+	}, [currentValue]);
+
+	const handleListSubmit = useCallback((index: number, command: ICommand) => {
 		// TODO: implement
-		console.error("Unimplemented: submit as selected!!!", index);
+		console.error("Unimplemented: submit as selected!!!", index, command);
 	}, []);
 
 	const handleInputSubmit = useCallback(() => {
 		if (currentListIndex !== undefined) {
-			handleListSubmit(currentListIndex);
+			handleListSubmit(currentListIndex, searchResults[currentListIndex]);
 		}
 	}, [currentListIndex, handleListSubmit]);
 
@@ -85,7 +90,7 @@ export const CommandInput = (): JSX.Element => {
 				</button>
 			</form>
 			<CommandList
-				searchTerms={currentValue}
+				entries={searchResults}
 				selectedIndex={currentListIndex}
 				setSelectedIndex={setCurrentListIndex}
 				submit={handleListSubmit}

@@ -15,7 +15,7 @@ interface ICommandsJSON {
 	commands: ICommandsJSONCommand[];
 }
 
-interface ICommand {
+export interface ICommand {
 	slug: string;
 	name: string;
 	description?: string;

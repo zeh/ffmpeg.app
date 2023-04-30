@@ -1,4 +1,4 @@
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import cx from "classnames";
 
 import Commands from "../../utils/commands/Commands";
@@ -18,6 +18,7 @@ export interface IProps {
 
 export const CommandList = ({ searchTerms, selectedIndex }: IProps): JSX.Element | null => {
 	const [items, setItems] = useState<ICommand[]>([]);
+	const selectedIndexRef = useRef<HTMLDivElement>(null);
 
 	if (!searchTerms) {
 		return null;
@@ -28,10 +29,21 @@ export const CommandList = ({ searchTerms, selectedIndex }: IProps): JSX.Element
 		setItems(commands.map((c, index) => ({ label: c.name, value: index.toString(), tags: c.tags })));
 	}, [searchTerms]);
 
+	useEffect(() => {
+		const scroll =
+			(selectedIndexRef.current as unknown as { scrollIntoViewIfNeeded: Element["scrollIntoView"] | undefined })
+				?.scrollIntoViewIfNeeded ?? selectedIndexRef.current?.scrollIntoView;
+		scroll?.apply(selectedIndexRef.current);
+	}, [selectedIndexRef.current]);
+
 	return (
 		<div className={s.container}>
 			{items.map((c, index) => (
-				<div key={c.value} className={cx({ [s.entry]: true, [s.selected]: index === selectedIndex })}>
+				<div
+					ref={index === selectedIndex ? selectedIndexRef : undefined}
+					key={c.value}
+					className={cx({ [s.entry]: true, [s.selected]: index === selectedIndex })}
+				>
 					<div className={cx([s.label])}>{c.label}</div>
 					<div className={cx([s.tags])}>
 						{c.tags.map((t) => (

@@ -16,6 +16,7 @@
 	box-shadow: 0 1px 3px var(--color-theme-input-shadow);
 	max-height: calc(5 * 32px + 2px); /* 5 lines, plus paddings */
 	z-index: 1000;
+	scroll-behavior: smooth;
 }
 
 .entry {

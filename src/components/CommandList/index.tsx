@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "preact/hooks";
+import { useEffect, useMemo, useRef } from "preact/hooks";
 import cx from "classnames";
 
 import Commands from "../../utils/commands/Commands";
@@ -14,20 +14,34 @@ interface ICommand {
 export interface IProps {
 	searchTerms?: string;
 	selectedIndex?: number;
+	setSelectedIndex?: (index: number) => void;
 }
 
-export const CommandList = ({ searchTerms, selectedIndex }: IProps): JSX.Element | null => {
-	const [items, setItems] = useState<ICommand[]>([]);
+export const CommandList = ({ searchTerms, selectedIndex, setSelectedIndex }: IProps): JSX.Element | null => {
 	const selectedIndexRef = useRef<HTMLDivElement>(null);
 
 	if (!searchTerms) {
 		return null;
 	}
 
-	useEffect(() => {
+	const items: ICommand[] = useMemo(() => {
 		const commands = Commands.getWithSearch(searchTerms);
-		setItems(commands.map((c, index) => ({ label: c.name, value: index.toString(), tags: c.tags })));
+		return commands.map((c, index) => ({ label: c.name, value: index.toString(), tags: c.tags }));
 	}, [searchTerms]);
+
+	const selectedIndexClean = useMemo(() => {
+		if (selectedIndex === undefined) {
+			return undefined;
+		} else {
+			return Math.min(selectedIndex, items.length - 1);
+		}
+	}, [items, selectedIndex]);
+
+	useEffect(() => {
+		if (selectedIndexClean !== undefined && selectedIndex != selectedIndexClean) {
+			setSelectedIndex?.(selectedIndexClean);
+		}
+	}, [selectedIndex, selectedIndexClean, setSelectedIndex]);
 
 	useEffect(() => {
 		const scroll =
@@ -40,9 +54,9 @@ export const CommandList = ({ searchTerms, selectedIndex }: IProps): JSX.Element
 		<div className={s.container}>
 			{items.map((c, index) => (
 				<div
-					ref={index === selectedIndex ? selectedIndexRef : undefined}
+					ref={index === selectedIndexClean ? selectedIndexRef : undefined}
 					key={c.value}
-					className={cx({ [s.entry]: true, [s.selected]: index === selectedIndex })}
+					className={cx({ [s.entry]: true, [s.selected]: index === selectedIndexClean })}
 				>
 					<div className={cx([s.label])}>{c.label}</div>
 					<div className={cx([s.tags])}>

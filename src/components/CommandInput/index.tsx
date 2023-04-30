@@ -8,8 +8,8 @@ import s from "./styles.module.css";
 
 export const CommandInput = (): JSX.Element => {
 	const [currentValue, setCurrentValue] = useState<string>("");
-	const inputRef = useRef<HTMLInputElement>(null);
 	const [currentListIndex, setCurrentListIndex] = useState<number | undefined>(undefined);
+	const inputRef = useRef<HTMLInputElement>(null);
 
 	const handleInput = useCallback((e: JSX.TargetedEvent<HTMLInputElement>) => {
 		const newValue = (e.target as HTMLInputElement | undefined)?.value ?? "";
@@ -26,8 +26,6 @@ export const CommandInput = (): JSX.Element => {
 					}
 				} else if (e.code === "ArrowDown") {
 					setCurrentListIndex(currentListIndex + 1);
-					// TODO: clamp?
-					// maybe forward events to the command list instead...
 				}
 			} else {
 				if (e.code === "ArrowDown") {
@@ -72,7 +70,7 @@ export const CommandInput = (): JSX.Element => {
 					<Icons.Close />
 				</button>
 			</form>
-			<CommandList searchTerms={currentValue} selectedIndex={currentListIndex} />
+			<CommandList searchTerms={currentValue} selectedIndex={currentListIndex} setSelectedIndex={setCurrentListIndex} />
 		</div>
 	);
 };

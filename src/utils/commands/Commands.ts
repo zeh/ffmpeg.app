@@ -45,9 +45,11 @@ const getAll = (): ICommand[] => {
 		const commandsJSON = commandsJSONFile as ICommandsJSON;
 		const defs = commandsJSON.definitions;
 		commands = commandsJSON.commands.map((commandJSON): ICommand => {
+			const name = parseWithDefinitions(commandJSON.name, defs);
+
 			const command = {
-				slug: slugify(parseWithDefinitions(commandJSON.name, defs)),
-				name: parseWithDefinitions(commandJSON.name, defs),
+				slug: slugify(name),
+				name,
 				description: maybeParseWithDefinitions(commandJSON.description, defs),
 				command: parseWithDefinitions(commandJSON.command, defs),
 				keywords: commandJSON.keywords ?? [],

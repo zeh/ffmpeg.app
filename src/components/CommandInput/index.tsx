@@ -13,7 +13,7 @@ export const CommandInput = (): JSX.Element => {
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const searchResults: ICommand[] = useMemo(() => {
-		return Commands.getWithSearch(currentValue);
+		return currentValue ? Commands.getWithSearch(currentValue) : [];
 	}, [currentValue]);
 
 	const handleListSubmit = useCallback((index: number, command: ICommand) => {

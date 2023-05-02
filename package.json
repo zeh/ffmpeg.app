@@ -12,6 +12,7 @@
 		"lint": "eslint src/**/*.{ts,tsx}"
 	},
 	"dependencies": {
+		"@types/node": "^20.1.0",
 		"classnames": "^2.3.1",
 		"preact": "^10.5.15",
 		"wouter-preact": "^2.10.0-alpha.1"

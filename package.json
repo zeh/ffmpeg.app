@@ -13,7 +13,8 @@
 	},
 	"dependencies": {
 		"classnames": "^2.3.1",
-		"preact": "^10.5.15"
+		"preact": "^10.5.15",
+		"wouter": "^2.10.1"
 	},
 	"devDependencies": {
 		"@preact/preset-vite": "^2.1.5",

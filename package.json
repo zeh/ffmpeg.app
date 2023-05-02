@@ -14,7 +14,7 @@
 	"dependencies": {
 		"classnames": "^2.3.1",
 		"preact": "^10.5.15",
-		"wouter": "^2.10.1"
+		"wouter-preact": "^2.10.0-alpha.1"
 	},
 	"devDependencies": {
 		"@preact/preset-vite": "^2.1.5",

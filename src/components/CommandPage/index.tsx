@@ -1,4 +1,4 @@
-import { RouteComponentProps } from "wouter";
+import { RouteComponentProps } from "wouter-preact";
 
 import s from "./styles.module.css";
 

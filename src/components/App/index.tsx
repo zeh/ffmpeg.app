@@ -1,4 +1,4 @@
-import { Route, Switch } from "wouter";
+import { Route, Switch } from "wouter-preact";
 
 import { CommandPage } from "../CommandPage";
 import { RootPage } from "../RootPage";

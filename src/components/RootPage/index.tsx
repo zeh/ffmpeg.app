@@ -1,4 +1,4 @@
-import { useLocation } from "wouter";
+import { useLocation } from "wouter-preact";
 
 import { useCallback } from "preact/hooks";
 import { CommandInput } from "../CommandInput";

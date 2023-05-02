@@ -7,7 +7,11 @@ import Commands, { ICommand } from "../../utils/commands/Commands";
 
 import s from "./styles.module.css";
 
-export const CommandInput = (): JSX.Element => {
+interface IProps {
+	onSelectCommand?: (slug: string) => void;
+}
+
+export const CommandInput = ({ onSelectCommand }: IProps): JSX.Element => {
 	const [currentValue, setCurrentValue] = useState<string>("");
 	const [currentListIndex, setCurrentListIndex] = useState<number | undefined>(undefined);
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -17,8 +21,7 @@ export const CommandInput = (): JSX.Element => {
 	}, [currentValue]);
 
 	const handleListSubmit = useCallback((index: number, command: ICommand) => {
-		// TODO: implement
-		console.error("Unimplemented: submit as selected!!!", index, command);
+		onSelectCommand?.(command.slug);
 	}, []);
 
 	const handleInputSubmit = useCallback(() => {

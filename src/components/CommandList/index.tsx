@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef } from "preact/hooks";
 import cx from "classnames";
 
-import Commands, { ICommand } from "../../utils/commands/Commands";
+import { ICommand } from "../../utils/commands/Commands";
 
 import s from "./styles.module.css";
 
-export interface IProps {
+interface IProps {
 	entries: ICommand[];
 	selectedIndex?: number;
 	setSelectedIndex?: (index: number) => void;

@@ -31,11 +31,15 @@ command = "yarn build"
   for = "/*"
   [headers.values]
 	Cache-Control = "public, max-age=0, no-cache, no-store, must-revalidate"
+	Cross-Origin-Opener-Policy = "same-origin"
+	Cross-Origin-Embedder-Policy = "require-corp"
 
 [[headers]]
   for = "*.html"
   [headers.values]
 	Cache-Control = "public, max-age=0, no-cache, no-store, must-revalidate"
+	Cross-Origin-Opener-Policy = "same-origin"
+	Cross-Origin-Embedder-Policy = "require-corp"
 
 [[headers]]
   for = "*.js"

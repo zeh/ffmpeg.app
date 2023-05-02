@@ -1,0 +1,73 @@
+# Configurations for Netlify
+# https://www.netlify.com/docs/netlify-toml-reference/
+
+[build]
+
+publish = "dist/"
+command = "yarn build"
+
+# Site redirects
+
+[[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Cache
+# 60 = 1 minute
+# 300 = 5 minutes
+# 3600 = 1 hour
+# 86400 = 1 day
+# 604800 = 1 week
+# 1209600 = 2 weeks
+# 2628000 = 1 month
+# 5256000 = 2 months
+[[headers]]
+  for = "/*"
+  [headers.values]
+	Cache-Control = "public, max-age=0, no-cache, no-store, must-revalidate"
+
+[[headers]]
+  for = "*.html"
+  [headers.values]
+	Cache-Control = "public, max-age=0, no-cache, no-store, must-revalidate"
+
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=1209600"
+
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=1209600"
+
+[[headers]]
+  for = "*.ico"
+  [headers.values]
+    Cache-Control = "public, max-age=5256000"
+
+[[headers]]
+  for = "*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=5256000"
+
+[[headers]]
+  for = "*.gif"
+  [headers.values]
+    Cache-Control = "public, max-age=5256000"
+
+[[headers]]
+  for = "*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=5256000"
+
+[[headers]]
+  for = "*.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=5256000"

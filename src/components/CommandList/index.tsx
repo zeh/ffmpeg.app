@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef } from "preact/hooks";
+import { useEffect, useMemo, useRef } from "preact/hooks";
 import cx from "classnames";
 
 import { ICommand } from "../../utils/commands/Commands";
@@ -9,7 +9,7 @@ interface IProps {
 	entries: ICommand[];
 	selectedIndex?: number;
 	setSelectedIndex?: (index: number) => void;
-	submit?: (index: number, command: ICommand) => void;
+	submit?: (index: number) => void;
 }
 
 export const CommandList = ({ entries, selectedIndex, setSelectedIndex, submit }: IProps): JSX.Element | null => {
@@ -25,7 +25,7 @@ export const CommandList = ({ entries, selectedIndex, setSelectedIndex, submit }
 		} else {
 			return Math.min(selectedIndex, entries.length - 1);
 		}
-	}, [entries, selectedIndex]);
+	}, [entries.length, selectedIndex]);
 
 	useEffect(() => {
 		if (selectedIndexClean !== undefined && selectedIndex != selectedIndexClean) {
@@ -40,10 +40,6 @@ export const CommandList = ({ entries, selectedIndex, setSelectedIndex, submit }
 		scroll?.apply(selectedIndexRef.current);
 	}, [selectedIndexRef.current]);
 
-	const handleSubmit = useCallback((index: number) => {
-		submit?.(index, entries[index]);
-	}, []);
-
 	return (
 		<div className={s.container}>
 			{entries.map((c, index) => (
@@ -52,7 +48,7 @@ export const CommandList = ({ entries, selectedIndex, setSelectedIndex, submit }
 					key={c.slug}
 					className={cx({ [s.entry]: true, [s.selected]: index === selectedIndexClean })}
 					onClick={() => {
-						handleSubmit(index);
+						submit?.(index);
 					}}
 				>
 					<div className={cx([s.label])}>{c.name}</div>

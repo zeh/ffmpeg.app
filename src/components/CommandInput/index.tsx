@@ -20,13 +20,16 @@ export const CommandInput = ({ onSelectCommand }: IProps): JSX.Element => {
 		return currentValue ? Commands.getWithSearch(currentValue) : [];
 	}, [currentValue]);
 
-	const handleListSubmit = useCallback((index: number, command: ICommand) => {
-		onSelectCommand?.(command.slug);
-	}, []);
+	const handleListSubmit = useCallback(
+		(index: number) => {
+			onSelectCommand?.(searchResults[index].slug);
+		},
+		[onSelectCommand, searchResults],
+	);
 
 	const handleInputSubmit = useCallback(() => {
 		if (currentListIndex !== undefined) {
-			handleListSubmit(currentListIndex, searchResults[currentListIndex]);
+			handleListSubmit(currentListIndex);
 		}
 	}, [currentListIndex, handleListSubmit]);
 

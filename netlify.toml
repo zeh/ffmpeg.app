@@ -53,6 +53,11 @@ command = "yarn build"
     Cache-Control = "public, max-age=5256000"
 
 [[headers]]
+  for = "*.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=5256000"
+
+[[headers]]
   for = "*.jpg"
   [headers.values]
     Cache-Control = "public, max-age=5256000"
@@ -68,6 +73,11 @@ command = "yarn build"
     Cache-Control = "public, max-age=5256000"
 
 [[headers]]
-  for = "*.svg"
+  for = "*.ttf"
+  [headers.values]
+    Cache-Control = "public, max-age=5256000"
+
+[[headers]]
+  for = "*.woff2"
   [headers.values]
     Cache-Control = "public, max-age=5256000"

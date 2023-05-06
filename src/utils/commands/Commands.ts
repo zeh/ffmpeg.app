@@ -76,6 +76,14 @@ const getAll = (): ICommand[] => {
 	return commands as ICommand[];
 };
 
+const getFromSlug = (slug?: string): ICommand | null => {
+	if (!slug) {
+		return null;
+	}
+
+	return getAll().find((c) => c.slug === slug) ?? null;
+};
+
 const getWithSearch = (search?: string): ICommand[] => {
 	const commands = getAll();
 
@@ -99,5 +107,6 @@ const getWithSearch = (search?: string): ICommand[] => {
 
 export default {
 	getAll,
+	getFromSlug,
 	getWithSearch,
 };

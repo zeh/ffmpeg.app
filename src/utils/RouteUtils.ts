@@ -3,7 +3,7 @@ export const getRootRoute = (): string => {
 };
 
 export const getCommandRoute = (): string => {
-	return "/:slug";
+	return "/command/:slug";
 };
 
 export const getCommandPath = (slug: string): string => {

@@ -14,7 +14,7 @@ command = "yarn build"
   status = 200
 
 [[redirects]]
-  from = "/*"
+  from = "/command/*"
   to = "/index.html"
   status = 200
 

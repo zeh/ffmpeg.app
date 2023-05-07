@@ -10,6 +10,7 @@
 	/* Light theme */
 	--color-theme-background: var(--color-basic-whiteish);
 	--color-theme-text: var(--color-basic-blackish);
+	--color-theme-lines: rgba(0, 0, 0, 0.25);
 	--color-theme-text-link: var(--color-basic-black);
 	--color-theme-input-text: var(--color-basic-blackish);
 	--color-theme-input-background: var(--color-basic-white);
@@ -18,6 +19,9 @@
 	--color-theme-input-buttons: var(--color-basic-blackish);
 	--color-theme-input-border: rgba(0, 0, 0, 0.25);
 	--color-theme-input-shadow: rgba(0, 0, 0, 0.2);
+	--color-theme-command-background: var(--color-basic-white);
+	--color-theme-command-border: rgba(0, 0, 0, 0.25);
+	--color-theme-command-shadow: rgba(0, 0, 0, 0.2);
 	--color-theme-tag-foreground: var(--color-basic-whiteish);
 	--color-theme-tag-background: var(--color-basic-dark-gray);
 
@@ -30,6 +34,7 @@
 		/* Dark theme */
 		--color-theme-background: var(--color-basic-blackish);
 		--color-theme-text: var(--color-basic-light-gray);
+		--color-theme-lines: rgba(255, 255, 255, 0.25);
 		--color-theme-text-link: var(--color-basic-white);
 		--color-theme-input-text: var(--color-basic-light-gray);
 		--color-theme-input-background: var(--color-basic-dark-gray);
@@ -38,6 +43,9 @@
 		--color-theme-input-buttons: var(--color-basic-light-gray);
 		--color-theme-input-border: var(--color-basic-blackish);
 		--color-theme-input-shadow: rgba(0, 0, 0, 0.2);
+		--color-theme-command-background: var(--color-basic-dark-gray);
+		--color-theme-command-border: var(--color-basic-blackish);
+		--color-theme-command-shadow: rgba(0, 0, 0, 0.2);
 		--color-theme-tag-foreground: var(--color-basic-blackish);
 		--color-theme-tag-background: var(--color-basic-light-gray);
 

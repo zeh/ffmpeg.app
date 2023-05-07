@@ -6,12 +6,38 @@
 	position: absolute;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
+	padding: 100px 100px;
+}
+
+.box {
+	width: 100%;
+	background-color: var(--color-theme-command-background);
+	box-shadow: 0 0px 3px var(--color-theme-command-shadow);
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+	border: 1px solid var(--color-theme-command-border);
+	border-radius: var(--size-command-border-radius);
+	padding: 1em 2em;
+
+	.hr {
+		width: 100%;
+		height: 1px;
+		margin: 0;
+		background-color: var(--color-theme-lines);;
+	}
 }
 
 .title {
 	@mixin type-style-title;
+
+	color: var(--color-theme-text);
+}
+
+.description {
+	@mixin type-style-body;
 
 	color: var(--color-theme-text);
 }

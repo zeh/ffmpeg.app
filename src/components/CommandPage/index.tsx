@@ -23,10 +23,13 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 
 	return (
 		<div className={s.container}>
-			<p className={s.title}>{command.name}</p>
-			<p className={s.description}>{command.description}</p>
-			<p className={s.tags}>{command.tags}</p>
-			<p className={s.command}>{command.command}</p>
+			<div className={s.box}>
+				<p className={s.title}>{command.name}</p>
+				<p className={s.hr} />
+				<p className={s.description}>{command.description}</p>
+				<p className={s.tags}>{command.tags}</p>
+				<p className={s.command}>{command.command}</p>
+			</div>
 		</div>
 	);
 };

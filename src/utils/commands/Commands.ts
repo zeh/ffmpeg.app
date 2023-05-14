@@ -40,6 +40,9 @@ const maybeParseWithDefinitions = (
 	return text ? parseWithDefinitions(text, definitions) : text;
 };
 
+/**
+ * Returns all of the existing commands, including their metadata.
+ */
 const getAll = (): ICommand[] => {
 	if (commands === null) {
 		const commandsJSON = commandsJSONFile as ICommandsJSON;
@@ -76,6 +79,9 @@ const getAll = (): ICommand[] => {
 	return commands as ICommand[];
 };
 
+/**
+ * Based on a slug string, find and return the Command it refers to.
+ */
 const getFromSlug = (slug?: string): ICommand | null => {
 	if (!slug) {
 		return null;
@@ -84,6 +90,9 @@ const getFromSlug = (slug?: string): ICommand | null => {
 	return getAll().find((c) => c.slug === slug) ?? null;
 };
 
+/**
+ * Based on a search string, returns a list of Commands.
+ */
 const getWithSearch = (search?: string): ICommand[] => {
 	const commands = getAll();
 

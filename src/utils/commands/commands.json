@@ -1,13 +1,14 @@
 {
 	"definitions": {
 		"input_audio": "{{{input_file:title=Input;mask=*.wav,*.mp3,*.aac}}}",
-		"input_video": "{{{input_file:title=Input;mask=*.mp4,*.avi,*.mov}}}"
+		"input_video": "{{{input_file:title=Input;mask=*.mp4,*.avi,*.mov}}}",
+		"output": "{{{output_file:extension=input_file_0_extension}}}"
 	},
 	"commands": [
 		{
 			"name": "Mute a video",
 			"description": "Removes the audio track of a video without transcoding.",
-			"command": "-i ${input_video} -an -c copy {{{output:ext=input}}}",
+			"command": "-i ${input_video} -an -c copy ${output}",
 			"keywords": ["audio", "mute", "remove", "sound", "mute", "volume"],
 			"tags": ["video", "no-transcoding"]
 		},
@@ -21,42 +22,42 @@
 		{
 			"name": "Change volume of an audio file by scale",
 			"description": "Change the volume of an audio file to a scale of the current volune.",
-			"command": "-i ${input_audio} -filter:a \"volume=0.5\" {{{output:ext=input}}}",
+			"command": "-i ${input_audio} -filter:a \"volume=0.5\" ${output}",
 			"keywords": ["audio", "volume", "increase", "decrease"],
 			"tags": ["audio"]
 		},
 		{
 			"name": "Change volume of an audio file by decibels",
 			"description": "Change the volume of an audio file by decibels.",
-			"command": "-i ${input_audio} -filter:a \"volume=10dB\" {{{output:ext=input}}}",
+			"command": "-i ${input_audio} -filter:a \"volume=10dB\" ${output}",
 			"keywords": ["audio", "volume", "increase", "decrease"],
 			"tags": ["audio"]
 		},
 		{
 			"name": "Normalize loudness of an audio file",
 			"description": "Normalize the perceived loudness of a file using he EBU R128 algorithm.",
-			"command": "-i ${input_audio} -filter:a loudnorm {{{output:ext=input}}}",
+			"command": "-i ${input_audio} -filter:a loudnorm ${output}",
 			"keywords": ["audio", "normalize", "volume", "increase", "decrease"],
 			"tags": ["audio"]
 		},
 		{
 			"name": "Crop a video",
 			"description": "Crops a video to a specific area.",
-			"command": "-i ${input_video} -filter:v \"crop=w:h:x:y\" -crf 18 -preset veryslow {{{output:ext=input}}}",
+			"command": "-i ${input_video} -filter:v \"crop=w:h:x:y\" -crf 18 -preset veryslow ${output}",
 			"keywords": ["crop", "video"],
 			"tags": ["video"]
 		},
 		{
 			"name": "Change a video playback speed",
 			"description": "Change the speed a video is played (faster).",
-			"command": "-i ${input_video} -filter:v \"setpts=0.5*PTS\" -crf 18 -preset veryslow {{{output:ext=input}}}",
+			"command": "-i ${input_video} -filter:v \"setpts=0.5*PTS\" -crf 18 -preset veryslow ${output}",
 			"keywords": ["speed", "video"],
 			"tags": ["video"]
 		},
 		{
 			"name": "Rotate a video",
 			"description": "Rotate a video 90\".",
-			"command": "-i ${input_video} -vf \"transpose=dir=1\" {{{output:ext=input}}}",
+			"command": "-i ${input_video} -vf \"transpose=dir=1\" ${output}",
 			"keywords": ["video", "rotate"],
 			"tags": ["audio"]
 		}

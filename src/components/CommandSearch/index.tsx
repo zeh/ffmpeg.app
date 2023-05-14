@@ -11,7 +11,7 @@ interface IProps {
 	onSelectCommand?: (slug: string) => void;
 }
 
-export const CommandInput = ({ onSelectCommand }: IProps): JSX.Element => {
+export const CommandSearch = ({ onSelectCommand }: IProps): JSX.Element => {
 	const [currentValue, setCurrentValue] = useState<string>("");
 	const [currentListIndex, setCurrentListIndex] = useState<number | undefined>(undefined);
 	const inputRef = useRef<HTMLInputElement>(null);

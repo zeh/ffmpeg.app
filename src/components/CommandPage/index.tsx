@@ -2,6 +2,7 @@ import { RouteComponentProps } from "wouter-preact";
 import { useMemo } from "preact/hooks";
 
 import Commands from "../../utils/commands/Commands";
+import { TagList } from "../TagList";
 
 import s from "./styles.module.css";
 
@@ -25,9 +26,9 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 		<div className={s.container}>
 			<div className={s.box}>
 				<p className={s.title}>{command.name}</p>
+				<TagList className={s.tags} tags={command.tags} />
 				<p className={s.hr} />
 				<p className={s.description}>{command.description}</p>
-				<p className={s.tags}>{command.tags}</p>
 				<p className={s.command}>{command.command}</p>
 			</div>
 		</div>

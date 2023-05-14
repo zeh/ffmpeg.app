@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef } from "preact/hooks";
 import cx from "classnames";
 
 import { ICommand } from "../../utils/commands/Commands";
+import { TagList } from "../TagList";
 
 import s from "./styles.module.css";
 
@@ -52,11 +53,7 @@ export const CommandList = ({ entries, selectedIndex, setSelectedIndex, submit }
 					}}
 				>
 					<div className={cx([s.label])}>{c.name}</div>
-					<div className={cx([s.tags])}>
-						{c.tags.map((t) => (
-							<div className={cx([s.tag])}>{t}</div>
-						))}
-					</div>
+					<TagList tags={c.tags} />
 				</div>
 			))}
 		</div>

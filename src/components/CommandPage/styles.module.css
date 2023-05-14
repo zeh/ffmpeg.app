@@ -21,6 +21,7 @@
 	border: 1px solid var(--color-theme-command-border);
 	border-radius: var(--size-command-border-radius);
 	padding: 1em 2em;
+	position: relative;
 
 	.hr {
 		width: 100%;
@@ -34,6 +35,12 @@
 	@mixin type-style-title;
 
 	color: var(--color-theme-text);
+}
+
+.tags {
+	position: absolute;
+	top: 2em;
+	right: 2em;
 }
 
 .description {

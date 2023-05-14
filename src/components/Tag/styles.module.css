@@ -1,0 +1,11 @@
+@import "../../styles/mixins/index.css";
+
+.container {
+	@mixin type-style-tag;
+	color: var(--color-theme-tag-foreground);
+	background-color: var(--color-theme-tag-background);
+	border-radius: var(--size-tag-border-radius);
+	padding: calc(var(--size-tag-border-radius) / 4) calc(var(--size-tag-border-radius) / 1);
+	opacity: var(--opacity-tag);
+	margin-inline-start: var(--size-tag-border-radius);
+}

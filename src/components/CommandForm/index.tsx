@@ -19,6 +19,7 @@ export const CommandForm = ({ command }: IProps): JSX.Element => {
 
 	return (
 		<div className={cx([s.container])}>
+			<CommandFormFieldStaticText text={"ffmpeg"} />
 			{inputFields.map((f) => {
 				switch (f.kind) {
 					case CommandInputKind.StaticText:

@@ -1,8 +1,8 @@
 @import "../../styles/mixins/index.css";
 
 .container {
-	border: 1px solid green;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	white-space: nowrap;
 }

@@ -7,5 +7,14 @@ interface IProps {
 }
 
 export const CommandFormFieldStaticText = ({ text }: IProps): JSX.Element => {
-	return <div className={cx([s.container])}>{text}</div>;
+	return (
+		<>
+			{text
+				.trim()
+				.split(" ")
+				.map((t) => (
+					<div className={cx([s.container])}>{t}</div>
+				))}
+		</>
+	);
 };

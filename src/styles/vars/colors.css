@@ -6,6 +6,7 @@
 	--color-basic-dark-gray: #222222;
 	--color-basic-whiteish: #eeeeee;
 	--color-basic-white: #ffffff;
+	--color-basic-green: #008700;
 
 	/* Light theme */
 	--color-theme-background: var(--color-basic-whiteish);
@@ -26,6 +27,9 @@
 	--color-theme-tag-background: var(--color-basic-dark-gray);
 	--color-theme-code-background: var(--color-basic-whiteish);
 	--color-theme-code-text: var(--color-basic-dark-gray);
+	--color-theme-button-background: var(--color-basic-green);
+	--color-theme-button-text: var(--color-basic-whiteish);
+	--color-theme-button-border: #005700;
 
 	--opacity-tag: 0.75;
 	--opacity-placeholder: 0.35;
@@ -52,6 +56,9 @@
 		--color-theme-tag-background: var(--color-basic-light-gray);
 		--color-theme-code-background: var(--color-basic-blackish);
 		--color-theme-code-text: var(--color-basic-light-gray);
+		--color-theme-button-background: var(--color-basic-green);
+		--color-theme-button-text: var(--color-basic-whiteish);
+		--color-theme-button-border: #005700;
 
 		--opacity-placeholder: 0.35;
 	}

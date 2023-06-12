@@ -1,9 +1,10 @@
 import { RouteComponentProps } from "wouter-preact";
-import { useMemo } from "preact/hooks";
+import { useCallback, useMemo } from "preact/hooks";
 
 import Commands from "../../utils/commands/Commands";
 import { CommandForm } from "../CommandForm";
 import { TagList } from "../TagList";
+import { Button } from "../Button";
 
 import s from "./styles.module.css";
 
@@ -13,6 +14,11 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 	const command = useMemo(() => {
 		return Commands.getFromSlug(slug);
 	}, [slug]);
+
+	const handleStart = useCallback(() => {
+		// TODO: implement
+		console.warn("Unimplemented: start encoding");
+	}, []);
 
 	if (!command) {
 		// TODO: Return error page, maybe with suggestions
@@ -31,6 +37,9 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 				<p className={s.hr} />
 				<p className={s.description}>{command.description}</p>
 				<CommandForm command={command.command} />
+				<div className={s.buttonRow}>
+					<Button text={"Start"} onClick={handleStart}/>
+				</div>
 			</div>
 		</div>
 	);

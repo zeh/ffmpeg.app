@@ -48,3 +48,7 @@
 
 	color: var(--color-theme-text);
 }
+
+.buttonRow {
+	padding-top: 1.2em;
+}

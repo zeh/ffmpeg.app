@@ -10,6 +10,16 @@
 	font-weight: 700;
 }
 
+@define-mixin type-basic-code-regular {
+	font-family: "Roboto Mono", sans-serif;
+	font-weight: 400;
+}
+
+@define-mixin type-basic-code-bold {
+	font-family: "Roboto Mono", sans-serif;
+	font-weight: 700;
+}
+
 /* Actual styles */
 
 @define-mixin type-style-title {
@@ -22,6 +32,14 @@
 
 @define-mixin type-style-body {
 	@mixin type-basic-body-regular;
+
+	font-size: 16px;
+	line-height: 150%;
+}
+
+@define-mixin type-style-code {
+	@mixin type-style-body;
+	@mixin type-basic-code-regular;
 
 	font-size: 16px;
 	line-height: 150%;

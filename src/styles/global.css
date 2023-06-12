@@ -46,3 +46,21 @@ a {
 	src: url("../assets/fonts/RobotoSlab-Bold.woff2") format("woff2"),
 		url("../assets/fonts/RobotoSlab-Bold.ttf") format("truetype");
 }
+
+@font-face {
+	font-family: "Roboto Mono";
+	font-display: swap;
+	font-style: normal;
+	font-weight: 400;
+	src: url("../assets/fonts/RobotoMono-Regular.woff2") format("woff2"),
+		url("../assets/fonts/RobotoMono-Regular.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "Roboto Mono";
+	font-display: swap;
+	font-style: normal;
+	font-weight: 700;
+	src: url("../assets/fonts/RobotoMono-Bold.woff2") format("woff2"),
+		url("../assets/fonts/RobotoMono-Bold.ttf") format("truetype");
+}

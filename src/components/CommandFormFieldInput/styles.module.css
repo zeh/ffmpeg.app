@@ -4,4 +4,71 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	outline: 1px solid var(--color-theme-input-border);
+	width: 200px;
+	height: 100%;
+	cursor: pointer;
+}
+
+.fileInput {
+	display: none;
+}
+
+.label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 100%;
+}
+
+.errorState {
+	background-color: var(--color-theme-error-background);
+}
+
+.draggingOverWindow {
+	background-color: red;
+	border-width: 2px;
+}
+
+.windowCover {
+	background-color: rgba(150, 210, 217, 0.9);
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	backdrop-filter: blur(4px);
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	border: 16px dashed rgba(255, 255, 255, 0.4);
+	cursor: no-drop;
+}
+
+.hidden {
+	display: none;
+}
+
+.dragForbidden {
+	cursor: no-drop;
+}
+
+.dragAllowed {
+	cursor: grabbing;
+}
+
+.windowCoverTitle {
+	@mixin type-style-title;
+	font-size: 4em;
+	padding: 0;
+	margin: 0.25em;
+}
+
+.windowCoverSubtitle {
+	@mixin type-style-body;
+	font-size: 1em;
+	padding: 0;
+	margin: 1em;
 }

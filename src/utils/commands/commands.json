@@ -1,7 +1,7 @@
 {
 	"definitions": {
-		"input_audio": "{{{input_file:title=Input;mask=*.wav,*.mp3,*.aac}}}",
-		"input_video": "{{{input_file:title=Input;mask=*.mp4,*.avi,*.mov}}}",
+		"input_audio": "{{{input_file:title=Input audio;types=audio/*}}}",
+		"input_video": "{{{input_file:title=Input video;types=video/*}}}",
 		"output": "{{{output_file:extension=input_file_0_extension}}}"
 	},
 	"commands": [

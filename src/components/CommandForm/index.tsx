@@ -25,7 +25,7 @@ export const CommandForm = ({ command }: IProps): JSX.Element => {
 					case CommandInputKind.StaticText:
 						return <CommandFormFieldStaticText text={f.text} />;
 					case CommandInputKind.InputFile:
-						return <CommandFormFieldInputFile title={f.title} mask={f.mask} />;
+						return <CommandFormFieldInputFile title={f.title} types={f.types} />;
 					case CommandInputKind.OutputFile:
 						return <CommandFormFieldOutputFile title={f.title} extension={f.extension} />;
 				}

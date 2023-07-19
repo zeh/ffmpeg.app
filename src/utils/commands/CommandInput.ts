@@ -7,7 +7,7 @@ export enum CommandInputKind {
 interface ICommandInputFieldInputFile {
 	kind: CommandInputKind.InputFile;
 	title: string;
-	mask: string[];
+	types: string[];
 }
 
 interface ICommandInputFieldOutputFile {
@@ -67,7 +67,7 @@ const createSpecialCommandInputField = (input: string): ICommandInputField => {
 			return {
 				kind: CommandInputKind.InputFile,
 				title: inputParamObj.title ?? "Input",
-				mask: (inputParamObj.mask ?? "*.*").split(","),
+				types: (inputParamObj.types ?? "*").split(",").map((t) => t.trim()),
 			};
 		case CommandInputKind.OutputFile:
 			return {

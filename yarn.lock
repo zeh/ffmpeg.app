@@ -375,6 +375,23 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.42.0.tgz#484a1d638de2911e6f5a30c12f49c7e4a3270fb6"
   integrity sha512-6SWlXpWU5AvId8Ac7zjzmIOqMOba/JWY8XZ4A7q7Gn1Vlfg/SFFIlrtHXt9nPn4op9ZPAkl91Jao+QQv3r/ukw==
 
+"@ffmpeg/ffmpeg@^0.12.2":
+  version "0.12.2"
+  resolved "https://registry.yarnpkg.com/@ffmpeg/ffmpeg/-/ffmpeg-0.12.2.tgz#c82c4e642f775339fcf9356e508cf810aedc8d83"
+  integrity sha512-ZoOG0nWBjAzgVVTNi0ISGVUkPfGVHEYjZaDW0rL6vgM2IjAwjLmt/ZeHm3IzjCGWF6GRj4auKMYM0WTBp/20IA==
+  dependencies:
+    "@ffmpeg/types" "^0.12.0"
+
+"@ffmpeg/types@^0.12.0":
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/@ffmpeg/types/-/types-0.12.0.tgz#fe6affeea2d599d6d2d57e2c57eb8ca384c7b2a2"
+  integrity sha512-AuR4K+L6v1/9hVOsikU4rGGT5nKulQa8HrtYhpgBEq0HojoWB1c9bq3TTkNBpEvS/gC17WDMVJrqIGgXOj1DXA==
+
+"@ffmpeg/util@^0.12.0":
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/@ffmpeg/util/-/util-0.12.0.tgz#62dacd3b402b5fd0849e8542a6c977c7a7e04694"
+  integrity sha512-8sHCW8H/ngqVhbRvCCX4e4uDNgZVoz8uNRry1zphIyzdX6flfBa2TmVwJ4g9/Qw//eAubEnuHaSxDGWWxcOTjg==
+
 "@humanwhocodes/config-array@^0.11.10":
   version "0.11.10"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.10.tgz#5a3ffe32cc9306365fb3fd572596cd602d5e12d2"

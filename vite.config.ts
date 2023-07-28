@@ -18,5 +18,9 @@ export default defineConfig({
 				});
 			},
 		},
-	]
+	],
+	// Prevents issues with worker loading: https://github.com/ffmpegwasm/ffmpeg.wasm/issues/523
+	optimizeDeps: {
+		exclude: ["@ffmpeg/ffmpeg", "@ffmpeg/util"],
+	},
 });

@@ -1,5 +1,6 @@
 import { RouteComponentProps } from "wouter-preact";
 import { useCallback, useMemo } from "preact/hooks";
+import { useEncoder } from "../../utils/ffmpeg/Encoder";
 
 import Commands from "../../utils/commands/Commands";
 import { CommandForm } from "../CommandForm";
@@ -29,6 +30,8 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 		);
 	}
 
+	const encoder = useEncoder();
+
 	return (
 		<div className={s.container}>
 			<div className={s.box}>
@@ -38,7 +41,13 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 				<p className={s.description}>{command.description}</p>
 				<CommandForm command={command.command} />
 				<div className={s.buttonRow}>
-					<Button text={"Start"} onClick={handleStart}/>
+					<Button
+						className={s.button}
+						text={encoder.inited ? "Start" : "Initializing..."}
+						onClick={handleStart}
+						disabled={!encoder.inited}
+						progress={encoder.initProgress}
+					/>
 				</div>
 			</div>
 		</div>

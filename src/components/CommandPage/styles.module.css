@@ -52,3 +52,7 @@
 .buttonRow {
 	padding-top: 1.2em;
 }
+
+.button {
+	width: 200px;
+}

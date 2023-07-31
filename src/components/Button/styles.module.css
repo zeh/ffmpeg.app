@@ -4,11 +4,14 @@
 	@mixin type-style-body;
 
 	display: flex;
+	justify-content: center;
 	text-transform: uppercase;
 	outline: 0;
 	border-width: 0;
 	margin: 0;
 	padding: 0.4em 1em;
+	position: relative;
+	user-select: none;
 
 	color: var(--color-theme-button-text);
 	background-color: var(--color-theme-button-background);
@@ -20,4 +23,18 @@
 	&:active {
 		border-width: 2px 0 0 0;
 	}
+}
+
+.disabled {
+	pointer-events: none;
+}
+
+.backgroundProgress {
+	background-color: var(--color-theme-button-border);
+	opacity: 0.6;
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
 }

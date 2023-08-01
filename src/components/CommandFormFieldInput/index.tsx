@@ -8,9 +8,10 @@ import { checkMimeTypeMatches, getFilesFromDataTransfer } from "../../utils/File
 interface IProps {
 	title: string;
 	types: string[];
+	onSetFile?: (file: File | null) => void;
 }
 
-export const CommandFormFieldInputFile = ({ title, types }: IProps): JSX.Element => {
+export const CommandFormFieldInputFile = ({ onSetFile, title, types }: IProps): JSX.Element => {
 	const [isDraggingOverWindow, setIsDraggingOverWindow] = useState(false);
 	const [isDraggingValid, setIsDraggingValid] = useState(false);
 	const [file, setFile] = useState<File | null>(null);
@@ -33,6 +34,10 @@ export const CommandFormFieldInputFile = ({ title, types }: IProps): JSX.Element
 			setFile(e.target.files[0]);
 		}
 	}, []);
+
+	useEffect(() => {
+		onSetFile?.(file);
+	}, [file]);
 
 	const handleCoverDrop = useCallback(
 		(e: DragEvent) => {

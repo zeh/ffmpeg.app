@@ -20,13 +20,15 @@ export const Button = ({ className, disabled, onClick, progress, text }: IProps)
 					left: f * 100 + "%",
 			  };
 	return (
-		<button
-			className={cx([className, s.container, enabled ? undefined : s.disabled])}
-			disabled={!enabled}
-			onClick={onClick}
-		>
-			<div className={s.backgroundProgress} style={progressStyle} />
-			{text}
-		</button>
+		<div className={cx([enabled ? undefined : s.disabledContainer])}>
+			<button
+				className={cx([className, s.button, enabled ? undefined : s.disabledButton])}
+				disabled={!enabled}
+				onClick={onClick}
+			>
+				<div className={s.backgroundProgress} style={progressStyle} />
+				{text}
+			</button>
+		</div>
 	);
 };

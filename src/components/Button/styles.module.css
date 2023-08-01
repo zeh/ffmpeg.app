@@ -1,6 +1,10 @@
 @import "../../styles/mixins/index.css";
 
-.container {
+.disabledContainer {
+	cursor: not-allowed;
+}
+
+.button {
 	@mixin type-style-body;
 
 	display: flex;
@@ -25,7 +29,8 @@
 	}
 }
 
-.disabled {
+.disabledButton {
+	opacity: 0.5;
 	pointer-events: none;
 }
 

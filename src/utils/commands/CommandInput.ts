@@ -52,6 +52,18 @@ const getFromCommand = (command: string): ICommandInputField[] => {
 	return inputFields;
 };
 
+const getInputFilesFromCommand = (command: string): ICommandInputFieldInputFile[] => {
+	return getFromCommand(command).filter(
+		(ci) => ci.kind === CommandInputKind.InputFile,
+	) as ICommandInputFieldInputFile[];
+};
+
+const getOutputFilesFromCommand = (command: string): ICommandInputFieldOutputFile[] => {
+	return getFromCommand(command).filter(
+		(ci) => ci.kind === CommandInputKind.OutputFile,
+	) as ICommandInputFieldOutputFile[];
+};
+
 const createSpecialCommandInputField = (input: string): ICommandInputField => {
 	const [inputType, inputParams] = input.split(":");
 	const inputParamObj: Record<string, string> = inputParams.split(";").reduce((prev, curr) => {
@@ -89,4 +101,6 @@ const createStaticTextCommandInputField = (text: string): ICommandInputFieldStat
 
 export default {
 	getFromCommand,
+	getInputFilesFromCommand,
+	getOutputFilesFromCommand,
 };

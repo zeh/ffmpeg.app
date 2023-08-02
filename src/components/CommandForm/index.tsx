@@ -11,14 +11,16 @@ import s from "./styles.module.css";
 interface IProps {
 	command: string;
 	onSetFile?: (index: number, file: File | null) => void;
+	outputFileNames?: Array<string | null>;
 }
 
-export const CommandForm = ({ command, onSetFile }: IProps): JSX.Element => {
+export const CommandForm = ({ command, onSetFile, outputFileNames }: IProps): JSX.Element => {
 	const inputFields = useMemo(() => {
 		return CommandInput.getFromCommand(command);
 	}, [command]);
 
 	let numInputs = 0;
+	let numOutputs = 0;
 
 	return (
 		<div className={cx([s.container])}>
@@ -35,7 +37,8 @@ export const CommandForm = ({ command, onSetFile }: IProps): JSX.Element => {
 						);
 					}
 					case CommandInputKind.OutputFile: {
-						return <CommandFormFieldOutputFile title={f.title} extension={f.extension} />;
+						const i = numOutputs++;
+						return <CommandFormFieldOutputFile title={f.title} filename={outputFileNames?.[i]} />;
 					}
 				}
 			})}

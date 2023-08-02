@@ -23,8 +23,14 @@ interface ICommandInputFieldStaticText {
 
 type ICommandInputField = ICommandInputFieldInputFile | ICommandInputFieldOutputFile | ICommandInputFieldStaticText;
 
+const commandCache: Record<string, ICommandInputField[]> = {};
+
 const getFromCommand = (command: string): ICommandInputField[] => {
-	// Based on string segments, create input fields
+	// Based on string segments, create fields (input, output, static text)
+	if (commandCache[command]) {
+		return commandCache[command];
+	}
+
 	const inputFields: ICommandInputField[] = [];
 	const commandRegex = /\{\{\{(.*?)\}\}\}/;
 	let toParse = command;
@@ -48,6 +54,8 @@ const getFromCommand = (command: string): ICommandInputField[] => {
 	if (toParse.length > 0) {
 		inputFields.push(createStaticTextCommandInputField(toParse));
 	}
+
+	commandCache[command] = inputFields;
 
 	return inputFields;
 };

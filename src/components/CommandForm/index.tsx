@@ -10,11 +10,12 @@ import s from "./styles.module.css";
 
 interface IProps {
 	command: string;
+	disabled?: boolean;
 	onSetFile?: (index: number, file: File | null) => void;
 	outputFileNames?: Array<string | null>;
 }
 
-export const CommandForm = ({ command, onSetFile, outputFileNames }: IProps): JSX.Element => {
+export const CommandForm = ({ command, disabled, onSetFile, outputFileNames }: IProps): JSX.Element => {
 	const inputFields = useMemo(() => {
 		return CommandInput.getFromCommand(command);
 	}, [command]);
@@ -23,7 +24,7 @@ export const CommandForm = ({ command, onSetFile, outputFileNames }: IProps): JS
 	let numOutputs = 0;
 
 	return (
-		<div className={cx([s.container])}>
+		<div className={cx([s.container, disabled ? s.disabledContainer : undefined])}>
 			<CommandFormFieldStaticText text={"ffmpeg"} />
 			{inputFields.map((f) => {
 				switch (f.kind) {
@@ -42,6 +43,7 @@ export const CommandForm = ({ command, onSetFile, outputFileNames }: IProps): JS
 					}
 				}
 			})}
+			{disabled ? <div className={s.disabledOverlay} /> : null}
 		</div>
 	);
 };

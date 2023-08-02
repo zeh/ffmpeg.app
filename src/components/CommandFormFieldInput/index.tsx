@@ -96,7 +96,7 @@ export const CommandFormFieldInputFile = ({ onSetFile, title, types }: IProps): 
 		};
 	}, []);
 
-	const label = file ? file.name : title;
+	const label = file?.name ?? title;
 
 	const containerClasses = [s.container, file ? undefined : s.errorState];
 

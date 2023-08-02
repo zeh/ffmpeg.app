@@ -20,11 +20,6 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 		return Commands.getFromSlug(slug);
 	}, [slug]);
 
-	const handleStart = useCallback(() => {
-		// TODO: implement
-		console.warn("Unimplemented: start encoding");
-	}, []);
-
 	const numInputFiles = useMemo(() => {
 		return CommandInput.getInputFilesFromCommand(command?.command ?? "").length;
 	}, [command]);
@@ -71,6 +66,14 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 		});
 	}, [inputFiles]);
 
+	const handleStart = useCallback(() => {
+		if (command && hasAllInputFiles) {
+			encoder.encode(command.command, inputFiles as File[], outputFileNames as string[]);
+		}
+	}, [command, inputFiles, hasAllInputFiles, outputFileNames]);
+
+	const canClickStart = encoder.inited && encoder.canEncode && hasAllInputFiles;
+
 	return (
 		<div className={s.container}>
 			<div className={s.box}>
@@ -78,13 +81,18 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 				<TagList className={s.tags} tags={command.tags} />
 				<p className={s.hr} />
 				<p className={s.description}>{command.description}</p>
-				<CommandForm command={command.command} onSetFile={handleSetFile} outputFileNames={outputFileNames} />
+				<CommandForm
+					command={command.command}
+					onSetFile={handleSetFile}
+					outputFileNames={outputFileNames}
+					disabled={encoder.isEncoding}
+				/>
 				<div className={s.buttonRow}>
 					<Button
 						className={s.button}
 						text={encoder.inited ? "Start" : "Initializing..."}
 						onClick={handleStart}
-						disabled={!encoder.inited || !hasAllInputFiles}
+						disabled={!canClickStart}
 						progress={encoder.initProgress}
 					/>
 				</div>

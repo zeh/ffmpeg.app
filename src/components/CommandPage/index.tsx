@@ -7,6 +7,7 @@ import { CommandForm } from "../CommandForm";
 import { TagList } from "../TagList";
 import { Button } from "../Button";
 import CommandInput from "../../utils/commands/CommandInput";
+import { getExtensionForFile } from "../../utils/FileUtils";
 
 import s from "./styles.module.css";
 
@@ -51,6 +52,25 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 		return inputFiles.every((f) => f !== null);
 	}, [inputFiles]);
 
+	const outputFileNames = useMemo(() => {
+		const outputFiles = CommandInput.getOutputFilesFromCommand(command?.command ?? "");
+		return outputFiles.map((of, i) => {
+			let extension = of.extension;
+			const match = extension.match(/input_file_(\d+)_extension/);
+			if (match) {
+				// Reuse extension from an input
+				const inputIndex = parseInt(match[1], 10);
+				const inputFile = inputFiles[inputIndex];
+				if (!inputFile) {
+					return null;
+				} else {
+					extension = getExtensionForFile(inputFile.type, inputFile.name);
+				}
+			}
+			return outputFiles.length === 1 ? `output.${extension}` : `output_${i}.${extension}`;
+		});
+	}, [inputFiles]);
+
 	return (
 		<div className={s.container}>
 			<div className={s.box}>
@@ -58,7 +78,7 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 				<TagList className={s.tags} tags={command.tags} />
 				<p className={s.hr} />
 				<p className={s.description}>{command.description}</p>
-				<CommandForm command={command.command} onSetFile={handleSetFile} />
+				<CommandForm command={command.command} onSetFile={handleSetFile} outputFileNames={outputFileNames} />
 				<div className={s.buttonRow}>
 					<Button
 						className={s.button}

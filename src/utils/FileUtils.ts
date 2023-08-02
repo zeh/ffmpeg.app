@@ -36,3 +36,8 @@ export const getFilesFromDataTransfer = (dataTransfer: DataTransfer | null): Fil
 
 	return files;
 };
+
+export const getExtensionForFile = (mimeType: string, path: string): string => {
+	const types = mimeType.toLowerCase().split("/");
+	return types[1] ?? path.split(".").pop();
+};

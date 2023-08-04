@@ -47,12 +47,16 @@
 	@mixin type-style-body;
 
 	color: var(--color-theme-text);
+	text-align: left;
 }
 
 .buttonRow {
 	padding-top: 1.2em;
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
 
 .button {
-	width: 200px;
+	width: 300px;
 }

@@ -8,6 +8,7 @@ import { TagList } from "../TagList";
 import { Button } from "../Button";
 import CommandInput from "../../utils/commands/CommandInput";
 import { getExtensionForFile } from "../../utils/FileUtils";
+import { EncoderJobStatus } from "../EncoderJobStatus";
 
 import s from "./styles.module.css";
 
@@ -96,6 +97,7 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 						progress={encoder.initProgress}
 					/>
 				</div>
+				{encoder.job ? <EncoderJobStatus key={encoder.job.id} job={encoder.job} /> : null}
 			</div>
 		</div>
 	);

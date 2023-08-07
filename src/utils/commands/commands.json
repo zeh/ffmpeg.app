@@ -59,7 +59,35 @@
 			"description": "Rotate a video 90\".",
 			"command": "-i ${input_video} -vf \"transpose=dir=1\" ${output}",
 			"keywords": ["video", "rotate"],
-			"tags": ["audio"]
+			"tags": ["video"]
+		},
+		{
+			"name": "Combine video and audio tracks",
+			"description": "Create a single video file by combining a video track and an audio track from separate files.",
+			"command": "-i ${input_video} -i ${input_audio} -crf 18 -preset veryslow ${output}",
+			"keywords": ["video", "rotate"],
+			"tags": ["video"]
+		},
+		{
+			"name": "Loop a video",
+			"description": "Create a video that self-repeats an arbitrary number of times, without recompressing it.",
+			"command": "-i ${input_video} -stream_loop 2 -c copy ${output}",
+			"keywords": ["video", "repeating", "loop"],
+			"tags": ["video"]
+		},
+		{
+			"name": "Convert an audio file to MP3",
+			"description": "Re-encodes any audio file in MP3 format.",
+			"command": "-i ${input_audio} -vn -ar 44100 -ac 2 -b:a 192k {{{output_file:extension=mp3}}}",
+			"keywords": ["audio", "mp3"],
+			"tags": ["video", "no-transcoding"]
+		},
+		{
+			"name": "Create an animated GIF",
+			"description": "Create an animated GIF out of a video.",
+			"command": "-i ${input_video} -r 24 -vf scale=200:-1 {{{output_file:extension=gif}}}",
+			"keywords": ["audio", "gif"],
+			"tags": ["gif"]
 		}
 	]
 }

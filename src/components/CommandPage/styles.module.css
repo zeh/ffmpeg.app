@@ -52,6 +52,34 @@
 	padding: var(--size-margin-common) 0;
 }
 
+.closeButton {
+	color: var(--color-theme-text);
+	display: flex;
+	justify-content: center;
+	outline: 0;
+	border-width: 0;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	right: var(--size-margin-common-double);
+	top: var(--size-margin-common-double);
+	user-select: none;
+
+	background-color: transparent;
+	border-color: transparent;
+	cursor: pointer;
+
+	width: var(--size-margin-common-double);
+	height: var(--size-margin-common-double);
+
+	& .lines {
+		stroke: currentColor;
+		fill: transparent;
+		stroke-linecap: round;
+		stroke-width: 2;
+	}
+}
+
 .buttonRow {
 	padding-top: var(--size-margin-common);
 	padding-bottom: var(--size-margin-common);

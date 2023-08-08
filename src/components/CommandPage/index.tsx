@@ -81,6 +81,14 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 		link.click();
 	}, []);
 
+	const handleClose = useCallback(() => {
+		if (history.length > 0) {
+			history.back();
+		} else {
+			location.href = "/";
+		}
+	}, []);
+
 	const canClickStart = encoder.inited && encoder.canEncode && hasAllInputFiles;
 	const canSave = encoder.job?.status === JobStatus.Finished;
 
@@ -91,6 +99,11 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 				<TagList className={s.tags} tags={command.tags} />
 				<p className={s.hr} />
 				<p className={s.description}>{command.description}</p>
+				<button className={s.closeButton} onClick={handleClose}>
+					<svg viewBox="0 0 40 40">
+						<path class={s.lines} d="M 10,10 L 30,30 M 30,10 L 10,30" />
+					</svg>
+				</button>
 				<CommandForm
 					command={command.command}
 					onSetFile={handleSetFile}

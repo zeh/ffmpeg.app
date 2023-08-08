@@ -2,7 +2,19 @@
 	"definitions": {
 		"input_audio": "{{{input_file:title=Input audio;types=audio/*}}}",
 		"input_video": "{{{input_file:title=Input video;types=video/*}}}",
-		"output": "{{{output_file:extension=input_file_0_extension}}}"
+		"output": "{{{output_file:extension=input_file_0_extension}}}",
+		"selector_crf": "{{{selector:default=23;options=Lossless|0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,High quality|17,18,19,20,21,22,23,24,25,26,27,Low quality|28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,Lowest quality|51}}}",
+		"selector_preset": "{{{selector:default=medium;options=Lowest compression|ultrafast,superfast,veryfast,faster,fast,medium,slow,slower,Best compression|veryslow,placebo}}}",
+		"selector_vf_transpose": "{{{selector:default='transpose=clock';options=90 degrees|'transpose=clock',180 degrees|'transpose=clock,transpose=clock',270 degrees|'transpose=cclock'}}}",
+		"selector_stream_loop": "{{{selector:default=1;options=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50}}}",
+		"selector_r_gif": "{{{selector:default=24;options=10,11.11,12.5,14.28,16.67,20,25,33.33,50,100}}}",
+		"selector_filter_v_setpts": "{{{selector:default=setpts=0.5*PTS;options=10x speed|setpts=0.1*PTS,5x speed|setpts=0.2*PTS,4x speed|setpts=0.25*PTS,3x speed|setpts=0.3333*PTS,2x speed|setpts=0.5*PTS,1.75x speed|setpts=0.5714*PTS,1.5x speed|setpts=0.6667*PTS,1.25x speed|setpts=0.8*PTS,1.1x speed|setpts=0.9091*PTS,0.9x speed|setpts=1.1111*PTS,0.8x speed|setpts=1.25*PTS,0.7x speed|setpts=1.4286*PTS,0.6x speed|setpts=1.6667*PTS,0.5x speed|setpts=2*PTS,0.4x speed|setpts=2.5*PTS,0.3x speed|setpts=3.3333*PTS,0.2x speed|setpts=5*PTS,0.1x speed|setpts=10*PTS}}}",
+		"selector_filter_a_volume_pc": "{{{selector:default=0,5;options=10%|0.1,0.2,0.3,0.4,50%|0.5,0.6,0.7,0.8,0.9,100%|1.0,1.1,1.2,1.3,1.4,150%|1.5,1.6,1.7,1.8,1.9,200%|2.0,2.1,2.2,2.3,2.4,250%|2.5,2.6,2.7,2.8,2.9,300%|3.0}}}",
+		"selector_filter_a_volume_db": "{{{selector:default=volume=10dB;options=volume=-50dB,volume=-45dB,volume=-40dB,volume=-35dB,volume=-30dB,volume=-25dB,volume=-20dB,volume=-15dB,volume=-10dB,volume=-5dB,volume=0dB,volume=5dB,volume=10dB,volume=15dB,volume=20dB,volume=25dB,volume=30dB,volume=35dB,volume=40dB,volume=45dB,volume=50dB}}}",
+		"selector_b_a": "{{{selector:default=256k;options=8k,16k,24k,32k,40k,48k,64k,80k,96k,112k,128k,160k,192k,224k,256k,320k}}}",
+		"selector_ar": "{{{selector:default=44100;options=8000,11025,Telephone|16000,AM|22050,miniDV/FM|32000,37800,NTSC|44056,Audio CD|44100,48000,88200,DVD Audio|96000,176400,192000,Digital eXtreme|352800}}}",
+		"selector_ac": "{{{selector:default=2;options=Mono|1,Stereo|2}}}",
+		"video_encoding_options": "-crf ${selector_crf} -preset ${selector_preset}"
 	},
 	"commands": [
 		{
@@ -15,21 +27,21 @@
 		{
 			"name": "Re-encode video as H.264",
 			"description": "Converts any input video to H.264 format. Audio is preserved.",
-			"command": "-i ${input_video} -c:v libx264 -crf 18 -preset veryslow -movflags faststart -profile:v high {{{output_file:extension=mp4}}}",
+			"command": "-i ${input_video} -c:v libx264 ${video_encoding_options} -movflags faststart -profile:v high {{{output_file:extension=mp4}}}",
 			"keywords": ["encode", "transcode", "video", "h264"],
 			"tags": ["video"]
 		},
 		{
 			"name": "Change volume of an audio file by scale",
 			"description": "Change the volume of an audio file to a scale of the current volune.",
-			"command": "-i ${input_audio} -filter:a \"volume=0.5\" ${output}",
+			"command": "-i ${input_audio} -filter:a ${selector_filter_a_volume_pc} ${output}",
 			"keywords": ["audio", "volume", "increase", "decrease"],
 			"tags": ["audio"]
 		},
 		{
 			"name": "Change volume of an audio file by decibels",
 			"description": "Change the volume of an audio file by decibels.",
-			"command": "-i ${input_audio} -filter:a \"volume=10dB\" ${output}",
+			"command": "-i ${input_audio} -filter:a ${selector_filter_a_volume_db} ${output}",
 			"keywords": ["audio", "volume", "increase", "decrease"],
 			"tags": ["audio"]
 		},
@@ -43,49 +55,49 @@
 		{
 			"name": "Crop a video",
 			"description": "Crops a video to a specific area.",
-			"command": "-i ${input_video} -filter:v \"crop=w:h:x:y\" -crf 18 -preset veryslow ${output}",
+			"command": "-i ${input_video} -filter:v crop=w:h:x:y ${video_encoding_options} ${output}",
 			"keywords": ["crop", "video"],
 			"tags": ["video"]
 		},
 		{
 			"name": "Change a video playback speed",
-			"description": "Change the speed a video is played (faster).",
-			"command": "-i ${input_video} -filter:v \"setpts=0.5*PTS\" -crf 18 -preset veryslow ${output}",
+			"description": "Change the speed a video is played. This maintains the video framerate, thus dropping or duplicating frames as needed. This is especially desirable when making a video go faster, but usually undesirable when making a video slower (slow motion).",
+			"command": "-i ${input_video} -filter:v ${selector_filter_v_setpts} ${video_encoding_options} ${output}",
 			"keywords": ["speed", "video"],
 			"tags": ["video"]
 		},
 		{
 			"name": "Rotate a video",
-			"description": "Rotate a video 90\".",
-			"command": "-i ${input_video} -vf transpose=dir=1 ${output}",
+			"description": "Rotate a video by 90 degrees increments.",
+			"command": "-i ${input_video} -vf ${selector_vf_transpose} ${output}",
 			"keywords": ["video", "rotate"],
 			"tags": ["video"]
 		},
 		{
 			"name": "Combine video and audio tracks",
 			"description": "Create a single video file by combining a video track and an audio track from separate files.",
-			"command": "-i ${input_video} -i ${input_audio} -crf 18 -preset veryslow ${output}",
+			"command": "-i ${input_video} -i ${input_audio} ${video_encoding_options} ${output}",
 			"keywords": ["video", "rotate"],
 			"tags": ["video"]
 		},
 		{
 			"name": "Loop a video",
 			"description": "Create a video that self-repeats an arbitrary number of times, without recompressing it.",
-			"command": "-i ${input_video} -stream_loop 2 -c copy ${output}",
+			"command": "-i ${input_video} -stream_loop ${selector_stream_loop} -c copy ${output}",
 			"keywords": ["video", "repeating", "loop"],
 			"tags": ["video"]
 		},
 		{
 			"name": "Convert an audio file to MP3",
-			"description": "Re-encodes any audio file in MP3 format.",
-			"command": "-i ${input_audio} -vn -ar 44100 -ac 2 -b:a 192k {{{output_file:extension=mp3}}}",
+			"description": "Re-encodes any audio file in MP3 format using a constant bit rate (CBR) approach.",
+			"command": "-i ${input_audio} -vn -ar ${selector_ar} -ac ${selector_ac} -b:a ${selector_b_a} {{{output_file:extension=mp3}}}",
 			"keywords": ["audio", "mp3"],
-			"tags": ["video", "no-transcoding"]
+			"tags": ["audio"]
 		},
 		{
 			"name": "Create an animated GIF",
 			"description": "Create an animated GIF out of a video.",
-			"command": "-i ${input_video} -r 24 -vf scale=200:-1 {{{output_file:extension=gif}}}",
+			"command": "-i ${input_video} -r ${selector_r_gif} -vf scale=200:-1 {{{output_file:extension=gif}}}",
 			"keywords": ["audio", "gif"],
 			"tags": ["gif"]
 		}

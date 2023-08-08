@@ -1,0 +1,9 @@
+@import "../../styles/mixins/index.css";
+
+.container {
+	@mixin type-style-title;
+
+	display: flex;
+	color: var(--color-theme-text);
+	margin-bottom: var(--size-margin-common);
+}

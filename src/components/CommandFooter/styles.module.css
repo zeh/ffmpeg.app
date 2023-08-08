@@ -4,7 +4,6 @@
 	@mixin type-style-footer;
 
 	display: flex;
-	position: absolute;
-	bottom: 0;
-	margin-bottom: var(--size-margin-common);
+	color: var(--color-theme-text);
+	margin-top: var(--size-margin-common);
 }

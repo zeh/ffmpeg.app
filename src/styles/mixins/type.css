@@ -48,7 +48,7 @@
 @define-mixin type-style-footer {
 	@mixin type-style-body;
 
-	font-size: 0.75em;
+	font-size: 0.8em;
 }
 
 @define-mixin type-style-tag {

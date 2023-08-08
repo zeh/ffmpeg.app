@@ -1,8 +1,9 @@
 import { useLocation } from "wouter-preact";
 
 import { useCallback } from "preact/hooks";
+import { CommandFooter } from "../CommandFooter";
+import { CommandHeader } from "../CommandHeader";
 import { CommandSearch } from "../CommandSearch";
-import { Footer } from "../Footer";
 import { getCommandPath } from "../../utils/RouteUtils";
 
 import s from "./styles.module.css";
@@ -16,9 +17,9 @@ export const RootPage = (): JSX.Element => {
 
 	return (
 		<div className={s.container}>
-			<p className={s.title}>What do you want to do with FFmpeg today?</p>
+			<CommandHeader />
 			<CommandSearch onSelectCommand={handleSelectCommand} />
-			<Footer />
+			<CommandFooter />
 		</div>
 	);
 };

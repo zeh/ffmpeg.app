@@ -9,9 +9,3 @@
 	justify-content: center;
 	align-items: center;
 }
-
-.title {
-	@mixin type-style-title;
-
-	color: var(--color-theme-text);
-}

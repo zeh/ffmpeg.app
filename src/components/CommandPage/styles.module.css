@@ -20,7 +20,7 @@
 	flex-direction: column;
 	border: 1px solid var(--color-theme-command-border);
 	border-radius: var(--size-command-border-radius);
-	padding: 1em 2em;
+	padding: var(--size-margin-common) var(--size-margin-common-double);
 	position: relative;
 
 	.hr {
@@ -35,12 +35,12 @@
 	@mixin type-style-title;
 
 	color: var(--color-theme-text);
+	margin: 0;
+	padding: var(--size-margin-common) 0;
 }
 
 .tags {
-	position: absolute;
-	top: 2em;
-	right: 2em;
+	margin-bottom: var(--size-margin-common);
 }
 
 .description {
@@ -48,10 +48,13 @@
 
 	color: var(--color-theme-text);
 	text-align: left;
+	margin: 0;
+	padding: var(--size-margin-common) 0;
 }
 
 .buttonRow {
-	padding-top: 1.2em;
+	padding-top: var(--size-margin-common);
+	padding-bottom: var(--size-margin-common);
 	width: 100%;
 	display: flex;
 	justify-content: center;

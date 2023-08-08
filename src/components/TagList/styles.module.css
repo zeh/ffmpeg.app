@@ -4,4 +4,5 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	gap: var(--size-margin-common-quarter);
 }

@@ -1,5 +1,8 @@
 :root {
 	--size-margin-common: 16px;
+	--size-margin-common-half: 8px;
+	--size-margin-common-quarter: 4px;
+	--size-margin-common-double: 32px;
 	--size-input-border-radius: 6px;
 	--size-tag-border-radius: 4px;
 	--size-command-border-radius: 2px;

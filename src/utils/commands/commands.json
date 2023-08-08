@@ -57,7 +57,7 @@
 		{
 			"name": "Rotate a video",
 			"description": "Rotate a video 90\".",
-			"command": "-i ${input_video} -vf \"transpose=dir=1\" ${output}",
+			"command": "-i ${input_video} -vf transpose=dir=1 ${output}",
 			"keywords": ["video", "rotate"],
 			"tags": ["video"]
 		},

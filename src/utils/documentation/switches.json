@@ -1,0 +1,14 @@
+{
+	"switches": [
+		{
+			"match": "-crf",
+			"description": "The Constant Rate Factor (CRF) controls the quality of the encoded content, if you want to use quality as the dominant factor of your encoding process (as opposed to the file size). This is the recommended rate control mode for most uses.\n\nA lower CRF value generally leads to higher quality, and a higher value, lower quality. The typical range to use is around 17–28; choose the highest CRF value that still provides an acceptable quality. If the output looks good, then try a higher value. If it looks bad, choose a lower value.",
+			"reference": "https://trac.ffmpeg.org/wiki/Encode/H.264#crf"
+		},
+		{
+			"match": "-preset",
+			"description": "Picks a preset, each being a collection of options that will provide a certain encoding speed to compression ratio. A slower preset will provide better compression (compression is quality per filesize). This means that, for example, if you target a certain file size or constant bit rate, you will achieve better quality with a slower preset. Similarly, for constant quality encoding, you will simply save bitrate by choosing a slower preset.\n\nUse the slowest preset that you have patience for.",
+			"reference": "https://trac.ffmpeg.org/wiki/Encode/H.264#Preset"
+		}
+	]
+}

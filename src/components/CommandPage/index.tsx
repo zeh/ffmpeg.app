@@ -1,6 +1,6 @@
 import { RouteComponentProps } from "wouter-preact";
 import { useCallback, useMemo, useState } from "preact/hooks";
-import { useEncoder } from "../../utils/ffmpeg/Encoder";
+import { JobStatus, useEncoder } from "../../utils/ffmpeg/Encoder";
 
 import Commands from "../../utils/commands/Commands";
 import { CommandForm } from "../CommandForm";
@@ -73,7 +73,16 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 		}
 	}, [command, inputFiles, hasAllInputFiles, outputFileNames]);
 
+	const handleSaveOutputFile = useCallback(async (filename: string) => {
+		const data = await encoder.getOutputFileData(filename);
+		const link = document.createElement("a")
+		link.href = URL.createObjectURL(new Blob([(data as Uint8Array).buffer]));
+		link.download = filename;
+		link.click();
+	}, []);
+
 	const canClickStart = encoder.inited && encoder.canEncode && hasAllInputFiles;
+	const canSave = encoder.job?.status === JobStatus.Finished;
 
 	return (
 		<div className={s.container}>
@@ -98,6 +107,13 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 					/>
 				</div>
 				{encoder.job ? <EncoderJobStatus key={encoder.job.id} job={encoder.job} /> : null}
+				{canSave ? (
+					<div className={s.buttonRow}>
+						{encoder.job?.outputFileNames.map((filename) => (
+							<Button className={s.button} text={`Save ${filename}`} onClick={() => handleSaveOutputFile(filename)} />
+						))}
+					</div>
+				) : null}
 			</div>
 		</div>
 	);

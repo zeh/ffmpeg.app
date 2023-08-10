@@ -89,13 +89,13 @@ const createSpecialCommandInputField = (input: string): ICommandInputField => {
 		case CommandInputKind.InputFile:
 			return {
 				kind: CommandInputKind.InputFile,
-				title: inputParamObj.title ?? "Input",
+				title: unquote(inputParamObj.title ?? "Input"),
 				types: (inputParamObj.types ?? "*").split(",").map((t) => t.trim()),
 			};
 		case CommandInputKind.OutputFile:
 			return {
 				kind: CommandInputKind.OutputFile,
-				title: inputParamObj.title ?? "Output",
+				title: unquote(inputParamObj.title ?? "Output"),
 				extension: inputParamObj.extension ?? ".bin",
 			};
 		default:

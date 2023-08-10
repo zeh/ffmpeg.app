@@ -10,7 +10,12 @@ import { safeSplit } from "../StringUtils";
 
 type TLoadStatusKeys = "core" | "wasm";
 type TLoadStatus = Record<TLoadStatusKeys, { received: number; total: number; finished: boolean }>;
-type TEncodeFunc = (command: string, inputFiles: File[], outputFileNames: string[]) => Promise<void>;
+type TEncodeFunc = (
+	command: string,
+	inputFiles: File[],
+	outputFileNames: string[],
+	selectorValues: string[],
+) => Promise<void>;
 
 export enum JobStatus {
 	Starting = "starting",
@@ -221,7 +226,7 @@ export const useEncoder = (): TEncoderView => {
 	}, []);
 
 	const handleQueueEncode = useCallback(
-		async (command: string, inputFiles: File[], outputFileNames: string[]) => {
+		async (command: string, inputFiles: File[], outputFileNames: string[], selectorValues: string[]) => {
 			const newJob: TEncoderJob = {
 				id: Date.now().toString(16),
 				command,
@@ -248,6 +253,7 @@ export const useEncoder = (): TEncoderView => {
 				command,
 				inputFiles,
 				outputFileNames,
+				selectorValues,
 				handleJobReadingFilesStart,
 				handleJobTranscodingStart,
 				handleJobFinish,
@@ -318,6 +324,7 @@ const startEncode = async (
 	command: string,
 	inputFiles: File[],
 	outputFileNames: string[],
+	selectorValues: string[],
 	onReadingFilesStart: () => void,
 	onTranscodingStart: () => void,
 	onFinish: (success: boolean) => void,
@@ -329,6 +336,7 @@ const startEncode = async (
 	const inputFileNames: string[] = [];
 	let inputs = 0;
 	let outputs = 0;
+	let selectors = 0;
 	const commands: string[] = [];
 	commandInputs.forEach((ci) => {
 		switch (ci.kind) {
@@ -346,6 +354,11 @@ const startEncode = async (
 			case CommandInputKind.OutputFile: {
 				commands.push(outputFileNames[outputs]);
 				outputs++;
+				break;
+			}
+			case CommandInputKind.Selector: {
+				commands.push(selectorValues[selectors]);
+				selectors++;
 				break;
 			}
 		}

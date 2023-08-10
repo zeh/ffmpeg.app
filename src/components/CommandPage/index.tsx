@@ -25,7 +25,14 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 		return CommandInput.getInputFilesFromCommand(command?.command ?? "").length;
 	}, [command]);
 
+	const selectors = useMemo(() => {
+		return CommandInput.getSelectorsFromCommand(command?.command ?? "");
+	}, [command]);
+
 	const [inputFiles, setInputFiles] = useState<Array<File | null>>(Array.from(Array(numInputFiles)).map(() => null));
+	const [selectorValues, setSelectorValues] = useState<Array<string | null>>(
+		selectors.map((s) => s.defaultValue ?? null),
+	);
 
 	if (!command) {
 		// TODO: Return error page, maybe with suggestions
@@ -44,9 +51,21 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 		});
 	}, []);
 
+	const handleSetSelectorValue = useCallback((index: number, value: string | null) => {
+		setSelectorValues((values: Array<string | null>) => {
+			const nf = values.concat();
+			nf[index] = value ?? null;
+			return nf;
+		});
+	}, []);
+
 	const hasAllInputFiles = useMemo(() => {
 		return inputFiles.every((f) => f !== null);
 	}, [inputFiles]);
+
+	const hasAllSelectorValues = useMemo(() => {
+		return selectorValues.every((v) => v !== null);
+	}, [selectorValues]);
 
 	const outputFileNames = useMemo(() => {
 		const outputFiles = CommandInput.getOutputFilesFromCommand(command?.command ?? "");
@@ -68,14 +87,14 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 	}, [inputFiles]);
 
 	const handleStart = useCallback(() => {
-		if (command && hasAllInputFiles) {
-			encoder.encode(command.command, inputFiles as File[], outputFileNames as string[]);
+		if (command && hasAllInputFiles && hasAllSelectorValues) {
+			encoder.encode(command.command, inputFiles as File[], outputFileNames as string[], selectorValues as string[]);
 		}
-	}, [command, inputFiles, hasAllInputFiles, outputFileNames]);
+	}, [command, inputFiles, selectorValues, hasAllInputFiles, hasAllSelectorValues, outputFileNames]);
 
 	const handleSaveOutputFile = useCallback(async (filename: string) => {
 		const data = await encoder.getOutputFileData(filename);
-		const link = document.createElement("a")
+		const link = document.createElement("a");
 		link.href = URL.createObjectURL(new Blob([(data as Uint8Array).buffer]));
 		link.download = filename;
 		link.click();
@@ -85,7 +104,7 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 		location.href = "/";
 	}, []);
 
-	const canClickStart = encoder.inited && encoder.canEncode && hasAllInputFiles;
+	const canClickStart = encoder.inited && encoder.canEncode && hasAllInputFiles && hasAllSelectorValues;
 	const canSave = encoder.job?.status === JobStatus.Finished;
 
 	return (
@@ -103,7 +122,9 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 				<CommandForm
 					command={command.command}
 					onSetFile={handleSetFile}
+					onSetSelectorValue={handleSetSelectorValue}
 					outputFileNames={outputFileNames}
+					selectorValues={selectorValues}
 					disabled={encoder.isEncoding}
 				/>
 				<div className={s.buttonRow}>

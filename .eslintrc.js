@@ -22,7 +22,7 @@ module.exports = {
 		"plugin:prettier/recommended",
 	],
 	rules: {
-		"no-console": ["error", { allow: ["error", "info", "warn"] }],
+		"no-console": ["error", { allow: ["error", "info", "warn", "assert"] }],
 		"no-dupe-class-members": ["off"],
 		"indent": ["off"],
 		"sort-imports": ["error", { ignoreDeclarationSort: true }],

@@ -1,0 +1,115 @@
+@import "../../styles/mixins/index.css";
+
+.container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	outline: 1px solid var(--color-theme-input-border);
+	min-width: 10px;
+	height: 2em;
+	cursor: pointer;
+	background-color: var(--color-theme-input-background);
+	user-select: none;
+	position: relative;
+
+	&:after {
+		position: absolute;
+		content: "";
+		top: 14px;
+		right: 10px;
+		width: 0;
+		height: 0;
+		border: 4px solid transparent;
+		border-color: var(--color-theme-text) transparent transparent transparent;
+	}
+
+	&.expanded:after {
+		transform: scaleY(-100%);
+		top: 9px;
+	}
+}
+
+.label {
+	color: var(--color-theme-input-text);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 100%;
+	text-align: left;
+	padding: 0 0.5em;
+}
+
+.errorState {
+	background-color: var(--color-theme-error-background);
+}
+
+.list {
+	position: absolute;
+	width: calc(100% + 2px);
+	margin: 0 -1px;
+	top: 100%;
+	overflow: hidden auto;
+	border-radius: var(--size-input-border-radius);
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	border: 1px solid var(--color-theme-input-border);
+	background-color: var(--color-theme-input-background);
+	padding: 6px 0 2px 0;
+	display: flex;
+	flex-direction: column;
+	box-shadow: 0 1px 3px var(--color-theme-input-shadow);
+	max-height: calc(8 * 32px + 2px); /* 8 lines, plus paddings */
+	z-index: 1000;
+}
+
+.entry {
+	color: var(--color-theme-input-text);
+	height: 2em;
+	min-height: 2em;
+	padding: 0 calc(0.5em + 1px);
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	cursor: pointer;
+	user-select: none;
+
+	&:hover {
+		background-color: var(--color-theme-input-background-hover);
+	}
+
+	&.selected {
+		background-color: var(--color-theme-input-background-selected);
+	}
+}
+
+.listLabels {
+	flex: 1;
+	display: flex;
+	flex-direction: row;
+	align-items: baseline;
+	gap: 0.5em;
+}
+
+.listLabel {
+	@mixin type-style-body;
+
+	flex: 0 0 auto;
+	text-align: start;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.listSublabel {
+	@mixin type-style-body;
+
+	font-size: 0.8em;
+
+	flex: 1 1 auto;
+	text-align: end;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+	opacity: 0.5;
+}

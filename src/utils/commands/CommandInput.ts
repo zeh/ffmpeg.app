@@ -1,3 +1,5 @@
+import { safeSplit } from "../StringUtils";
+
 export enum CommandInputKind {
 	InputFile = "input_file",
 	OutputFile = "output_file",
@@ -73,9 +75,10 @@ const getOutputFilesFromCommand = (command: string): ICommandInputFieldOutputFil
 };
 
 const createSpecialCommandInputField = (input: string): ICommandInputField => {
-	const [inputType, inputParams] = input.split(":");
-	const inputParamObj: Record<string, string> = inputParams.split(";").reduce((prev, curr) => {
-		const [key, value] = curr.split("=");
+	const [inputType, inputParams] = safeSplit(input, ":");
+	console.assert(inputType && inputParams, `Could not parse input field parameters: "${input}"`);
+	const inputParamObj: Record<string, string> = safeSplit(inputParams, ";").reduce((prev, curr) => {
+		const [key, value] = safeSplit(curr, "=");
 		return {
 			...prev,
 			[key]: value,

@@ -64,3 +64,14 @@ export const safeSplit = (text: string, divider: string): string[] => {
 	console.assert(stack.length === 0, `Tried splitting a string with unclosed pairs: ${text}`);
 	return entries;
 };
+
+/**
+ * If a string is wrapped in quotes, remove it
+ */
+export const unquote = (text: string): string => {
+	if (text.length > 1 && QUOTE_PAIRS.some((pair) => text.startsWith(pair[0]) && text.endsWith(pair[1]))) {
+		return text.substring(1, text.length - 1);
+	}
+
+	return text;
+};

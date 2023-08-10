@@ -5,6 +5,12 @@ LATIN1_ARRAY.split("|").forEach((char, index, arr) => {
 	if (index % 2 == 0) LATIN1_MAP[char] = arr[index + 1];
 });
 
+const QUOTE_PAIRS: Array<[string, string]> = [
+	['"', '"'],
+	["'", "'"],
+	["`", "`"],
+];
+
 /**
  * Removes all extended, accented latin characters from a text, replacing them with their latin "equivalent"
  */
@@ -20,4 +26,41 @@ export const removeDiacritics = (text: string): string => {
 export const slugify = (text: string): string => {
 	const invalidChars = /[^a-zA-Z0-9]/g;
 	return removeDiacritics(text).replace(invalidChars, " ").replace(/ +/g, "-").toLowerCase();
+};
+
+/**
+ * Splits a string into an array, respecting quotes
+ */
+export const safeSplit = (text: string, divider: string): string[] => {
+	const entries: string[] = [];
+	const stack: number[] = [];
+	let entry = "";
+	text.split("").forEach((c) => {
+		if (stack.length === 0 && c === divider) {
+			// New divider
+			entries.push(entry);
+			entry = "";
+		} else {
+			// Just a char
+			entry += c;
+
+			// Check if closing the current stack
+			if (stack.length > 0 && c === QUOTE_PAIRS[stack[0]][1]) {
+				// Closing!
+				stack.shift();
+			} else {
+				// Check if opening a new stack
+				const openPairIndex = QUOTE_PAIRS.findIndex((pair) => pair[0] === c);
+				if (openPairIndex > -1) {
+					// Opening a new pair!
+					stack.unshift(openPairIndex);
+				}
+			}
+		}
+	});
+
+	entries.push(entry);
+
+	console.assert(stack.length === 0, `Tried splitting a string with unclosed pairs: ${text}`);
+	return entries;
 };

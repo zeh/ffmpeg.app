@@ -1,9 +1,10 @@
-import { safeSplit } from "../StringUtils";
+import { safeSplit, unquote } from "../StringUtils";
 
 export enum CommandInputKind {
 	InputFile = "input_file",
 	OutputFile = "output_file",
 	StaticText = "static_text",
+	Selector = "selector",
 }
 
 interface ICommandInputFieldInputFile {
@@ -23,7 +24,20 @@ interface ICommandInputFieldStaticText {
 	text: string;
 }
 
-type ICommandInputField = ICommandInputFieldInputFile | ICommandInputFieldOutputFile | ICommandInputFieldStaticText;
+interface ICommandInputFieldSelector {
+	kind: CommandInputKind.Selector;
+	defaultValue?: string;
+	options: Array<{
+		label?: string;
+		value: string;
+	}>;
+}
+
+type ICommandInputField =
+	| ICommandInputFieldInputFile
+	| ICommandInputFieldOutputFile
+	| ICommandInputFieldStaticText
+	| ICommandInputFieldSelector;
 
 const commandCache: Record<string, ICommandInputField[]> = {};
 
@@ -79,6 +93,10 @@ const getOutputFilesFromCommand = (command: string): ICommandInputFieldOutputFil
 	) as ICommandInputFieldOutputFile[];
 };
 
+const getSelectorsFromCommand = (command: string): ICommandInputFieldSelector[] => {
+	return getFromCommand(command).filter((ci) => ci.kind === CommandInputKind.Selector) as ICommandInputFieldSelector[];
+};
+
 const createSpecialCommandInputField = (input: string): ICommandInputField => {
 	const [inputType, inputParams] = safeSplit(input, ":", 1);
 	console.assert(inputType && inputParams, `Could not parse input field parameters: "${input}"`);
@@ -103,9 +121,39 @@ const createSpecialCommandInputField = (input: string): ICommandInputField => {
 				title: unquote(inputParamObj.title ?? "Output"),
 				extension: inputParamObj.extension ?? ".bin",
 			};
+		case CommandInputKind.Selector:
+			return {
+				kind: CommandInputKind.Selector,
+				defaultValue: inputParamObj.default ? unquote(inputParamObj.default) : undefined,
+				options: parseSelectorOptions(inputParamObj.options),
+			};
 		default:
-			throw new Error(`Command input [${input}] not parseable`);
+			throw new Error(`Command input of type "${inputType}" not parseable`);
 	}
+};
+
+/**
+ * Creates a list of options from a string.
+ * "a,b" ===> [{ value: "a" }, {value: "b" }]
+ * "A|a,b" ===> [{ label: "A", value: "a" }, {value: "b" }]
+ * "'A'|'a,1',b" ===> [{ label: "A", value: "a,1" }, {value: "b" }]
+ */
+const parseSelectorOptions = (options: string): ICommandInputFieldSelector["options"] => {
+	return safeSplit(options, ",").map((option) => {
+		const values = safeSplit(option, "|");
+		if (values.length === 1) {
+			return {
+				value: unquote(values[0]),
+			};
+		} else if (values.length === 2) {
+			return {
+				label: unquote(values[0]),
+				value: unquote(values[1]),
+			};
+		} else {
+			throw new Error(`Could not parse selector option: ${option}`);
+		}
+	});
 };
 
 const createStaticTextCommandInputField = (text: string): ICommandInputFieldStaticText => {
@@ -119,4 +167,5 @@ export default {
 	getFromCommand,
 	getInputFilesFromCommand,
 	getOutputFilesFromCommand,
+	getSelectorsFromCommand,
 };

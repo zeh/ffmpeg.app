@@ -29,7 +29,13 @@
 			"description": "Converts any input video to H.264 format. Audio is preserved.",
 			"command": "-i ${input_video} -c:v libx264 ${video_encoding_options} -movflags faststart -profile:v high {{{output_file:extension=mp4}}}",
 			"keywords": ["encode", "transcode", "video", "h264"],
-			"tags": ["video"]
+			"tags": ["video"],
+			"templates": [
+				{
+					"name": "High-quality web encode",
+					"selectors": ["17", "veryslow", ""]
+				}
+			]
 		},
 		{
 			"name": "Change volume of an audio file by scale",

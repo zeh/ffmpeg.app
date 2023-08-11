@@ -75,6 +75,10 @@ export const useEncoder = (): TEncoderView => {
 				//   frame=  871 fps=8.1 q=24.0 size=     256kB time=00:00:26.90 bitrate=  78.0kbits/s speed=0.251x
 				//   frame=  872 fps=0.0 q=-1.0 Lsize=    3848kB time=00:00:28.96 bitrate=1088.2kbits/s speed=2.72e+03x
 				//   frame=   46 fps= 43 q=0.0 size=       0kB time=00:00:00.00 bitrate=N/A dup=18 drop=0 speed=   0x
+
+				// TODO: need to understand audio as well
+				// Examples:
+				//   size=     848kB time=00:03:36.94 bitrate=  32.0kbits/s speed=43.6x
 				const matchDuring = message
 					.trim()
 					.match(

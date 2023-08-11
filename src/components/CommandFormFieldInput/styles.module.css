@@ -47,6 +47,7 @@
 	flex-direction: column;
 	border: 16px dashed rgba(255, 255, 255, 0.4);
 	cursor: no-drop;
+	z-index: 2000;
 }
 
 .hidden {

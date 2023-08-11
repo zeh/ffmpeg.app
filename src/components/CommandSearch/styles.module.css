@@ -1,19 +1,33 @@
 @import "../../styles/mixins/index.css";
 
+$field-height: calc(1.2em + 16px + 12px);
+
 .container {
 	margin: 0;
 	width: calc(100% - var(--size-margin-common-double) * 2);
 	max-width: 700px;
 	display: flex;
+	flex: 0 0 auto;
 	flex-direction: column;
 	position: relative;
+
+	transition: max-width 0.2s ease-out, width 0.2s ease-out, transform 0.3s ease-in;
+
+	@mixin for-size-small-minus {
+		&.focused {
+			max-width: 100%;
+			width: 100%;
+			transform: translateY(calc(-50vh + calc($field-height / 2)));
+			transform: translateY(calc(-50dvh + calc($field-height / 2)));
+		}
+	}
 }
 
 .form {
 	appearance: none;
 	outline: none;
 	padding: 0;
-	margin: 0 auto;
+	margin: 0;
 	width: 100%;
 	background-color: var(--color-theme-input-background);
 	box-shadow: 0 1px 3px var(--color-theme-input-shadow);
@@ -45,6 +59,15 @@
 		color: var(--color-theme-input-text);
 		opacity: var(--opacity-placeholder);
 	}
+}
+
+.list {
+	transition: max-height 0.2s ease-out;
+}
+
+.listFocused {
+	max-height: calc(100vh - $field-height);
+	max-height: calc(100dvh - $field-height);
 }
 
 .clear {

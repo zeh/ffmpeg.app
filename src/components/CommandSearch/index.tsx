@@ -42,6 +42,7 @@ export const CommandSearch = ({ onSelectCommand }: IProps): JSX.Element => {
 	const handleInputKeyDown = useCallback(
 		(e: JSX.TargetedKeyboardEvent<HTMLInputElement>) => {
 			if (typeof currentListIndex === "number") {
+				// Something selected in the list already
 				if (e.key === "ArrowUp") {
 					if (currentListIndex > 0) {
 						setCurrentListIndex(currentListIndex - 1);
@@ -53,12 +54,19 @@ export const CommandSearch = ({ onSelectCommand }: IProps): JSX.Element => {
 					handleInputSubmit();
 				}
 			} else {
+				// Nothing selected
 				if (e.key === "ArrowDown") {
 					setCurrentListIndex(0);
+				} else if (e.key === "Enter") {
+					e.preventDefault();
+					// If there's only one visible result, assume that's the one desired
+					if (searchResults.length === 1) {
+						handleListSubmit(0);
+					}
 				}
 			}
 		},
-		[currentListIndex],
+		[currentListIndex, searchResults.length],
 	);
 
 	const handleFormSubmit = useCallback((e: JSX.TargetedEvent<HTMLFormElement>) => {
@@ -71,6 +79,14 @@ export const CommandSearch = ({ onSelectCommand }: IProps): JSX.Element => {
 		setCurrentValue("");
 		inputRef.current?.focus();
 	}, []);
+
+	const visiblySelectedListIndex = useMemo(() => {
+		if (typeof currentListIndex === "undefined" && searchResults.length === 1) {
+			return 0;
+		} else {
+			return currentListIndex;
+		}
+	}, [currentListIndex, searchResults.length]);
 
 	const clearVisible = currentValue.length > 0;
 
@@ -97,7 +113,7 @@ export const CommandSearch = ({ onSelectCommand }: IProps): JSX.Element => {
 			</form>
 			<CommandList
 				entries={searchResults}
-				selectedIndex={currentListIndex}
+				selectedIndex={visiblySelectedListIndex}
 				setSelectedIndex={setCurrentListIndex}
 				submit={handleListSubmit}
 			/>

@@ -38,6 +38,12 @@ export const getFilesFromDataTransfer = (dataTransfer: DataTransfer | null): Fil
 };
 
 export const getExtensionForFile = (mimeType: string, path: string): string => {
+	// Special cases
+	const map: Record<string, string> = {
+		"audio/mpeg": "mp3",
+	};
+
+	// Fallback cases
 	const types = mimeType.toLowerCase().split("/");
-	return types[1] ?? path.split(".").pop();
+	return map[mimeType] ?? types[1] ?? path.split(".").pop();
 };

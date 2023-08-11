@@ -52,3 +52,11 @@ $screen-large-min-minus1: 1279px;
 		@mixin-content;
 	}
 }
+
+/* Avoid using these */
+
+@define-mixin for-size-small-minus {
+	@media (max-width: $screen-medium-min-minus1) {
+		@mixin-content;
+	}
+}

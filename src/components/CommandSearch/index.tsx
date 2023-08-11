@@ -4,6 +4,7 @@ import cx from "classnames";
 import { Icons } from "../Icons";
 import { CommandList } from "../CommandList";
 import Commands, { ICommand } from "../../utils/commands/Commands";
+import { useWindowSize } from "../../utils/hooks/useViewportWidth";
 
 import s from "./styles.module.css";
 
@@ -88,6 +89,12 @@ export const CommandSearch = ({ onSelectCommand }: IProps): JSX.Element => {
 		}
 	}, [currentListIndex, searchResults.length]);
 
+	const windowSize = useWindowSize();
+	const useSmallPlaceholder = windowSize.width < 630;
+	const placeholder = useSmallPlaceholder
+		? "Enter keywords or a command"
+		: 'Enter keywords or a command (for example, "Mute a video")';
+
 	const clearVisible = currentValue.length > 0;
 
 	return (
@@ -97,7 +104,7 @@ export const CommandSearch = ({ onSelectCommand }: IProps): JSX.Element => {
 					className={s.input}
 					ref={inputRef}
 					maxLength={300}
-					placeholder={'Enter keywords or a command (for example, "Mute a video")'}
+					placeholder={placeholder}
 					type={"text"}
 					autoComplete={"off"}
 					autoCapitalize={"off"}

@@ -6,6 +6,7 @@ import { DownloadProgressEvent } from "@ffmpeg/util/dist/esm/types";
 import { useCallback, useEffect, useMemo, useState } from "preact/hooks";
 import CommandInput, { CommandInputKind } from "../commands/CommandInput";
 import { getExtensionForFile } from "../FileUtils";
+import { safeSplit } from "../StringUtils";
 
 type TLoadStatusKeys = "core" | "wasm";
 type TLoadStatus = Record<TLoadStatusKeys, { received: number; total: number; finished: boolean }>;
@@ -328,7 +329,7 @@ const startEncode = async (
 	commandInputs.forEach((ci) => {
 		switch (ci.kind) {
 			case CommandInputKind.StaticText: {
-				commands.push(...ci.text.trim().split(" "));
+				commands.push(...safeSplit(ci.text.trim(), " "));
 				break;
 			}
 			case CommandInputKind.InputFile: {

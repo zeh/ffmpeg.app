@@ -357,6 +357,7 @@ const startEncode = async (
 
 	onTranscodingStart();
 
+	console.info(`[FFMPEG] Executing commands:`, commands);
 	const result = await ffmpeg.exec(commands);
 
 	onFinish(result === 0);

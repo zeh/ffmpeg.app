@@ -375,10 +375,10 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.42.0.tgz#484a1d638de2911e6f5a30c12f49c7e4a3270fb6"
   integrity sha512-6SWlXpWU5AvId8Ac7zjzmIOqMOba/JWY8XZ4A7q7Gn1Vlfg/SFFIlrtHXt9nPn4op9ZPAkl91Jao+QQv3r/ukw==
 
-"@ffmpeg/ffmpeg@^0.12.2":
-  version "0.12.2"
-  resolved "https://registry.yarnpkg.com/@ffmpeg/ffmpeg/-/ffmpeg-0.12.2.tgz#c82c4e642f775339fcf9356e508cf810aedc8d83"
-  integrity sha512-ZoOG0nWBjAzgVVTNi0ISGVUkPfGVHEYjZaDW0rL6vgM2IjAwjLmt/ZeHm3IzjCGWF6GRj4auKMYM0WTBp/20IA==
+"@ffmpeg/ffmpeg@^0.12.4":
+  version "0.12.4"
+  resolved "https://registry.yarnpkg.com/@ffmpeg/ffmpeg/-/ffmpeg-0.12.4.tgz#38ce7a131960e23a939b624558916883b97c8703"
+  integrity sha512-YwdnZFxtKncEbg2ybJOZ8di7kxtVo6DP3FkWWn5E0MiXHXxCjgiIJNq5I+/04+OGC1nMvF3hdvGuRFxuogh/mQ==
   dependencies:
     "@ffmpeg/types" "^0.12.0"
 

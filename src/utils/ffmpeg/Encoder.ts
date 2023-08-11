@@ -59,7 +59,7 @@ export const useEncoder = (): TEncoderView => {
 	const [loadStatus, setLoadStatus] = useState<TLoadStatus>({
 		core: {
 			received: 0,
-			total: 109488,
+			total: 109870,
 			finished: false,
 		},
 		wasm: {
@@ -264,7 +264,7 @@ export const useEncoder = (): TEncoderView => {
 
 	useEffect(() => {
 		console.info("Initializing FFmpeg");
-		const baseURL = "https://unpkg.com/@ffmpeg/core@0.12.1/dist/esm";
+		const baseURL = "https://unpkg.com/@ffmpeg/core@0.12.2/dist/esm";
 
 		// The default for naming is https://unpkg.com/@ffmpeg/core@${CORE_VERSION}/dist/umd/ffmpeg-core.wasm`,
 		// but we use it so we can listen to updates

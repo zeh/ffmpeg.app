@@ -13,7 +13,7 @@
 		"lint": "eslint src/**/*.{ts,tsx}"
 	},
 	"dependencies": {
-		"@ffmpeg/ffmpeg": "^0.12.2",
+		"@ffmpeg/ffmpeg": "^0.12.4",
 		"@ffmpeg/util": "^0.12.0",
 		"@types/node": "^20.1.0",
 		"classnames": "^2.3.1",

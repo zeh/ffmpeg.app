@@ -4,7 +4,8 @@
 	@mixin type-style-title;
 
 	display: flex;
+	flex: 0 1 50%;
 	color: var(--color-theme-text);
-	margin-bottom: var(--size-margin-common);
-	padding: 0px var(--size-margin-common);
+	padding: 0px var(--size-margin-common) var(--size-margin-common);
+	align-items: flex-end;
 }

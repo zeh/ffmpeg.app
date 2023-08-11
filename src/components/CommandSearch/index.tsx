@@ -16,6 +16,7 @@ export const CommandSearch = ({ onSelectCommand }: IProps): JSX.Element => {
 	const [currentValue, setCurrentValue] = useState<string>("");
 	const [currentListIndex, setCurrentListIndex] = useState<number | undefined>(undefined);
 	const inputRef = useRef<HTMLInputElement>(null);
+	const [inputHasFocus, setInputHasFocus] = useState(false);
 
 	const searchResults: ICommand[] = useMemo(() => {
 		return currentValue ? Commands.getWithSearch(currentValue) : [];
@@ -38,6 +39,14 @@ export const CommandSearch = ({ onSelectCommand }: IProps): JSX.Element => {
 		const newValue = (e.target as HTMLInputElement | undefined)?.value ?? "";
 		setCurrentValue(newValue);
 		setCurrentListIndex(undefined);
+	}, []);
+
+	const handleInputFocus = useCallback(() => {
+		setInputHasFocus(true);
+	}, []);
+
+	const handleInputBlur = useCallback(() => {
+		setInputHasFocus(false);
 	}, []);
 
 	const handleInputKeyDown = useCallback(
@@ -98,8 +107,8 @@ export const CommandSearch = ({ onSelectCommand }: IProps): JSX.Element => {
 	const clearVisible = currentValue.length > 0;
 
 	return (
-		<div className={s.container}>
-			<form className={s.form} onSubmit={handleFormSubmit}>
+		<div className={cx([s.container, inputHasFocus ? s.focused : undefined])}>
+			<form className={cx([s.form, inputHasFocus ? s.focused : undefined])} onSubmit={handleFormSubmit}>
 				<input
 					className={s.input}
 					ref={inputRef}
@@ -110,6 +119,8 @@ export const CommandSearch = ({ onSelectCommand }: IProps): JSX.Element => {
 					autoCapitalize={"off"}
 					autocorrect={"off"}
 					onInput={handleInput}
+					onFocus={handleInputFocus}
+					onBlur={handleInputBlur}
 					onKeyDown={handleInputKeyDown}
 					value={currentValue}
 					autoFocus
@@ -119,6 +130,7 @@ export const CommandSearch = ({ onSelectCommand }: IProps): JSX.Element => {
 				</button>
 			</form>
 			<CommandList
+				className={cx([s.list, inputHasFocus ? s.listFocused : undefined])}
 				entries={searchResults}
 				selectedIndex={visiblySelectedListIndex}
 				setSelectedIndex={setCurrentListIndex}

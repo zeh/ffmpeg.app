@@ -8,12 +8,19 @@ import s from "./styles.module.css";
 
 interface IProps {
 	entries: ICommand[];
+	className?: string;
 	selectedIndex?: number;
 	setSelectedIndex?: (index: number) => void;
 	submit?: (index: number) => void;
 }
 
-export const CommandList = ({ entries, selectedIndex, setSelectedIndex, submit }: IProps): JSX.Element | null => {
+export const CommandList = ({
+	className,
+	entries,
+	selectedIndex,
+	setSelectedIndex,
+	submit,
+}: IProps): JSX.Element | null => {
 	const selectedIndexRef = useRef<HTMLDivElement>(null);
 
 	if (entries.length === 0) {
@@ -42,7 +49,7 @@ export const CommandList = ({ entries, selectedIndex, setSelectedIndex, submit }
 	}, [selectedIndexRef.current]);
 
 	return (
-		<div className={s.container}>
+		<div className={cx([className, s.container])}>
 			{entries.map((c, index) => (
 				<div
 					ref={index === selectedIndexClean ? selectedIndexRef : undefined}

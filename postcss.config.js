@@ -4,5 +4,6 @@ module.exports = {
 		require("autoprefixer"),
 		require("postcss-nesting"),
 		require("cssnano")({ preset: ["default", { discardComments: { removeAll: true } }] }),
+		require("postcss-simple-vars"),
 	],
 };

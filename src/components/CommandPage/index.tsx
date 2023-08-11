@@ -82,11 +82,7 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 	}, []);
 
 	const handleClose = useCallback(() => {
-		if (history.length > 0) {
-			history.back();
-		} else {
-			location.href = "/";
-		}
+		location.href = "/";
 	}, []);
 
 	const canClickStart = encoder.inited && encoder.canEncode && hasAllInputFiles;

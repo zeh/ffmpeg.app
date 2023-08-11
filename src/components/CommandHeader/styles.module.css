@@ -6,4 +6,5 @@
 	display: flex;
 	color: var(--color-theme-text);
 	margin-bottom: var(--size-margin-common);
+	padding: 0px var(--size-margin-common);
 }

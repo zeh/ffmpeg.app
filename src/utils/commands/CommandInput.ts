@@ -75,10 +75,10 @@ const getOutputFilesFromCommand = (command: string): ICommandInputFieldOutputFil
 };
 
 const createSpecialCommandInputField = (input: string): ICommandInputField => {
-	const [inputType, inputParams] = safeSplit(input, ":");
+	const [inputType, inputParams] = safeSplit(input, ":", 1);
 	console.assert(inputType && inputParams, `Could not parse input field parameters: "${input}"`);
 	const inputParamObj: Record<string, string> = safeSplit(inputParams, ";").reduce((prev, curr) => {
-		const [key, value] = safeSplit(curr, "=");
+		const [key, value] = safeSplit(curr, "=", 1);
 		return {
 			...prev,
 			[key]: value,

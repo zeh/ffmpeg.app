@@ -42,7 +42,10 @@ const getFromCommand = (command: string): ICommandInputField[] => {
 
 		// Add text before
 		if (pos > 0) {
-			inputFields.push(createStaticTextCommandInputField(toParse.substring(0, pos)));
+			const text = toParse.substring(0, pos).trim();
+			if (text.length > 0) {
+				inputFields.push(createStaticTextCommandInputField(toParse.substring(0, pos)));
+			}
 		}
 
 		// Add input found
@@ -54,7 +57,9 @@ const getFromCommand = (command: string): ICommandInputField[] => {
 
 	// Add remaining text, if needed
 	if (toParse.length > 0) {
-		inputFields.push(createStaticTextCommandInputField(toParse));
+		if (toParse.length > 0) {
+			inputFields.push(createStaticTextCommandInputField(toParse));
+		}
 	}
 
 	commandCache[command] = inputFields;

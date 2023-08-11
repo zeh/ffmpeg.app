@@ -129,7 +129,6 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 				/>
 				<div className={s.buttonRow}>
 					<Button
-						className={s.button}
 						text={encoder.inited ? "Start" : "Initializing..."}
 						onClick={handleStart}
 						disabled={!canClickStart}
@@ -140,7 +139,7 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 				{canSave ? (
 					<div className={s.buttonRow}>
 						{encoder.job?.outputFileNames.map((filename) => (
-							<Button className={s.button} text={`Save ${filename}`} onClick={() => handleSaveOutputFile(filename)} />
+							<Button text={`Save ${filename}`} onClick={() => handleSaveOutputFile(filename)} />
 						))}
 					</div>
 				) : null}

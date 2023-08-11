@@ -36,7 +36,15 @@
 
 	color: var(--color-theme-text);
 	margin: 0;
-	padding: var(--size-margin-common) 0;
+	padding: var(--size-margin-common-half) 0;
+	text-align: left;
+
+	margin-right: calc(var(--size-margin-common-half) + var(--size-margin-common-double));
+
+	@mixin for-size-medium-plus {
+		padding: var(--size-margin-common) 0;
+		margin-right: calc(var(--size-margin-common) + var(--size-margin-common-double));
+	}
 }
 
 .tags {
@@ -61,16 +69,24 @@
 	margin: 0;
 	padding: 0;
 	position: absolute;
-	right: var(--size-margin-common-double);
-	top: var(--size-margin-common-double);
 	user-select: none;
-
 	background-color: transparent;
 	border-color: transparent;
 	cursor: pointer;
 
 	width: var(--size-margin-common-double);
 	height: var(--size-margin-common-double);
+
+	top: var(--size-margin-common);
+	right: var(--size-margin-common);
+
+	@mixin for-size-medium-plus {
+		width: var(--size-margin-common-double);
+		height: var(--size-margin-common-double);
+		top: var(--size-margin-common-double);
+		right: var(--size-margin-common-double);
+	}
+
 
 	& .lines {
 		stroke: currentColor;
@@ -85,10 +101,8 @@
 	padding-bottom: var(--size-margin-common);
 	width: 100%;
 	display: flex;
+	flex-direction: row;
 	justify-content: center;
 	gap: var(--size-margin-common);
-}
-
-.button {
-	width: 300px;
+	flex-wrap: wrap;
 }

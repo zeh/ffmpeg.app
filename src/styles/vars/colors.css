@@ -46,8 +46,8 @@
 		--color-theme-text-link: var(--color-basic-white);
 		--color-theme-input-text: var(--color-basic-light-gray);
 		--color-theme-input-background: var(--color-basic-dark-gray);
-		--color-theme-input-background-hover: rgba(0, 0, 0, 0.075);
-		--color-theme-input-background-selected: rgba(0, 0, 0, 0.2);
+		--color-theme-input-background-hover: rgba(255, 255, 255, 0.0375);
+		--color-theme-input-background-selected: rgba(255, 255, 255, 0.1);
 		--color-theme-input-buttons: var(--color-basic-light-gray);
 		--color-theme-input-border: var(--color-basic-blackish);
 		--color-theme-input-shadow: rgba(0, 0, 0, 0.2);

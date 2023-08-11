@@ -1,5 +1,11 @@
 @import "../../styles/mixins/index.css";
 
+.container {
+	display: flex;
+	width: 300px;
+	flex: 0 1 300px;
+}
+
 .disabledContainer {
 	cursor: not-allowed;
 }
@@ -7,6 +13,7 @@
 .button {
 	@mixin type-style-body;
 
+	flex: 1;
 	display: flex;
 	justify-content: center;
 	text-transform: uppercase;

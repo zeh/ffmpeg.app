@@ -31,12 +31,12 @@ export const slugify = (text: string): string => {
 /**
  * Splits a string into an array, respecting quotes
  */
-export const safeSplit = (text: string, divider: string): string[] => {
+export const safeSplit = (text: string, divider: string, maxDividers = 0): string[] => {
 	const entries: string[] = [];
 	const stack: number[] = [];
 	let entry = "";
 	text.split("").forEach((c) => {
-		if (stack.length === 0 && c === divider) {
+		if (stack.length === 0 && c === divider && (maxDividers === 0 || entries.length < maxDividers)) {
 			// New divider
 			entries.push(entry);
 			entry = "";

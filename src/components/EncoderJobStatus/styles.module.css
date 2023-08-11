@@ -9,11 +9,20 @@
 .box {
 	background-color: var(--color-theme-code-background);
 	width: 100%;
-	height: 40px;
 	position: relative;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+
+	height: 120px;
+
+	@mixin for-size-small-plus {
+		height: 80px;
+	}
+
+	@mixin for-size-medium-plus {
+		height: 40px;
+	}
 }
 
 .label {
@@ -30,8 +39,32 @@
 	margin: 0 1em;
 	color: var(--color-theme-text);
 	text-align: right;
+	white-space: nowrap;
 }
 
+.labelInfoEntry {
+	white-space: nowrap;
+}
+
+.showWhenTiny {
+	display: none;
+	@mixin for-size-tiny-only {
+		display: inline;
+	}
+}
+
+.showWhenSmall {
+	display: none;
+	@mixin for-size-small-only {
+		display: inline;
+	}
+}
+.showWhenMediumPlus {
+	display: none;
+	@mixin for-size-medium-plus {
+		display: inline;
+	}
+}
 
 .foregroundBar {
 	background-color: var(--color-theme-code-text);

@@ -1,3 +1,4 @@
+import cx from "classnames";
 import { useMemo } from "preact/hooks";
 
 import { JobStatus, TEncoderJob } from "../../utils/ffmpeg/Encoder";
@@ -33,15 +34,15 @@ export const EncoderJobStatus = ({ job }: IProps): JSX.Element => {
 		}
 	}, [job.progress, job.status]);
 
-	const labelInfo = useMemo(() => {
+	const labelInfos = useMemo(() => {
 		if (job.status === JobStatus.InProgressTranscoding || job.status === JobStatus.Finished) {
 			const frames = job.progressStats.frames.toString(10) + " frames";
 			const time = Math.floor(job.progressStats.time * 10) / 10 + " sec";
 			const size = Math.floor(job.progressStats.size / 1000) + " kB";
 			const bitrate = (job.progressStats.bitrate ? job.progressStats.bitrate / 1000 : "?") + " kbps";
-			return `${frames} ‧ ${time} ‧ ${size} ‧ ${bitrate}`;
+			return [frames, time, size, bitrate];
 		} else {
-			return "";
+			return [];
 		}
 	}, [job.status, job.progressStats]);
 
@@ -57,7 +58,30 @@ export const EncoderJobStatus = ({ job }: IProps): JSX.Element => {
 		<div className={s.container}>
 			<div className={s.box}>
 				<div className={s.label}>{label}</div>
-				<div className={s.labelInfo}>{labelInfo}</div>
+				<div className={cx([s.labelInfo, s.showWhenTiny])}>
+					{labelInfos.map((l, i) => (
+						<>
+							{i > 0 ? <br /> : null}
+							<span className={s.labelInfoEntry}>{l}</span>
+						</>
+					))}
+				</div>
+				<div className={cx([s.labelInfo, s.showWhenSmall])}>
+					{labelInfos.map((l, i) => (
+						<>
+							{i > 0 ? i % 2 === 1 ? <>{" ‧ "}</> : <br /> : null}
+							<span className={s.labelInfoEntry}>{l}</span>
+						</>
+					))}
+				</div>
+				<div className={cx([s.labelInfo, s.showWhenMediumPlus])}>
+					{labelInfos.map((l, i) => (
+						<>
+							{i > 0 ? <>{" ‧ "}</> : null}
+							<span className={s.labelInfoEntry}>{l}</span>
+						</>
+					))}
+				</div>
 				<div key={job.status} className={s.foregroundBar} style={progressStyle} />
 			</div>
 		</div>

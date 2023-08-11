@@ -81,18 +81,29 @@ export const CommandFormFieldInputFile = ({ onSetFile, title, types }: IProps): 
 			e.stopPropagation();
 
 			// Detect only when it's actually leaving the window
-			if (e.clientX === 0 || e.clientY === 0) {
+			if (e.clientX <= 0 || e.clientY <= 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
 				setIsDraggingOverWindow(false);
 			}
+		};
+
+		const handleWindowMouseLeave = (e: MouseEvent): void => {
+			e.preventDefault();
+			e.stopPropagation();
+			setIsDraggingOverWindow(false);
 		};
 
 		window.addEventListener("dragstart", handleWindowDragStart);
 		window.addEventListener("dragenter", handleWindowDragEnter);
 		window.addEventListener("dragleave", handleWindowDragLeave);
+
+		// Only happens when there's no drag; last resort fallback when stuck in drag mode
+		document.documentElement.addEventListener("mouseleave", handleWindowMouseLeave);
+
 		return () => {
 			window.removeEventListener("dragstart", handleWindowDragStart);
 			window.removeEventListener("dragenter", handleWindowDragEnter);
 			window.removeEventListener("dragleave", handleWindowDragLeave);
+			document.documentElement.removeEventListener("mouseleave", handleWindowMouseLeave);
 		};
 	}, []);
 

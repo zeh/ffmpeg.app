@@ -105,10 +105,11 @@ export const CommandSearch = ({ onSelectCommand }: IProps): JSX.Element => {
 		: 'Enter keywords or a command (for example, "Mute a video")';
 
 	const clearVisible = currentValue.length > 0;
+	const shouldShowFocused = inputHasFocus && currentValue;
 
 	return (
-		<div className={cx([s.container, inputHasFocus ? s.focused : undefined])}>
-			<form className={cx([s.form, inputHasFocus ? s.focused : undefined])} onSubmit={handleFormSubmit}>
+		<div className={cx([s.container, shouldShowFocused ? s.focused : undefined])}>
+			<form className={cx([s.form, shouldShowFocused ? s.focused : undefined])} onSubmit={handleFormSubmit}>
 				<input
 					className={s.input}
 					ref={inputRef}
@@ -130,7 +131,7 @@ export const CommandSearch = ({ onSelectCommand }: IProps): JSX.Element => {
 				</button>
 			</form>
 			<CommandList
-				className={cx([s.list, inputHasFocus ? s.listFocused : undefined])}
+				className={cx([s.list, shouldShowFocused ? s.listFocused : undefined])}
 				entries={searchResults}
 				selectedIndex={visiblySelectedListIndex}
 				setSelectedIndex={setCurrentListIndex}

@@ -36,11 +36,16 @@ export const EncoderJobStatus = ({ job }: IProps): JSX.Element => {
 
 	const labelInfos = useMemo(() => {
 		if (job.status === JobStatus.InProgressTranscoding || job.status === JobStatus.Finished) {
-			const frames = job.progressStats.frames.toString(10) + " frames";
-			const time = Math.floor(job.progressStats.time * 10) / 10 + " sec";
-			const size = Math.floor(job.progressStats.size / 1000) + " kB";
-			const bitrate = (job.progressStats.bitrate ? job.progressStats.bitrate / 1000 : "?") + " kbps";
-			return [frames, time, size, bitrate];
+			return [
+				// Frames (for video)
+				job.progressStats.frames ? job.progressStats.frames.toString(10) + " frames" : undefined,
+				// Time
+				Math.floor(job.progressStats.time * 10) / 10 + " sec",
+				// Size
+				Math.floor(job.progressStats.size / 1000) + " kB",
+				// Bitrate
+				(job.progressStats.bitrate ? job.progressStats.bitrate / 1000 : "?") + " kbps",
+			].filter((s) => typeof s === "string");
 		} else {
 			return [];
 		}

@@ -34,7 +34,7 @@ export const EncoderJobStatus = ({ job }: IProps): JSX.Element => {
 		}
 	}, [job.progress, job.status]);
 
-	const labelInfos = useMemo(() => {
+	const progressLabels = useMemo(() => {
 		if (job.status === JobStatus.InProgressTranscoding || job.status === JobStatus.Finished) {
 			return [
 				// Frames (for video)
@@ -63,26 +63,12 @@ export const EncoderJobStatus = ({ job }: IProps): JSX.Element => {
 		<div className={s.container}>
 			<div className={s.box}>
 				<div className={s.label}>{label}</div>
-				<div className={cx([s.labelInfo, s.showWhenTiny])}>
-					{labelInfos.map((l, i) => (
+				<div className={s.labelInfo}>
+					{progressLabels.map((l, i) => (
 						<>
-							{i > 0 ? <br /> : null}
-							<span className={s.labelInfoEntry}>{l}</span>
-						</>
-					))}
-				</div>
-				<div className={cx([s.labelInfo, s.showWhenSmall])}>
-					{labelInfos.map((l, i) => (
-						<>
-							{i > 0 ? i % 2 === 1 ? <>{" ‧ "}</> : <br /> : null}
-							<span className={s.labelInfoEntry}>{l}</span>
-						</>
-					))}
-				</div>
-				<div className={cx([s.labelInfo, s.showWhenMediumPlus])}>
-					{labelInfos.map((l, i) => (
-						<>
-							{i > 0 ? <>{" ‧ "}</> : null}
+							<span className={s.showWhenTiny}>{i > 0 ? <br /> : null}</span>
+							<span className={s.showWhenSmall}>{i > 0 ? i % 2 === 1 ? <>{" ‧ "}</> : <br /> : null}</span>
+							<span className={s.showWhenMediumPlus}>{i > 0 ? <>{" ‧ "}</> : null}</span>
 							<span className={s.labelInfoEntry}>{l}</span>
 						</>
 					))}

@@ -32,7 +32,7 @@ export type TEncoderJob = {
 	progress: number;
 	progressStats: {
 		time: number;
-		frames: number;
+		frames?: number;
 		fps?: number;
 		size: number; // In bytes
 		bitrate?: number; // In bits per second
@@ -75,38 +75,34 @@ export const useEncoder = (): TEncoderView => {
 		setJob((job): TEncoderJob | null => {
 			if (job?.status === JobStatus.InProgressTranscoding) {
 				// If a progress update, update progressStats
-				// Examples during:
+				// Examples during (video):
 				//   frame=    1 fps=0.0 q=-1.0 size=       0kB time=-00:00:00.06 bitrate=N/A speed=N/A
 				//   frame=  871 fps=8.1 q=24.0 size=     256kB time=00:00:26.90 bitrate=  78.0kbits/s speed=0.251x
 				//   frame=  872 fps=0.0 q=-1.0 Lsize=    3848kB time=00:00:28.96 bitrate=1088.2kbits/s speed=2.72e+03x
 				//   frame=   46 fps= 43 q=0.0 size=       0kB time=00:00:00.00 bitrate=N/A dup=18 drop=0 speed=   0x
-
-				// TODO: need to understand audio as well
-				// Examples:
+				//   frame=93500 fps= 25 q=-1.0 size= 1673216kB time=01:03:40.35 bitrate=3589.1kbits/s throttle=off speed=1.01x
+				// Examples during (audio):
 				//   size=     848kB time=00:03:36.94 bitrate=  32.0kbits/s speed=43.6x
-				const matchDuring = message
-					.trim()
-					.match(
-						/^frame= *(\d+?) fps=(.*?) q=(.*?) [L]*size= *(.*?)kB time=(.*?) bitrate=(.*?) (dup=(.*?) |)(drop=(.*?) |)speed=(.*?)x$/,
-					);
-				if (matchDuring) {
-					const frames = parseInt(matchDuring[1]);
-					const fps = parseFloat(matchDuring[2]);
-					const targetFPS = parseFloat(matchDuring[3]);
-					const sizeKB = parseFloat(matchDuring[4]);
-					// const time = parseFloat(match[5]); // Unused
-					const bitrate = matchDuring[6];
-					const dup = parseInt(matchDuring[8]);
-					const drop = parseInt(matchDuring[10]);
-					// const speed = parseFloat(match[11]); // Unused
+				const isStatsRow = Boolean(message.match(/^(frame=|size=)/));
+				if (isStatsRow) {
+					const frames = parseInt(message.match(/frame=(\d+?)(?: |$)/)?.[1] ?? "");
+					const fps = parseFloat(message.match(/fps=(.*?)(?: |$)/)?.[1] ?? "");
+					const targetFPS = parseFloat(message.match(/q=(.*?)(?: |$)/)?.[1] ?? "");
+					const sizeKB = parseFloat(message.match(/size=(.*?)kB/)?.[1] ?? "");
+					// const time = message.match(/time=(.*?)(?: |$)/)?.[1] ?? null; // Unused
+					const bitrateKBPS = parseFloat(message.match(/bitrate=(.*?)kbits\/s/)?.[1] ?? "");
+					const dup = parseInt(message.match(/dup=(.*?)(?: |$)/)?.[1] ?? "");
+					const drop = parseInt(message.match(/drop=(.*?)(?: |$)/)?.[1] ?? "");
+					// const speed = parseFloat(message.match(/speed=(.*?)x(?: |$)/)?.[1] ?? ""); // Unused
+					// const throttle = message.match(/throttle=(.*?)(?: |$)/)?.[1] ?? null; // Unused
 					return {
 						...job,
 						progressStats: {
 							...job.progressStats,
-							frames: isNaN(frames) ? 0 : frames,
+							frames: isNaN(frames) ? undefined : frames,
 							size: isNaN(sizeKB) ? 0 : sizeKB * 1000,
 							fps: isNaN(fps) ? undefined : fps,
-							bitrate: bitrate.endsWith("kbits/s") ? parseFloat(bitrate) * 1000 : undefined,
+							bitrate: isNaN(bitrateKBPS) ? undefined : bitrateKBPS * 1000,
 							framerate: isNaN(targetFPS) ? undefined : targetFPS,
 							dup: isNaN(dup) ? 0 : dup,
 							drop: isNaN(drop) ? 0 : drop,
@@ -233,7 +229,7 @@ export const useEncoder = (): TEncoderView => {
 				progress: 0,
 				progressStats: {
 					time: 0,
-					frames: 0,
+					frames: undefined,
 					fps: undefined,
 					size: 0,
 					bitrate: undefined,

@@ -51,6 +51,25 @@ export const EncoderJobStatus = ({ job }: IProps): JSX.Element => {
 		}
 	}, [job.status, job.progressStats]);
 
+	const endLabels = useMemo(() => {
+		if (job.status === JobStatus.Finished) {
+			return [
+				// Video
+				job.endStats.videoSize > 0 ? job.endStats.videoSize / 1000 + " kB video" : undefined,
+				// Audio
+				job.endStats.audioSize > 0 ? job.endStats.audioSize / 1000 + " kB audio" : undefined,
+				// Subtitles
+				job.endStats.subtitlesSize > 0 ? job.endStats.subtitlesSize / 1000 + " kB subtitles" : undefined,
+				// Headers
+				job.endStats.headersSize > 0 ? job.endStats.headersSize / 1000 + " kB headers" : undefined,
+				// Other
+				job.endStats.otherSize > 0 ? job.endStats.otherSize / 1000 + " kB other" : undefined,
+			].filter((s) => typeof s === "string");
+		} else {
+			return [];
+		}
+	}, [job.status, job.endStats]);
+
 	const progressStyle: JSX.CSSProperties = useMemo(() => {
 		if (job.status === JobStatus.InProgressTranscoding) {
 			return { right: (1 - job.progress) * 100 + "%" };
@@ -62,7 +81,19 @@ export const EncoderJobStatus = ({ job }: IProps): JSX.Element => {
 	return (
 		<div className={s.container}>
 			<div className={s.box}>
-				<div className={s.label}>{label}</div>
+				<div className={s.label}>
+					{label}
+					{endLabels.map((l, i) => (
+						<>
+							<span className={s.showWhenTiny}>
+								<br />
+							</span>
+							<span className={s.showWhenSmall}>{i % 2 === 1 ? <>{" ‧ "}</> : <br />}</span>
+							<span className={s.showWhenMediumPlus}>{" ‧ "}</span>
+							<span className={s.labelInfoEntry}>{l}</span>
+						</>
+					))}
+				</div>
 				<div className={s.labelInfo}>
 					{progressLabels.map((l, i) => (
 						<>

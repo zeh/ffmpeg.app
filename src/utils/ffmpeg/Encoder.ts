@@ -40,6 +40,14 @@ export type TEncoderJob = {
 		dup: number;
 		drop: number;
 	};
+	endStats: {
+		videoSize: number;
+		audioSize: number;
+		subtitlesSize: number;
+		otherSize: number;
+		headersSize: number;
+		muxingAmount: number;
+	};
 	status: JobStatus;
 	outputFileNames: string[];
 };
@@ -110,10 +118,32 @@ export const useEncoder = (): TEncoderView => {
 					};
 				}
 
-				// TODO:
-				// Examples at the end:
+				// If it's an end of encoding update, update endStats
+				// Examples at the end (video or audio):
 				//   video:541kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 1.633965%
 				//   video:3837kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.280976%
+				//   video:0kB audio:984kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.096913%
+				const isEndStatsRow = Boolean(message.match(/^(video:)/));
+				if (isEndStatsRow) {
+					const videoKB = parseInt(message.match(/video:(\d+?)kB/)?.[1] ?? "");
+					const audioKB = parseInt(message.match(/audio:(\d+?)kB/)?.[1] ?? "");
+					const subtitlesKB = parseInt(message.match(/subtitle:(\d+?)kB/)?.[1] ?? "");
+					const otherKB = parseInt(message.match(/other streams:(\d+?)kB/)?.[1] ?? "");
+					const headersKB = parseInt(message.match(/global headers:(\d+?)kB/)?.[1] ?? "");
+					const muxingPercent = parseFloat(message.match(/muxing overhead: *(.+?)%/)?.[1] ?? "");
+					return {
+						...job,
+						endStats: {
+							...job.endStats,
+							videoSize: isNaN(videoKB) ? 0 : videoKB * 1000,
+							audioSize: isNaN(audioKB) ? 0 : audioKB * 1000,
+							subtitlesSize: isNaN(subtitlesKB) ? 0 : subtitlesKB * 1000,
+							otherSize: isNaN(otherKB) ? 0 : otherKB * 1000,
+							headersSize: isNaN(headersKB) ? 0 : headersKB * 1000,
+							muxingAmount: isNaN(muxingPercent) ? 0 : muxingPercent / 100,
+						},
+					};
+				}
 			}
 			return job;
 		});
@@ -236,6 +266,14 @@ export const useEncoder = (): TEncoderView => {
 					framerate: undefined,
 					dup: 0,
 					drop: 0,
+				},
+				endStats: {
+					videoSize: 0,
+					audioSize: 0,
+					subtitlesSize: 0,
+					otherSize: 0,
+					headersSize: 0,
+					muxingAmount: 0,
 				},
 				status: JobStatus.Starting,
 				outputFileNames,

@@ -1,7 +1,7 @@
 import { useMemo } from "preact/hooks";
 
 import { JobStatus, TEncoderJob } from "../../utils/ffmpeg/Encoder";
-import { formatTimeDuration } from "../../utils/FormatUtils";
+import { formatTimeDuration, formatTimeReadable } from "../../utils/FormatUtils";
 
 import s from "./styles.module.css";
 
@@ -51,8 +51,30 @@ export const EncoderJobStatus = ({ job }: IProps): JSX.Element => {
 		}
 	}, [job.status, job.progressStats]);
 
-	const endLabels = useMemo(() => {
-		if (job.status === JobStatus.Finished) {
+	const mainLabels = useMemo(() => {
+		if (job.status === JobStatus.InProgressTranscoding) {
+			// Calculate time spent/remaining
+			let timeStatus: string | null = null;
+
+			const now = performance.now() / 1000;
+			const timeSpent = now - (job.timeTranscodingStarted ?? NaN);
+			if (!isNaN(timeSpent)) {
+				// Add time spent
+				timeStatus = `${formatTimeReadable(timeSpent)} spent`;
+
+				// Add time remaining only of somewhat predictable
+				job.progress;
+				if (timeSpent > 3) {
+					const timeTotal = timeSpent / job.progress;
+					timeStatus += ` (${formatTimeReadable(timeTotal - timeSpent)} remaining)`;
+				}
+			}
+
+			return [
+				// Time spent/remaining
+				timeStatus,
+			].filter((s) => typeof s === "string");
+		} else if (job.status === JobStatus.Finished) {
 			return [
 				// Video
 				job.endStats.videoSize > 0 ? job.endStats.videoSize / 1000 + " kB video" : undefined,
@@ -83,7 +105,7 @@ export const EncoderJobStatus = ({ job }: IProps): JSX.Element => {
 			<div className={s.box}>
 				<div className={s.label}>
 					{label}
-					{endLabels.map((l, i) => (
+					{mainLabels.map((l, i) => (
 						<>
 							<span className={s.showWhenTiny}>
 								<br />

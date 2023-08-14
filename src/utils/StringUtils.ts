@@ -75,3 +75,26 @@ export const unquote = (text: string): string => {
 
 	return text;
 };
+
+/**
+ * Creates a quick and dirty string hash of a specified length
+ */
+export const quickHash = (text: string, length = 12): string => {
+	// Create a quick hash checksum for a string
+	const table = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	const result = [];
+
+	// Create list of numbers per char
+	for (let i = 0; i < length; i++) {
+		result[i] = 0;
+	}
+
+	for (let i = 0; i < text.length; i++) {
+		result[i % result.length] += text.charCodeAt(i);
+	}
+
+	// Generate the final string
+	const hash = result.map((value) => table.charAt(value % table.length)).join("");
+
+	return hash;
+};

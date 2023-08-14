@@ -1,7 +1,7 @@
-import cx from "classnames";
 import { useMemo } from "preact/hooks";
 
 import { JobStatus, TEncoderJob } from "../../utils/ffmpeg/Encoder";
+import { formatTimeDuration } from "../../utils/FormatUtils";
 
 import s from "./styles.module.css";
 
@@ -40,7 +40,7 @@ export const EncoderJobStatus = ({ job }: IProps): JSX.Element => {
 				// Frames (for video)
 				job.progressStats.frames ? job.progressStats.frames.toString(10) + " frames" : undefined,
 				// Time
-				Math.floor(job.progressStats.time * 10) / 10 + " sec",
+				formatTimeDuration(job.progressStats.time),
 				// Size
 				Math.floor(job.progressStats.size / 1000) + " kB",
 				// Bitrate

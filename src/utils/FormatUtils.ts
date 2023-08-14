@@ -50,3 +50,17 @@ export const formatTimeReadable = (timeSeconds: number): string => {
 
 	return time;
 };
+
+/**
+ * Format size in "1,000 kB" format.
+ */
+export const formatSizeKB = (bytes: number): string => {
+	return new Intl.NumberFormat().format(Math.floor(bytes / 1000)) + " kB";
+};
+
+/**
+ * Format bitrate in "1,000.12 kbps" format.
+ */
+export const formatBitrateKbps = (bitrate: number): string => {
+	return new Intl.NumberFormat().format(Math.floor(bitrate / 10) / 100) + " kbps";
+};

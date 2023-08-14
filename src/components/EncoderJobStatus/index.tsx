@@ -83,7 +83,7 @@ export const EncoderJobStatus = ({ job }: IProps): JSX.Element => {
 		} else {
 			return [];
 		}
-	}, [job.status, job.endStats]);
+	}, [job.status, job.progress, job.endStats]);
 
 	const progressStyle: JSX.CSSProperties = useMemo(() => {
 		if (job.status === JobStatus.InProgressTranscoding) {

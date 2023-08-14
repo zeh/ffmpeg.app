@@ -20,9 +20,7 @@ export const formatTimeDuration = (timeSeconds: number): string => {
 		time = ("00" + days).substr(-2) + "days " + time;
 	}
 
-	if (mins > 0 || hours > 0 || days > 0) {
-		time = time.replace(/^0+/, "");
-	}
+	time = time.replace(/^0+(\d)/, "$1");
 
 	return time;
 };
@@ -48,9 +46,7 @@ export const formatTimeReadable = (timeSeconds: number): string => {
 		time = `${days}d ${time}`;
 	}
 
-	if (mins > 0 || hours > 0 || days > 0) {
-		time = time.replace(/^0+/, "");
-	}
+	time = time.replace(/^0+(\d)/, "$1");
 
 	return time;
 };

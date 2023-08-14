@@ -54,20 +54,13 @@ export const EncoderJobStatus = ({ job }: IProps): JSX.Element => {
 	const mainLabels = useMemo(() => {
 		if (job.status === JobStatus.InProgressTranscoding) {
 			// Calculate time spent/remaining
-			let timeStatus: string | null = null;
-
 			const now = performance.now() / 1000;
 			const timeSpent = now - (job.timeTranscodingStarted ?? NaN);
-			if (!isNaN(timeSpent)) {
-				// Add time spent
-				timeStatus = `${formatTimeReadable(timeSpent)} spent`;
+			let timeStatus: string | null = null;
 
-				// Add time remaining only of somewhat predictable
-				job.progress;
-				if (timeSpent > 3) {
-					const timeTotal = timeSpent / job.progress;
-					timeStatus += ` (${formatTimeReadable(timeTotal - timeSpent)} remaining)`;
-				}
+			if (timeSpent > 3) {
+				const timeTotal = timeSpent / job.progress;
+				timeStatus = `${formatTimeReadable(timeTotal - timeSpent)} left`;
 			}
 
 			return [

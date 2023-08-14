@@ -1,7 +1,7 @@
 import { useMemo } from "preact/hooks";
 
 import { JobStatus, TEncoderJob } from "../../utils/ffmpeg/Encoder";
-import { formatTimeDuration, formatTimeReadable } from "../../utils/FormatUtils";
+import { formatBitrateKbps, formatSizeKB, formatTimeDuration, formatTimeReadable } from "../../utils/FormatUtils";
 
 import s from "./styles.module.css";
 
@@ -42,9 +42,9 @@ export const EncoderJobStatus = ({ job }: IProps): JSX.Element => {
 				// Time
 				formatTimeDuration(job.progressStats.time),
 				// Size
-				Math.floor(job.progressStats.size / 1000) + " kB",
+				formatSizeKB(job.progressStats.size),
 				// Bitrate
-				(job.progressStats.bitrate ? job.progressStats.bitrate / 1000 : "?") + " kbps",
+				job.progressStats.bitrate ? formatBitrateKbps(job.progressStats.bitrate) : "?",
 			].filter((s) => typeof s === "string");
 		} else {
 			return [];
@@ -70,15 +70,15 @@ export const EncoderJobStatus = ({ job }: IProps): JSX.Element => {
 		} else if (job.status === JobStatus.Finished) {
 			return [
 				// Video
-				job.endStats.videoSize > 0 ? job.endStats.videoSize / 1000 + " kB video" : undefined,
+				job.endStats.videoSize > 0 ? formatSizeKB(job.endStats.videoSize) + " video" : undefined,
 				// Audio
-				job.endStats.audioSize > 0 ? job.endStats.audioSize / 1000 + " kB audio" : undefined,
+				job.endStats.audioSize > 0 ? formatSizeKB(job.endStats.audioSize) + " audio" : undefined,
 				// Subtitles
-				job.endStats.subtitlesSize > 0 ? job.endStats.subtitlesSize / 1000 + " kB subtitles" : undefined,
+				job.endStats.subtitlesSize > 0 ? formatSizeKB(job.endStats.subtitlesSize) + " subtitles" : undefined,
 				// Headers
-				job.endStats.headersSize > 0 ? job.endStats.headersSize / 1000 + " kB headers" : undefined,
+				job.endStats.headersSize > 0 ? formatSizeKB(job.endStats.headersSize) + " headers" : undefined,
 				// Other
-				job.endStats.otherSize > 0 ? job.endStats.otherSize / 1000 + " kB other" : undefined,
+				job.endStats.otherSize > 0 ? formatSizeKB(job.endStats.otherSize) + " other" : undefined,
 			].filter((s) => typeof s === "string");
 		} else {
 			return [];

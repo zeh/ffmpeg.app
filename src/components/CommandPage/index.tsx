@@ -1,5 +1,5 @@
-import { RouteComponentProps } from "wouter-preact";
-import { useCallback, useMemo, useState } from "preact/hooks";
+import { RouteComponentProps, useLocation } from "wouter-preact";
+import { useCallback, useEffect, useMemo, useState } from "preact/hooks";
 import { JobStatus, useEncoder } from "../../utils/ffmpeg/Encoder";
 
 import Commands from "../../utils/commands/Commands";
@@ -11,6 +11,7 @@ import { getExtensionForFile } from "../../utils/FileUtils";
 import { EncoderJobStatus } from "../EncoderJobStatus";
 
 import s from "./styles.module.css";
+import { useQueryString, useQueryStringParam } from "../../utils/hooks/useQueryString";
 
 type IProps = RouteComponentProps<{ slug: string }>;
 
@@ -29,9 +30,15 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 		return CommandInput.getSelectorsFromCommand(command?.command ?? "");
 	}, [command]);
 
+	const selectorIds = useMemo(() => {
+		return selectors.map((s) => s.slug);
+	}, [selectors]);
+
+	const [queryString, setQueryString] = useQueryString();
+
 	const [inputFiles, setInputFiles] = useState<Array<File | null>>(Array.from(Array(numInputFiles)).map(() => null));
 	const [selectorValues, setSelectorValues] = useState<Array<string | null>>(
-		selectors.map((s) => s.defaultValue ?? null),
+		selectors.map((s, i) => queryString[selectorIds[i]] ?? s.defaultValue ?? null),
 	);
 
 	if (!command) {
@@ -51,13 +58,19 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 		});
 	}, []);
 
-	const handleSetSelectorValue = useCallback((index: number, value: string | null) => {
-		setSelectorValues((values: Array<string | null>) => {
-			const nf = values.concat();
-			nf[index] = value ?? null;
-			return nf;
-		});
-	}, []);
+	const handleSetSelectorValue = useCallback(
+		(index: number, value: string | null) => {
+			setSelectorValues((values: Array<string | null>) => {
+				const nf = values.concat();
+				nf[index] = value ?? null;
+				return nf;
+			});
+			if (value !== null) {
+				setQueryString((qq) => ({ ...qq, [selectorIds[index]]: value }));
+			}
+		},
+		[setQueryString, selectorIds],
+	);
 
 	const hasAllInputFiles = useMemo(() => {
 		return inputFiles.every((f) => f !== null);

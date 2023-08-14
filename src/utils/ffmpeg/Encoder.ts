@@ -94,14 +94,14 @@ export const useEncoder = (): TEncoderView => {
 				//   size=     848kB time=00:03:36.94 bitrate=  32.0kbits/s speed=43.6x
 				const isStatsRow = Boolean(message.match(/^(frame=|size=)/));
 				if (isStatsRow) {
-					const frames = parseInt(message.match(/frame=(\d+?)(?: |$)/)?.[1] ?? "");
+					const frames = parseInt(message.match(/frame= *(\d+)(?: |$)/)?.[1] ?? "");
 					const fps = parseFloat(message.match(/fps=(.*?)(?: |$)/)?.[1] ?? "");
 					const targetFPS = parseFloat(message.match(/q=(.*?)(?: |$)/)?.[1] ?? "");
 					const sizeKB = parseFloat(message.match(/size=(.*?)kB/)?.[1] ?? "");
 					// const time = message.match(/time=(.*?)(?: |$)/)?.[1] ?? null; // Unused
 					const bitrateKBPS = parseFloat(message.match(/bitrate=(.*?)kbits\/s/)?.[1] ?? "");
-					const dup = parseInt(message.match(/dup=(.*?)(?: |$)/)?.[1] ?? "");
-					const drop = parseInt(message.match(/drop=(.*?)(?: |$)/)?.[1] ?? "");
+					const dup = parseInt(message.match(/dup= *(\d+)(?: |$)/)?.[1] ?? "");
+					const drop = parseInt(message.match(/drop= *(\d+)(?: |$)/)?.[1] ?? "");
 					// const speed = parseFloat(message.match(/speed=(.*?)x(?: |$)/)?.[1] ?? ""); // Unused
 					// const throttle = message.match(/throttle=(.*?)(?: |$)/)?.[1] ?? null; // Unused
 					return {

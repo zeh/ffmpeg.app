@@ -29,6 +29,7 @@ export enum JobStatus {
 export type TEncoderJob = {
 	id: string;
 	command: string;
+	timeTranscodingStarted?: number;
 	progress: number;
 	progressStats: {
 		time: number;
@@ -202,6 +203,7 @@ export const useEncoder = (): TEncoderView => {
 			} else {
 				return {
 					...job,
+					timeTranscodingStarted: performance.now() / 1000,
 					status: JobStatus.InProgressTranscoding,
 				};
 			}
@@ -257,6 +259,7 @@ export const useEncoder = (): TEncoderView => {
 				id: Date.now().toString(16),
 				command,
 				progress: 0,
+				timeTranscodingStarted: undefined,
 				progressStats: {
 					time: 0,
 					frames: undefined,

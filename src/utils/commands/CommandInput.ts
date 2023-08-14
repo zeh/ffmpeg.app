@@ -1,4 +1,4 @@
-import { safeSplit, unquote } from "../StringUtils";
+import { quickHash, safeSplit, unquote } from "../StringUtils";
 
 export enum CommandInputKind {
 	InputFile = "input_file",
@@ -25,6 +25,7 @@ interface ICommandInputFieldStaticText {
 }
 
 interface ICommandInputFieldSelector {
+	slug: string;
 	kind: CommandInputKind.Selector;
 	defaultValue?: string;
 	options: Array<{
@@ -123,6 +124,7 @@ const createSpecialCommandInputField = (input: string): ICommandInputField => {
 			};
 		case CommandInputKind.Selector:
 			return {
+				slug: inputParamObj.slug ? unquote(inputParamObj.slug) : quickHash(input),
 				kind: CommandInputKind.Selector,
 				defaultValue: inputParamObj.default ? unquote(inputParamObj.default) : undefined,
 				options: parseSelectorOptions(inputParamObj.options),

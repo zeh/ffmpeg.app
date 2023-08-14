@@ -53,19 +53,28 @@ export const EncoderJobStatus = ({ job }: IProps): JSX.Element => {
 
 	const mainLabels = useMemo(() => {
 		if (job.status === JobStatus.InProgressTranscoding) {
-			// Calculate time spent/remaining
 			const now = performance.now() / 1000;
 			const timeSpent = now - (job.timeTranscodingStarted ?? NaN);
-			let timeStatus: string | null = null;
 
+			// Calculate time spent/remaining
+			let timeStatus: string | null = null;
 			if (timeSpent > 3) {
 				const timeTotal = timeSpent / job.progress;
 				timeStatus = `${formatTimeReadable(timeTotal - timeSpent)} left`;
 			}
 
+			// Calculate predicted size
+			let sizeStatus: string | null = null;
+			if (timeSpent > 1 && job.progressStats.size > 0) {
+				const sizeTotal = job.progressStats.size / job.progress;
+				sizeStatus = `${formatSizeKB(sizeTotal)} predicted `;
+			}
+
 			return [
 				// Time spent/remaining
 				timeStatus,
+				// Predicted size
+				sizeStatus,
 			].filter((s) => typeof s === "string");
 		} else if (job.status === JobStatus.Finished) {
 			return [
@@ -83,7 +92,7 @@ export const EncoderJobStatus = ({ job }: IProps): JSX.Element => {
 		} else {
 			return [];
 		}
-	}, [job.status, job.progress, job.endStats]);
+	}, [job.status, job.progress, job.progressStats.size, job.endStats]);
 
 	const progressStyle: JSX.CSSProperties = useMemo(() => {
 		if (job.status === JobStatus.InProgressTranscoding) {

@@ -3,8 +3,8 @@ import { useMemo } from "preact/hooks";
 
 import CommandInput, { CommandInputKind } from "../../utils/commands/CommandInput";
 import { CommandFormFieldStaticText } from "../CommandFormFieldStaticText";
-import { CommandFormFieldInputFile } from "../CommandFormFieldInput";
-import { CommandFormFieldOutputFile } from "../CommandFormFieldOutput";
+import { CommandFormFieldInputFile } from "../CommandFormFieldInputFile";
+import { CommandFormFieldOutputFile } from "../CommandFormFieldOutputFile";
 import { CommandFormFieldSelector } from "../CommandFormFieldSelector";
 
 import s from "./styles.module.css";

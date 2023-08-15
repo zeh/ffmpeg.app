@@ -1,9 +1,9 @@
 import cx from "classnames";
-
-import s from "./styles.module.css";
 import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 
 import { checkMimeTypeMatches, getFilesFromDataTransfer } from "../../utils/FileUtils";
+
+import s from "./styles.module.css";
 
 interface IProps {
 	title: string;

@@ -19,11 +19,14 @@ export const CommandFormFieldSelector = ({ value, options, onSetValue }: IProps)
 		setIsExpanded(true);
 	}, []);
 
-	const handleClickEntry = useCallback((e: MouseEvent, value: string) => {
-		e.stopPropagation();
-		onSetValue?.(value);
-		setIsExpanded(false);
-	}, []);
+	const handleClickEntry = useCallback(
+		(e: MouseEvent, value: string) => {
+			e.stopPropagation();
+			onSetValue?.(value);
+			setIsExpanded(false);
+		},
+		[onSetValue],
+	);
 
 	const widthStyle = useMemo(() => {
 		const minLengthLabel = SELECT_LABEL.length + 2;

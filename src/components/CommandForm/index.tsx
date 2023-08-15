@@ -37,25 +37,31 @@ export const CommandForm = ({
 	return (
 		<div className={cx([s.container, disabled ? s.disabledContainer : undefined])}>
 			<CommandFormFieldStaticText text={"ffmpeg"} />
-			{inputFields.map((f) => {
+			{inputFields.map((f, ii) => {
 				switch (f.kind) {
 					case CommandInputKind.StaticText: {
-						return <CommandFormFieldStaticText text={f.text} />;
+						return <CommandFormFieldStaticText key={ii} text={f.text} />;
 					}
 					case CommandInputKind.InputFile: {
 						const i = numInputs++;
 						return (
-							<CommandFormFieldInputFile title={f.title} types={f.types} onSetFile={(file) => onSetFile?.(i, file)} />
+							<CommandFormFieldInputFile
+								key={`input_${i}`}
+								title={f.title}
+								types={f.types}
+								onSetFile={(file) => onSetFile?.(i, file)}
+							/>
 						);
 					}
 					case CommandInputKind.OutputFile: {
 						const i = numOutputs++;
-						return <CommandFormFieldOutputFile title={f.title} filename={outputFileNames?.[i]} />;
+						return <CommandFormFieldOutputFile key={`output_${i}`} title={f.title} filename={outputFileNames?.[i]} />;
 					}
 					case CommandInputKind.Selector: {
 						const i = numSelectors++;
 						return (
 							<CommandFormFieldSelector
+								key={`selector_${i}`}
 								value={selectorValues?.[i]}
 								options={f.options}
 								onSetValue={(value) => onSetSelectorValue?.(i, value)}

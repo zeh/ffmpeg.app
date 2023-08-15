@@ -1,5 +1,5 @@
-import { RouteComponentProps, useLocation } from "wouter-preact";
-import { useCallback, useEffect, useMemo, useState } from "preact/hooks";
+import { RouteComponentProps } from "wouter-preact";
+import { useCallback, useMemo, useState } from "preact/hooks";
 import { JobStatus, useEncoder } from "../../utils/ffmpeg/Encoder";
 
 import Commands from "../../utils/commands/Commands";
@@ -11,7 +11,7 @@ import { getExtensionForFile } from "../../utils/FileUtils";
 import { EncoderJobStatus } from "../EncoderJobStatus";
 
 import s from "./styles.module.css";
-import { useQueryString, useQueryStringParam } from "../../utils/hooks/useQueryString";
+import { useQueryString } from "../../utils/hooks/useQueryString";
 
 type IProps = RouteComponentProps<{ slug: string }>;
 

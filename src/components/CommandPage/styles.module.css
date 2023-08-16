@@ -90,15 +90,10 @@
 	border-color: transparent;
 	cursor: pointer;
 
-	width: var(--size-margin-common-double);
-	height: var(--size-margin-common-double);
-
 	top: var(--size-margin-common);
 	right: var(--size-margin-common);
 
 	@mixin for-size-medium-plus {
-		width: var(--size-margin-common-double);
-		height: var(--size-margin-common-double);
 		top: var(--size-margin-common-double);
 		right: var(--size-margin-common-double);
 	}

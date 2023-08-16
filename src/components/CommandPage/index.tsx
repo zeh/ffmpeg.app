@@ -2,6 +2,7 @@ import { RouteComponentProps } from "wouter-preact";
 import { useCallback, useMemo, useState } from "preact/hooks";
 import { JobStatus, useEncoder } from "../../utils/ffmpeg/Encoder";
 
+import { Icons } from "../Icons";
 import Commands from "../../utils/commands/Commands";
 import { CommandForm } from "../CommandForm";
 import { TagList } from "../TagList";
@@ -128,9 +129,7 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 				<p className={s.hr} />
 				<p className={s.description}>{command.description}</p>
 				<button className={s.closeButton} onClick={handleClose}>
-					<svg viewBox="0 0 40 40">
-						<path class={s.lines} d="M 10,10 L 30,30 M 30,10 L 10,30" />
-					</svg>
+					<Icons.Close size={20} />
 				</button>
 				<CommandForm
 					command={command.input}

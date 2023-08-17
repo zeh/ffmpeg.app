@@ -4,17 +4,14 @@ import { fetchFile, toBlobURL } from "@ffmpeg/util";
 import { FileData, LogEvent, ProgressEvent } from "@ffmpeg/ffmpeg/dist/esm/types";
 import { DownloadProgressEvent } from "@ffmpeg/util/dist/esm/types";
 import { useCallback, useEffect, useMemo, useState } from "preact/hooks";
-import CommandInput, { CommandInputKind } from "../commands/CommandInput";
-import { getExtensionForFile } from "../FileUtils";
-import { safeSplit } from "../StringUtils";
 
 type TLoadStatusKeys = "core" | "wasm";
 type TLoadStatus = Record<TLoadStatusKeys, { received: number; total: number; finished: boolean }>;
 type TEncodeFunc = (
-	command: string,
+	command: string[],
 	inputFiles: File[],
+	inputFileNames: string[],
 	outputFileNames: string[],
-	selectorValues: string[],
 ) => Promise<void>;
 
 export enum JobStatus {
@@ -28,7 +25,7 @@ export enum JobStatus {
 
 export type TEncoderJob = {
 	id: string;
-	command: string;
+	command: string[];
 	timeTranscodingStarted?: number;
 	progress: number;
 	progressStats: {
@@ -254,7 +251,7 @@ export const useEncoder = (): TEncoderView => {
 	}, []);
 
 	const handleQueueEncode = useCallback(
-		async (command: string, inputFiles: File[], outputFileNames: string[], selectorValues: string[]) => {
+		async (command: string[], inputFiles: File[], inputFileNames: string[], outputFileNames: string[]) => {
 			const newJob: TEncoderJob = {
 				id: Date.now().toString(16),
 				command,
@@ -289,8 +286,8 @@ export const useEncoder = (): TEncoderView => {
 				newJob.id,
 				command,
 				inputFiles,
+				inputFileNames,
 				outputFileNames,
-				selectorValues,
 				handleJobReadingFilesStart,
 				handleJobTranscodingStart,
 				handleJobFinish,
@@ -358,48 +355,15 @@ export const useEncoder = (): TEncoderView => {
 const startEncode = async (
 	ffmpeg: FFmpeg,
 	id: string,
-	command: string,
+	command: string[],
 	inputFiles: File[],
+	inputFileNames: string[],
 	outputFileNames: string[],
-	selectorValues: string[],
 	onReadingFilesStart: () => void,
 	onTranscodingStart: () => void,
 	onFinish: (success: boolean) => void,
 ): Promise<void> => {
 	// Actually start transcoding
-
-	// Parse proper input line, with file names
-	const commandInputs = CommandInput.getFromCommand(command);
-	const inputFileNames: string[] = [];
-	let inputs = 0;
-	let outputs = 0;
-	let selectors = 0;
-	const commands: string[] = [];
-	commandInputs.forEach((ci) => {
-		switch (ci.kind) {
-			case CommandInputKind.StaticText: {
-				commands.push(...safeSplit(ci.text.trim(), " "));
-				break;
-			}
-			case CommandInputKind.InputFile: {
-				const inputName = `input_${inputs}.${getExtensionForFile(inputFiles[inputs].type, inputFiles[inputs].name)}`;
-				commands.push(inputName);
-				inputFileNames.push(inputName);
-				inputs++;
-				break;
-			}
-			case CommandInputKind.OutputFile: {
-				commands.push(outputFileNames[outputs]);
-				outputs++;
-				break;
-			}
-			case CommandInputKind.Selector: {
-				commands.push(selectorValues[selectors]);
-				selectors++;
-				break;
-			}
-		}
-	});
 
 	onReadingFilesStart();
 
@@ -412,8 +376,8 @@ const startEncode = async (
 
 	onTranscodingStart();
 
-	console.info(`[FFMPEG] Executing commands:`, commands);
-	const result = await ffmpeg.exec(commands);
+	console.info(`[FFMPEG] Executing commands:`, command);
+	const result = await ffmpeg.exec(command);
 
 	onFinish(result === 0);
 };

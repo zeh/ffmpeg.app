@@ -34,7 +34,7 @@ interface ICommandInputFieldSelector {
 	}>;
 }
 
-type ICommandInputField =
+export type ICommandInputField =
 	| ICommandInputFieldInputFile
 	| ICommandInputFieldOutputFile
 	| ICommandInputFieldStaticText
@@ -80,22 +80,6 @@ const getFromCommand = (command: string): ICommandInputField[] => {
 	commandCache[command] = inputFields;
 
 	return inputFields;
-};
-
-const getInputFilesFromCommand = (command: string): ICommandInputFieldInputFile[] => {
-	return getFromCommand(command).filter(
-		(ci) => ci.kind === CommandInputKind.InputFile,
-	) as ICommandInputFieldInputFile[];
-};
-
-const getOutputFilesFromCommand = (command: string): ICommandInputFieldOutputFile[] => {
-	return getFromCommand(command).filter(
-		(ci) => ci.kind === CommandInputKind.OutputFile,
-	) as ICommandInputFieldOutputFile[];
-};
-
-const getSelectorsFromCommand = (command: string): ICommandInputFieldSelector[] => {
-	return getFromCommand(command).filter((ci) => ci.kind === CommandInputKind.Selector) as ICommandInputFieldSelector[];
 };
 
 const createSpecialCommandInputField = (input: string): ICommandInputField => {
@@ -165,9 +149,57 @@ const createStaticTextCommandInputField = (text: string): ICommandInputFieldStat
 	};
 };
 
-export default {
-	getFromCommand,
-	getInputFilesFromCommand,
-	getOutputFilesFromCommand,
-	getSelectorsFromCommand,
-};
+export default class CommandInput {
+	#fields: readonly ICommandInputField[] = [];
+
+	constructor(command: string) {
+		this.#fields = getFromCommand(command);
+	}
+
+	public getInputFiles(): readonly ICommandInputFieldInputFile[] {
+		return this.#fields.filter((ci) => ci.kind === CommandInputKind.InputFile) as ICommandInputFieldInputFile[];
+	}
+
+	public getOutputFiles(): readonly ICommandInputFieldOutputFile[] {
+		return this.#fields.filter((ci) => ci.kind === CommandInputKind.OutputFile) as ICommandInputFieldOutputFile[];
+	}
+
+	public getSelectors(): readonly ICommandInputFieldSelector[] {
+		return this.#fields.filter((ci) => ci.kind === CommandInputKind.Selector) as ICommandInputFieldSelector[];
+	}
+
+	public createCommandLine(inputFileNames: string[], outputFileNames: string[], selectorValues: string[]): string[] {
+		let inputs = 0;
+		let outputs = 0;
+		let selectors = 0;
+		const commands: string[] = [];
+		this.#fields.forEach((ci) => {
+			switch (ci.kind) {
+				case CommandInputKind.StaticText: {
+					commands.push(...safeSplit(ci.text.trim(), " "));
+					break;
+				}
+				case CommandInputKind.InputFile: {
+					commands.push(inputFileNames[inputs]);
+					inputs++;
+					break;
+				}
+				case CommandInputKind.OutputFile: {
+					commands.push(outputFileNames[outputs]);
+					outputs++;
+					break;
+				}
+				case CommandInputKind.Selector: {
+					commands.push(selectorValues[selectors]);
+					selectors++;
+					break;
+				}
+			}
+		});
+		return commands;
+	}
+
+	public getFields(): readonly ICommandInputField[] {
+		return this.#fields;
+	}
+}

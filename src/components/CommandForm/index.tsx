@@ -1,5 +1,4 @@
 import cx from "classnames";
-import { useMemo } from "preact/hooks";
 
 import CommandInput, { CommandInputKind } from "../../utils/commands/CommandInput";
 import { CommandFormFieldStaticText } from "../CommandFormFieldStaticText";
@@ -10,7 +9,7 @@ import { CommandFormFieldSelector } from "../CommandFormFieldSelector";
 import s from "./styles.module.css";
 
 interface IProps {
-	command: string;
+	command: CommandInput;
 	disabled?: boolean;
 	onSetFile?: (index: number, file: File | null) => void;
 	onSetSelectorValue?: (index: number, value: string | null) => void;
@@ -26,10 +25,6 @@ export const CommandForm = ({
 	outputFileNames,
 	selectorValues,
 }: IProps): JSX.Element => {
-	const inputFields = useMemo(() => {
-		return CommandInput.getFromCommand(command);
-	}, [command]);
-
 	let numInputs = 0;
 	let numOutputs = 0;
 	let numSelectors = 0;
@@ -37,7 +32,7 @@ export const CommandForm = ({
 	return (
 		<div className={cx([s.container, disabled ? s.disabledContainer : undefined])}>
 			<CommandFormFieldStaticText text={"ffmpeg"} />
-			{inputFields.map((f, ii) => {
+			{command.getFields().map((f, ii) => {
 				switch (f.kind) {
 					case CommandInputKind.StaticText: {
 						return <CommandFormFieldStaticText key={ii} text={f.text} />;

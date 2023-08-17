@@ -6,12 +6,11 @@ import Commands from "../../utils/commands/Commands";
 import { CommandForm } from "../CommandForm";
 import { TagList } from "../TagList";
 import { Button } from "../Button";
-import CommandInput from "../../utils/commands/CommandInput";
 import { getExtensionForFile } from "../../utils/FileUtils";
 import { EncoderJobStatus } from "../EncoderJobStatus";
+import { useQueryString } from "../../utils/hooks/useQueryString";
 
 import s from "./styles.module.css";
-import { useQueryString } from "../../utils/hooks/useQueryString";
 
 type IProps = RouteComponentProps<{ slug: string }>;
 
@@ -22,25 +21,6 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 		return Commands.getFromSlug(slug);
 	}, [slug]);
 
-	const numInputFiles = useMemo(() => {
-		return CommandInput.getInputFilesFromCommand(command?.command ?? "").length;
-	}, [command]);
-
-	const selectors = useMemo(() => {
-		return CommandInput.getSelectorsFromCommand(command?.command ?? "");
-	}, [command]);
-
-	const selectorIds = useMemo(() => {
-		return selectors.map((s) => s.slug);
-	}, [selectors]);
-
-	const [queryString, setQueryString] = useQueryString();
-
-	const [inputFiles, setInputFiles] = useState<Array<File | null>>(Array.from(Array(numInputFiles)).map(() => null));
-	const [selectorValues, setSelectorValues] = useState<Array<string | null>>(
-		selectors.map((s, i) => queryString[selectorIds[i]] ?? s.defaultValue ?? null),
-	);
-
 	if (!command) {
 		// TODO: Return error page, maybe with suggestions
 		return (
@@ -49,6 +29,21 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 			</div>
 		);
 	}
+
+	const selectors = useMemo(() => {
+		return command.input.getSelectors();
+	}, [command]);
+
+	const selectorIds = useMemo(() => {
+		return selectors.map((s) => s.slug);
+	}, [selectors]);
+
+	const [queryString, setQueryString] = useQueryString();
+
+	const [inputFiles, setInputFiles] = useState<Array<File | null>>(command.input.getInputFiles().map(() => null));
+	const [selectorValues, setSelectorValues] = useState<Array<string | null>>(
+		selectors.map((s, i) => queryString[selectorIds[i]] ?? s.defaultValue ?? null),
+	);
 
 	const handleSetFile = useCallback((index: number, file: File | null) => {
 		setInputFiles((files: Array<File | null>) => {
@@ -81,7 +76,7 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 	}, [selectorValues]);
 
 	const outputFileNames = useMemo(() => {
-		const outputFiles = CommandInput.getOutputFilesFromCommand(command?.command ?? "");
+		const outputFiles = command.input.getOutputFiles();
 		return outputFiles.map((of, i) => {
 			let extension = of.extension;
 			const match = extension.match(/input_file_(\d+)_extension/);
@@ -101,7 +96,12 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 
 	const handleStart = useCallback(() => {
 		if (command && hasAllInputFiles && hasAllSelectorValues) {
-			encoder.encode(command.command, inputFiles as File[], outputFileNames as string[], selectorValues as string[]);
+			const safeInputFiles = inputFiles as File[];
+			const safeOutputFileNames = outputFileNames as string[];
+			const safeSelectorValues = selectorValues as string[];
+			const inputFileNames = safeInputFiles.map((f, i) => `input_${i}.${getExtensionForFile(f.type, f.name)}`);
+			const commandString = command.input.createCommandLine(inputFileNames, safeOutputFileNames, safeSelectorValues);
+			encoder.encode(commandString, safeInputFiles, inputFileNames, safeOutputFileNames);
 		}
 	}, [command, inputFiles, selectorValues, hasAllInputFiles, hasAllSelectorValues, outputFileNames]);
 
@@ -133,7 +133,7 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 					</svg>
 				</button>
 				<CommandForm
-					command={command.command}
+					command={command.input}
 					onSetFile={handleSetFile}
 					onSetSelectorValue={handleSetSelectorValue}
 					outputFileNames={outputFileNames}

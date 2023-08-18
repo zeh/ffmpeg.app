@@ -23,4 +23,11 @@ export default defineConfig({
 	optimizeDeps: {
 		exclude: ["@ffmpeg/ffmpeg", "@ffmpeg/util"],
 	},
+	css: {
+		modules: {
+			// https://github.com/webpack/loader-utils#interpolatename
+			// Default seems to be "_[local]_[hash:base64:5]_[some number?"
+			generateScopedName: "[contenthash:base64:8]",
+		},
+	}
 });

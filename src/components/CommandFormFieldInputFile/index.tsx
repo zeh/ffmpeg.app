@@ -8,14 +8,19 @@ import s from "./styles.module.css";
 interface IProps {
 	title: string;
 	types: string[];
+	value?: File | null;
 	onSetFile?: (file: File | null) => void;
 }
 
-export const CommandFormFieldInputFile = ({ onSetFile, title, types }: IProps): JSX.Element => {
+export const CommandFormFieldInputFile = ({ onSetFile, title, types, value }: IProps): JSX.Element => {
 	const [isDraggingOverWindow, setIsDraggingOverWindow] = useState(false);
 	const [isDraggingValid, setIsDraggingValid] = useState(false);
-	const [file, setFile] = useState<File | null>(null);
+	const [file, setFile] = useState<File | null>(value ?? null);
 	const fileRef = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		console.log("!!! render :: ", file?.name, value?.name);
+	}, [file, value]);
 
 	const checkDataTransferValid = useCallback(
 		(dataTransfer: DataTransfer | null): boolean => {
@@ -38,6 +43,13 @@ export const CommandFormFieldInputFile = ({ onSetFile, title, types }: IProps): 
 	useEffect(() => {
 		onSetFile?.(file);
 	}, [file]);
+
+	useEffect(() => {
+		setFile(value ?? null);
+		if (!value && fileRef.current) {
+			(fileRef.current as { value: string | null }).value = null;
+		}
+	}, [value]);
 
 	const handleCoverDrop = useCallback(
 		(e: DragEvent) => {

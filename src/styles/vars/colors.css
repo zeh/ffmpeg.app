@@ -11,6 +11,7 @@
 	/* Light theme */
 	--color-theme-background: var(--color-basic-whiteish);
 	--color-theme-text: var(--color-basic-blackish);
+	--color-theme-lines-half: rgba(0, 0, 0, 0.125);
 	--color-theme-lines: rgba(0, 0, 0, 0.25);
 	--color-theme-text-link: var(--color-basic-black);
 	--color-theme-input-text: var(--color-basic-blackish);
@@ -42,6 +43,7 @@
 		/* Dark theme */
 		--color-theme-background: var(--color-basic-blackish);
 		--color-theme-text: var(--color-basic-light-gray);
+		--color-theme-lines-half: rgba(255, 255, 255, 0.125);
 		--color-theme-lines: rgba(255, 255, 255, 0.25);
 		--color-theme-text-link: var(--color-basic-white);
 		--color-theme-input-text: var(--color-basic-light-gray);

@@ -2,19 +2,13 @@
 
 .container {
 	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
+	flex-direction: column;
 	width: 100%;
-	column-gap: 0.5em;
-	row-gap: 0.5em;
 	align-items: center;
-	padding: 0.8em;
 	border-left: 3px solid var(--color-theme-lines);
 	color: var(--color-theme-code-text);
 	background-color: var(--color-theme-code-background);
 	position: relative;
-
-	@mixin type-style-code;
 }
 
 .disabledContainer {
@@ -31,4 +25,27 @@
 	left: 0;
 	bottom: 0;
 	transition: all 0.3s ease-out;
+}
+
+.actionRow {
+	display: flex;
+	justify-content: flex-end;
+	width: 100%;
+	border-bottom: 1px dotted var(--color-theme-lines-half);
+	padding: 8px 10px;
+	column-gap: 12px;
+}
+
+.command {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: 100%;
+	column-gap: 0.5em;
+	row-gap: 0.5em;
+	align-items: center;
+	padding: 0.8em;
+	position: relative;
+
+	@mixin type-style-code;
 }

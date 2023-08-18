@@ -49,9 +49,13 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 
 	const handleSetFile = useCallback((index: number, file: File | null) => {
 		setInputFiles((files: Array<File | null>) => {
-			const nf = files.concat();
-			nf[index] = file ?? null;
-			return nf;
+			if (files[index] !== file) {
+				const nf = files.concat();
+				nf[index] = file ?? null;
+				return nf;
+			} else {
+				return files;
+			}
 		});
 	}, []);
 
@@ -96,6 +100,32 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 		});
 	}, [inputFiles]);
 
+	const handleActionReset = useCallback(() => {
+		// Remove files from our map
+		setInputFiles((files) => files.map(() => null));
+		// Reset the actual values
+		const newSelectorValues = selectors.map((s) => s.defaultValue ?? null);
+		setSelectorValues(newSelectorValues);
+		newSelectorValues.forEach((value, index) => {
+			if (value) {
+				setQueryString((qq) => {
+					delete qq[selectorIds[index]];
+					return qq;
+				});
+			}
+		});
+	}, [selectors, selectorIds, setQueryString]);
+
+	const handleActionCopyToClipboard = useCallback(() => {
+		// TODO: get better output filename based on expected extension (eager 'outputFileNames')
+		const safeOutputFileNames = outputFileNames.map((o, i) => o ?? `output_${i}.ext`) as string[];
+		const safeSelectorValues = selectorValues.map((v) => v ?? "???") as string[];
+		// TODO: get better input filename suggestions based on expected mime type
+		const inputFileNames = inputFiles.map((f, i) => f?.name ?? `input_${i}.ext`);
+		const commandString = command.input.createCommandLine(inputFileNames, safeOutputFileNames, safeSelectorValues);
+		navigator.clipboard.writeText("ffmpeg " + commandString.join(" "));
+	}, [command.input, inputFiles, outputFileNames, selectorValues]);
+
 	const handleStart = useCallback(() => {
 		if (command && hasAllInputFiles && hasAllSelectorValues) {
 			const safeInputFiles = inputFiles as File[];
@@ -132,9 +162,12 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 				<IconButton className={s.closeButton} size={20} icon={Icons.Close} onClick={handleClose} />
 				<CommandForm
 					command={command.input}
+					onActionCopyToClipboard={handleActionCopyToClipboard}
+					onActionReset={handleActionReset}
 					onSetFile={handleSetFile}
 					onSetSelectorValue={handleSetSelectorValue}
 					outputFileNames={outputFileNames}
+					inputFiles={inputFiles}
 					selectorValues={selectorValues}
 					disabled={encoder.isEncoding}
 				/>

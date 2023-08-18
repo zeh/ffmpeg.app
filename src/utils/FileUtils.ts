@@ -49,5 +49,5 @@ export const getFilesFromDataTransfer = (dataTransfer: DataTransfer | null): Fil
 export const getExtensionForFile = (mimeType: string, path: string): string => {
 	// Fallback cases
 	const types = mimeType.toLowerCase().split("/");
-	return mimeTypeMap.find(([_, types]) => types.includes(mimeType))?.[0] ?? types[1] ?? path.split(".").pop();
+	return mimeTypeMap.find(([, types]) => types.includes(mimeType))?.[0] ?? types[1] ?? path.split(".").pop();
 };

@@ -77,18 +77,8 @@
 }
 
 .closeButton {
-	color: var(--color-theme-text);
-	display: flex;
-	justify-content: center;
-	outline: 0;
-	border-width: 0;
-	margin: 0;
-	padding: 0;
 	position: absolute;
-	user-select: none;
-	background-color: transparent;
-	border-color: transparent;
-	cursor: pointer;
+	color: var(--color-theme-text);
 
 	top: var(--size-margin-common);
 	right: var(--size-margin-common);
@@ -96,14 +86,6 @@
 	@mixin for-size-medium-plus {
 		top: var(--size-margin-common-double);
 		right: var(--size-margin-common-double);
-	}
-
-
-	& .lines {
-		stroke: currentColor;
-		fill: transparent;
-		stroke-linecap: round;
-		stroke-width: 2;
 	}
 }
 

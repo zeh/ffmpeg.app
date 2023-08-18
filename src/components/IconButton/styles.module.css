@@ -1,0 +1,15 @@
+@import "../../styles/mixins/index.css";
+
+.container {
+	color: var(--color-theme-text);
+	display: flex;
+	justify-content: center;
+	outline: 0;
+	border-width: 0;
+	margin: 0;
+	padding: 0;
+	user-select: none;
+	background-color: transparent;
+	border-color: transparent;
+	cursor: pointer;
+}

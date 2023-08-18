@@ -10,6 +10,7 @@ import { Button } from "../Button";
 import { getExtensionForFile } from "../../utils/FileUtils";
 import { EncoderJobStatus } from "../EncoderJobStatus";
 import { useQueryString } from "../../utils/hooks/useQueryString";
+import { IconButton } from "../IconButton";
 
 import s from "./styles.module.css";
 
@@ -128,9 +129,7 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 				<TagList className={s.tags} tags={command.tags} />
 				<p className={s.hr} />
 				<p className={s.description}>{command.description}</p>
-				<button className={s.closeButton} onClick={handleClose}>
-					<Icons.Close size={20} />
-				</button>
+				<IconButton className={s.closeButton} size={20} icon={Icons.Close} onClick={handleClose} />
 				<CommandForm
 					command={command.input}
 					onSetFile={handleSetFile}

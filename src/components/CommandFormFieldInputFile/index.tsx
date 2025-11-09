@@ -18,10 +18,6 @@ export const CommandFormFieldInputFile = ({ onSetFile, title, types, value }: IP
 	const [file, setFile] = useState<File | null>(value ?? null);
 	const fileRef = useRef<HTMLInputElement>(null);
 
-	useEffect(() => {
-		console.log("!!! render :: ", file?.name, value?.name);
-	}, [file, value]);
-
 	const checkDataTransferValid = useCallback(
 		(dataTransfer: DataTransfer | null): boolean => {
 			const files = getFilesFromDataTransfer(dataTransfer);

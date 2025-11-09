@@ -1,9 +1,15 @@
-module.exports = {
+import postcssMixins from "postcss-mixins";
+import autoprefixer from "autoprefixer";
+import postcssNesting from "postcss-nesting";
+import cssnano from "cssnano";
+import postcssSimpleVars from "postcss-simple-vars";
+
+export default {
 	plugins: [
-		require("postcss-mixins"),
-		require("autoprefixer"),
-		require("postcss-nesting"),
-		require("cssnano")({ preset: ["default", { discardComments: { removeAll: true } }] }),
-		require("postcss-simple-vars"),
+		postcssMixins,
+		autoprefixer,
+		postcssNesting,
+		cssnano({ preset: ["default", { discardComments: { removeAll: true } }] }),
+		postcssSimpleVars,
 	],
 };

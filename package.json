@@ -2,6 +2,7 @@
 	"name": "online-ffmpeg",
 	"private": true,
 	"version": "1.0.0",
+	"type": "module",
 	"license": "MIT",
 	"repository": "git@github.com:zeh/online-ffmpeg.git",
 	"author": "Zeh Fernando <zeh@zehfernando.com>",
@@ -10,7 +11,8 @@
 		"build": "tsc && vite build",
 		"watch": "tsc && vite build --watch",
 		"preview": "vite preview",
-		"lint": "eslint src/**/*.{ts,tsx}"
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix"
 	},
 	"dependencies": {
 		"@ffmpeg/ffmpeg": "^0.12.15",
@@ -22,18 +24,18 @@
 	},
 	"devDependencies": {
 		"@preact/preset-vite": "^2.5.0",
-		"@typescript-eslint/eslint-plugin": "^5.15.0",
-		"@typescript-eslint/parser": "^5.15.0",
+		"@typescript-eslint/eslint-plugin": "^8",
+		"@typescript-eslint/parser": "^8",
 		"autoprefixer": "^10.4.21",
 		"cssnano": "^6.1.2",
-		"eslint": "^8.57.1",
-		"eslint-config-prettier": "^8.10.2",
-		"eslint-plugin-prettier": "^4.2.5",
+		"eslint": "^9",
+		"eslint-config-prettier": "^10.1.8",
 		"postcss-mixins": "^9.0.4",
 		"postcss-nesting": "^11.2.2",
 		"postcss-simple-vars": "^7.0.1",
-		"prettier": "^2.5.1",
+		"prettier": "^3",
 		"typescript": "^5.1.6",
+		"typescript-eslint": "^8",
 		"vite": "^4.5.14"
 	}
 }

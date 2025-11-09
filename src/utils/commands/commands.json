@@ -47,7 +47,7 @@
 		},
 		{
 			"name": "Normalize loudness of an audio file",
-			"description": "Normalize the perceived loudness of a file using he EBU R128 algorithm.",
+			"description": "Normalize the perceived loudness of a file using the EBU R128 algorithm.",
 			"command": "-i ${input_audio} -filter:a loudnorm ${output}",
 			"keywords": ["audio", "normalize", "volume", "increase", "decrease"],
 			"tags": ["audio"]

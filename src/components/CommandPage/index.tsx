@@ -138,9 +138,9 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 	}, [command, inputFiles, selectorValues, hasAllInputFiles, hasAllSelectorValues, outputFileNames]);
 
 	const handleSaveOutputFile = useCallback(async (filename: string) => {
-		const data = await encoder.getOutputFileData(filename);
+		const data = (await encoder.getOutputFileData(filename)) as Uint8Array;
 		const link = document.createElement("a");
-		link.href = URL.createObjectURL(new Blob([(data as Uint8Array).buffer]));
+		link.href = URL.createObjectURL(new Blob([new Uint8Array(data)]));
 		link.download = filename;
 		link.click();
 	}, []);

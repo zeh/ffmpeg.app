@@ -1,4 +1,13 @@
 /**
+ * Map of file extension to possible mime types. This is used to guess extensions
+ * for new files based on the type.
+ */
+const mimeTypeMap: Array<[string, string[]]> = [
+	["mp3", ["audio/mpeg"]],
+	["mov", ["video/quicktime", "video/x-quicktime"]],
+];
+
+/**
  * Simple check for whether a mime type is matched in a list of allowed mime types.
  * This performs a simple check, so
  * - video/mp4 vs [video/mp4] => true
@@ -38,12 +47,7 @@ export const getFilesFromDataTransfer = (dataTransfer: DataTransfer | null): Fil
 };
 
 export const getExtensionForFile = (mimeType: string, path: string): string => {
-	// Special cases
-	const map: Record<string, string> = {
-		"audio/mpeg": "mp3",
-	};
-
 	// Fallback cases
 	const types = mimeType.toLowerCase().split("/");
-	return map[mimeType] ?? types[1] ?? path.split(".").pop();
+	return mimeTypeMap.find(([_, types]) => types.includes(mimeType))?.[0] ?? types[1] ?? path.split(".").pop();
 };

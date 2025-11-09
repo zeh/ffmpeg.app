@@ -118,12 +118,12 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 
 	const handleActionCopyToClipboard = useCallback(() => {
 		// TODO: get better output filename based on expected extension (eager 'outputFileNames')
-		const safeOutputFileNames = outputFileNames.map((o, i) => o ?? `output_${i}.ext`) as string[];
-		const safeSelectorValues = selectorValues.map((v) => v ?? "???") as string[];
+		const safeOutputFileNames = outputFileNames.map((o, i) => o ?? `output_${i}.ext`);
+		const safeSelectorValues = selectorValues.map((v) => v ?? "???");
 		// TODO: get better input filename suggestions based on expected mime type
 		const inputFileNames = inputFiles.map((f, i) => f?.name ?? `input_${i}.ext`);
 		const commandString = command.input.createCommandLine(inputFileNames, safeOutputFileNames, safeSelectorValues);
-		navigator.clipboard.writeText("ffmpeg " + commandString.join(" "));
+		void navigator.clipboard.writeText("ffmpeg " + commandString.join(" "));
 	}, [command.input, inputFiles, outputFileNames, selectorValues]);
 
 	const handleStart = useCallback(() => {
@@ -133,7 +133,7 @@ export const CommandPage = ({ params: { slug } }: IProps): JSX.Element => {
 			const safeSelectorValues = selectorValues as string[];
 			const inputFileNames = safeInputFiles.map((f, i) => `input_${i}.${getExtensionForFile(f.type, f.name)}`);
 			const commandString = command.input.createCommandLine(inputFileNames, safeOutputFileNames, safeSelectorValues);
-			encoder.encode(commandString, safeInputFiles, inputFileNames, safeOutputFileNames);
+			void encoder.encode(commandString, safeInputFiles, inputFileNames, safeOutputFileNames);
 		}
 	}, [command, inputFiles, selectorValues, hasAllInputFiles, hasAllSelectorValues, outputFileNames]);
 

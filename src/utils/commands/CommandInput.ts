@@ -93,7 +93,7 @@ const createSpecialCommandInputField = (input: string): ICommandInputField => {
 		};
 	}, {});
 
-	switch (inputType) {
+	switch (inputType as CommandInputKind) {
 		case CommandInputKind.InputFile:
 			return {
 				kind: CommandInputKind.InputFile,

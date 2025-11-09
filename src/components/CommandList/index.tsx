@@ -44,7 +44,7 @@ export const CommandList = ({
 	useEffect(() => {
 		const scroll =
 			(selectedIndexRef.current as unknown as { scrollIntoViewIfNeeded: Element["scrollIntoView"] | undefined })
-				?.scrollIntoViewIfNeeded ?? selectedIndexRef.current?.scrollIntoView;
+				?.scrollIntoViewIfNeeded ?? ((v) => selectedIndexRef.current?.scrollIntoView(v));
 		scroll?.apply(selectedIndexRef.current);
 	}, [selectedIndexRef.current]);
 

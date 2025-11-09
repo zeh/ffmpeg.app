@@ -31,7 +31,7 @@ let commands: ICommand[] | null = null;
 
 const parseWithDefinitions = (text: string, definitions: ICommandsJSON["definitions"]): string => {
 	return text.replaceAll(/\$\{(.*?)\}/g, (match, group1) =>
-		parseWithDefinitions(definitions[group1] ?? `!!!${group1}!!!`, definitions),
+		parseWithDefinitions(definitions[group1 as string] ?? `!!!${group1}!!!`, definitions),
 	);
 };
 
@@ -78,7 +78,7 @@ const getAll = (): ICommand[] => {
 		});
 	}
 
-	return commands as ICommand[];
+	return commands;
 };
 
 /**

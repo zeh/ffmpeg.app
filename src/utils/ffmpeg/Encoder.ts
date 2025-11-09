@@ -281,7 +281,7 @@ export const useEncoder = (): TEncoderView => {
 
 			setJob(newJob);
 
-			startEncode(
+			await startEncode(
 				ffmpeg,
 				newJob.id,
 				command,
@@ -302,7 +302,7 @@ export const useEncoder = (): TEncoderView => {
 
 		// The default for naming is https://unpkg.com/@ffmpeg/core@${CORE_VERSION}/dist/umd/ffmpeg-core.wasm`,
 		// but we use it so we can listen to updates
-		(async () => {
+		void (async () => {
 			await ffmpeg.load({
 				coreURL: await toBlobURL(
 					`${baseURL}/ffmpeg-core.js`,

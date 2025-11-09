@@ -17,3 +17,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# LLM stuff
+.claude
